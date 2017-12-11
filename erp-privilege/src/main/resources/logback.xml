@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration scan="true" scanPeriod="1800 seconds" debug="false">
+    <jmxConfigurator/>
+   <!--  <property name="log.home" value="${log.home}"/> -->
+   <!--  <property scope="context" name="FILE_NAME" value="${log.fileName}"/> -->
+
+    <timestamp key="byDay" datePattern="yyyy-MM-dd"/>
+
+    <appender name="Stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FileInfo"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.home}/${app.name}/${byDay}/${app.name}-info.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${log.home}/${app.name}/${log.dir.backup}-info/${byDay}/${app.name}-info-%i.log.zip
+            </fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${log.filesize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n
+            </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="FileError"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${USER_HOMapp.name_NAME}/${byDay}/${app.name}-error.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>
+               ${log.home}/${app.name}/${log.dir.backup}-error/${byDay}/${app.name}-error-%i.log.zip
+            </fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${log.filesize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n
+            </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <appender name="Druid"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.home}/${app.name}/${byDay}/${app.name}-druid.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>
+                ${log.home}/${app.name}/${log.dir.backup}-druid/${byDay}/${app.name}-druid-%i.log.zip
+            </fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${log.filesize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    <!-- <appender name="LOGSTASH" class="com.cwbase.logback.RedisAppender">
+       <source>canaan</source>
+       <type>test</type>
+       <host>192.168.11.129</host>
+       <key>logstash</key>   这个Key是Redis List的Key，需要和Logstash读取Redis的Key匹配
+       <tags>test</tags>
+       <mdc>true</mdc>
+       <location>true</location>
+       <callerStackIndex>0</callerStackIndex>
+     </appender>  -->
+    <appender name="Sentry" class="io.sentry.logback.SentryAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+    <logger name="com.alibaba.dubbo" level="INFO"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.apache.zookeeper" level="INFO"/>
+    <!-- <logger name="canaan.dao" level="DEBUG"/> -->
+    <logger name="com.alibaba.druid" level="INFO" additivity="false">
+    <logger name="org.jooq" level="DEBUG"/>
+        <appender-ref ref="druid"/>
+    </logger>
+    <root level="${log.level}">
+        <appender-ref ref="file_error"/>
+        <appender-ref ref="file_info"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="Sentry"/>
+    </root>
+</configuration>
