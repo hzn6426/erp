@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.canaan</groupId>
+        <artifactId>erp-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>erp-core</artifactId>
+    <name>erp-core</name>
+  
+    <dependencies>
+        <dependency>
+            <groupId>com.canaan</groupId>
+            <artifactId>erp-distribute</artifactId>
+        </dependency>
+    
+	    <dependency>
+	        <groupId>net.sf.dozer</groupId>
+	        <artifactId>dozer</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>net.sf.dozer</groupId>
+	        <artifactId>dozer-spring</artifactId>
+	    </dependency>
+	    
+	
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-core</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-context</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-beans</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-aop</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-tx</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-context-support</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-orm</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-websocket</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework</groupId>
+	        <artifactId>spring-jms</artifactId>
+	    </dependency>
+	            
+	    
+	    <dependency>
+	        <groupId>org.hibernate</groupId>
+	        <artifactId>hibernate-validator</artifactId>
+	    </dependency>
+	    
+	    
+	    <!-- log4j2的RollingRandomAccessFile支持（异步日志记录） -->
+	    <dependency>
+	        <groupId>com.lmax</groupId>
+	        <artifactId>disruptor</artifactId>
+	    </dependency>
+	    
+	    
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

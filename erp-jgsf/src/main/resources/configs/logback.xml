@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xml>
+  <configuration scan="true" scanPeriod="1800 seconds" debug="false">
+  
+     <timestamp key="byDay" datePattern="yyyy-MM-dd" />
+  
+     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+         <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+             </pattern>
+         </encoder>
+     </appender>
+ 
+     <appender name="InfoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+     	  <file>${log.home}/${log.fileName}/${byDay}/${log.fileName}-info.log</file>
+          <filter class="ch.qos.logback.classic.filter.LevelFilter">
+              <level>DEBUG</level>
+              <onMatch>ACCEPT</onMatch>
+              <onMismatch>DENY</onMismatch>
+          </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+             <fileNamePattern>${log.home}/${log.fileName}/${log.dir.infobackup}/${byDay}/${log.fileName}-%i.infolog.zip
+             </fileNamePattern>
+             <minIndex>1</minIndex>
+             <maxIndex>10</maxIndex>
+         </rollingPolicy>
+         <triggeringPolicy
+             class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+             <maxFileSize>${log.filesize}</maxFileSize>
+         </triggeringPolicy>
+         <encoder>
+             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+             </pattern>
+         </encoder>
+     </appender>
+     
+     <appender name="ErrorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+     	<file>${log.home}/${log.fileName}/${byDay}/${log.fileName}-error.log</file>
+          <filter class="ch.qos.logback.classic.filter.LevelFilter">
+              <level>ERROR</level>
+              <onMatch>ACCEPT</onMatch>
+              <onMismatch>DENY</onMismatch>
+          </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+             <fileNamePattern>${log.home}/${log.fileName}/${byDay}/${log.fileName}-%i.errorlog.zip
+             </fileNamePattern>
+             <minIndex>1</minIndex>
+             <maxIndex>10</maxIndex>
+         </rollingPolicy>
+ 
+         <triggeringPolicy
+             class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+             <maxFileSize>${log.filesize}</maxFileSize>
+         </triggeringPolicy>
+         <encoder>
+              <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+             </pattern>
+         </encoder>
+     </appender>
+    <appender name="Sentry" class="io.sentry.logback.SentryAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+ 
+     <root level="${log.level}">
+     	 <appender-ref ref="InfoAppender" />
+     	 <appender-ref ref="ErrorAppender" />
+         <appender-ref ref="STDOUT" />
+         <!--<appender-ref ref="Sentry" />-->
+        <!--  <appender-ref ref="LOGSTASH" /> -->
+     </root>
+ </configuration>

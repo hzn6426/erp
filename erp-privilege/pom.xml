@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.canaan</groupId>
+        <artifactId>erp-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>erp-privilege</artifactId>
+    <name>erp-privilege</name>
+    <url>http://maven.apache.org</url>
+  
+    <build>
+        <filters>
+            <filter>src/main/envs/env-${env}.properties</filter>
+        </filters>
+        <!-- <plugins>
+        数据库代码生成的插件 
+        <plugin>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen-maven</artifactId>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <dependencies>
+	           <dependency>
+	               <groupId>mysql</groupId>
+	               <artifactId>mysql-connector-java</artifactId>
+	               <version>${mysql-connector.version}</version>
+	           </dependency>
+            </dependencies>
+            <configuration>
+	           <jdbc>
+	               <driver>com.mysql.jdbc.Driver</driver>
+	               <url>jdbc:mysql://10.0.0.100:3306/dubbo_test?serverTimezone=GMT&amp;useUnicode=true&amp;characterEncoding=UTF-8</url>
+	               <user>root</user>
+	               <password>root</password>
+	           </jdbc>
+	           <generator>
+	               <database>
+	                   <name>org.jooq.util.mysql.MySQLDatabase</name>
+	                   <includes>.*</includes>
+	                   <inputSchema>dubbo_test</inputSchema>
+	               </database>
+	               <target>
+	                   <packageName>com.canaan.privilege.db</packageName>
+	                   <directory>src/main/java</directory>
+	               </target>
+	               <generate>
+	                   <daos>false</daos>
+	                   <pojos>true</pojos>
+	                   <immutablePojos>false</immutablePojos>
+	                   <jpaAnnotations>false</jpaAnnotations>
+	                   <validationAnnotations>true</validationAnnotations>
+	                   <deprecated>false</deprecated>
+	               </generate>
+	           </generator>
+            </configuration>
+        </plugin>
+        </plugins> -->
+    </build>
+    <dependencies>
+    	<dependency>
+   		   <groupId>com.canaan</groupId>
+   		   <artifactId>erp-privilege-api</artifactId>
+   	    </dependency>
+    
+        <dependency>
+   		   <groupId>com.canaan</groupId>
+   		   <artifactId>erp-core</artifactId>
+   	    </dependency>
+   	    <!-- jooq -->
+           <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+        </dependency>
+    </dependencies>
+</project>
