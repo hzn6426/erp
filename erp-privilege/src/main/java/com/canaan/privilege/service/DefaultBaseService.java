@@ -16,10 +16,10 @@ import org.jooq.TableRecord;
 import org.jooq.impl.DSL;
 
 import com.canaan.common.SearchResult;
-import com.canaan.core.Assert;
-import com.canaan.core.Checker;
-import com.canaan.core.ExceptionEnum;
-import com.canaan.core.ServerException;
+import com.canaan.core.exception.ExceptionEnum;
+import com.canaan.core.exception.ServerException;
+import com.canaan.core.util.Assert;
+import com.canaan.core.util.Checker;
 import com.canaan.common.BaseModel;
 import com.canaan.common.BaseService;
 @SuppressWarnings({"unchecked" })

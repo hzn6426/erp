@@ -1,4 +1,4 @@
-package com.canaan.core;
+package com.canaan.core.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;

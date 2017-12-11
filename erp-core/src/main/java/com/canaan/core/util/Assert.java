@@ -1,9 +1,10 @@
-package com.canaan.core;
+package com.canaan.core.util;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-
+import com.canaan.core.exception.ExceptionEnum;
+import com.canaan.core.exception.ServerException;
 import com.google.common.base.Preconditions;
 public class Assert {
 	

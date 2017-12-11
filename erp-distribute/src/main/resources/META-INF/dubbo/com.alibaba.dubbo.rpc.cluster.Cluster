@@ -1,0 +1,1 @@
+CustomerCluster=com.canaan.dubbo.cluster.CustomerFailoverCluster

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--
+    | 
+    | dubbo config 
+    | config the application ,registry ,protocols
+    |
+    -->
+    <dubbo:application name="${app.name}" owner="${dubbo.owner}" logger="slf4j"/>
+    <dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.zkaddress}" file="${dubbo.registry}/dubbo-registry/${app.name}.properties"/>
+    <dubbo:protocol name="${dubbo.provider.protocol}" port="${dubbo.provider.port}" host="${dubbo.provider.host}"/>
+    <!-- <dubbo:monitor protocol="registry"/> -->
+    
+    <!--
+    | 
+    | dozer config
+    | config the common dozer mapper files
+    |
+    -->
+    <bean id="baseMapper" class="org.dozer.DozerBeanMapper">
+        <property name="mappingFiles">
+            <list>
+                <value>dozer-mapper.xml</value>
+            </list>
+        </property>
+    </bean>
+    
+    
+</beans>

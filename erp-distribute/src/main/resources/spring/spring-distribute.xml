@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- aop 记录并发信息 -->
+	<!-- <bean id="distributeAspect" class="com.canaan.dubbo.common.DistributeAspect"></bean>   -->  
+    <!-- provider方filter 用于更新上下文 -->
+    <dubbo:provider filter="-exception,ProviderDistributeFilter,CustomerExceptionFilter" ></dubbo:provider>
+    <!-- 消费方拦截器-用于记录上下文信息和调用信息 -->
+    <dubbo:consumer filter="ConsumerDistributeFilter" cluster="CustomerCluster"/>
+</beans>

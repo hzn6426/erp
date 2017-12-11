@@ -14,6 +14,7 @@ import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.dubbo.rpc.RpcResult;
 import com.alibaba.dubbo.rpc.service.GenericService;
+import com.canaan.distribute.exception.BizException;
 import com.canaan.distribute.exception.DistributeException;
 /**
  * 消费者自定义异常，配置为禁用dubbo异常处理，采用当前异常类处理 
@@ -80,6 +81,11 @@ public class CustomerExceptionFilter implements Filter {
                     if (exception instanceof DistributeException) {
                     	return result;
                     }
+                    //后台业务异常
+                    if (exception instanceof BizException) {
+                    	return result;
+                    }
+                    
                     // 否则，包装成RuntimeException抛给客户端
                     return new RpcResult(new RuntimeException(StringUtils.toString(exception)));
                 } catch (Throwable e) {

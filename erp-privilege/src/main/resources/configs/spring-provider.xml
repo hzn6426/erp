@@ -17,6 +17,8 @@
     <!-- 暴露API服务，Provider上尽量多配置Consumer端的属性，
       让Provider实现者一开始就思考Provider服务特点、服务质量的问题。 -->
     <!--地区service-->
+    
+    
     <dubbo:service ref="sysMenuService"
                    interface="com.canaan.privilege.api.SysMenuService" timeout="${dubbo.provider.timeout}"
                    retries="${dubbo.provider.retries}"

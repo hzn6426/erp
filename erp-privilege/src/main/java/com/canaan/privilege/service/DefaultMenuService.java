@@ -3,12 +3,13 @@ package com.canaan.privilege.service;
 
 import org.jooq.Condition;
 import org.jooq.SortField;
+import org.springframework.stereotype.Service;
 
 import com.canaan.privilege.api.SysMenuService;
 import com.canaan.privilege.db.tables.SysMenu;
 import com.canaan.privilege.db.tables.records.SysMenuRecord;
 import com.canaan.privilege.dto.MenuDTO;
-
+@Service
 public class DefaultMenuService extends DefaultBaseService<SysMenuRecord, SysMenu, MenuDTO> implements SysMenuService {
 
 	@Override
@@ -24,8 +25,7 @@ public class DefaultMenuService extends DefaultBaseService<SysMenuRecord, SysMen
 
 	@Override
 	public Condition primaryKeyCondition(MenuDTO e) {
-		// TODO Auto-generated method stub
-		return null;
+		return SysMenu.SYS_MENU.ID.eq(e.getId());
 	}
 
 	

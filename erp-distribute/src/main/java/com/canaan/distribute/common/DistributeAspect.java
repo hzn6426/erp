@@ -6,6 +6,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.rpc.RpcException;
 import com.canaan.distribute.util.SnowflakeIdWorker;
@@ -24,6 +26,8 @@ import com.canaan.distribute.util.DistributeSignatureUtil;
  * @version V1.0
  */
 @Aspect
+@Component
+@Order(100)
 public class DistributeAspect {
 
 //	private static final Logger logger = LoggerFactory.getLogger(DistributeAspect.class);  

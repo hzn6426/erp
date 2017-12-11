@@ -1,4 +1,4 @@
-package com.canaan.core;
+package com.canaan.core.exception;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -16,20 +16,20 @@ public class ServerException extends RuntimeException {
 	@Getter
 	private int code;
 	
-	public ServerException(ExceptionEnum exceptionEnum) {
-		super(getBundleMessage(exceptionEnum.getCode()));
-		this.code = exceptionEnum.getCode();
+	public ServerException(ExceptionEnumable exceptionEnum) {
+		super(getBundleMessage(exceptionEnum.getExceptionCode()));
+		this.code = exceptionEnum.getExceptionCode();
 	}
 	
 	public ServerException(ExceptionEnum exceptionEnum, Object... arguments) {
-		super(MessageFormat.format(getBundleMessage(exceptionEnum.getCode()), arguments));
-		this.code = exceptionEnum.getCode();
+		super(MessageFormat.format(getBundleMessage(exceptionEnum.getExceptionCode()), arguments));
+		this.code = exceptionEnum.getExceptionCode();
 	}
 	
 	private static String getBundleMessage(int code) {
 		String message =  bundle.getString(String.valueOf(code));
 		if (message == null) {
-			message = getBundleMessage(ExceptionEnum.NO_BUNDLE_CODE.getCode());
+			message = getBundleMessage(ExceptionEnum.NO_BUNDLE_CODE.getExceptionCode());
 		}
 		return message;
 	}
