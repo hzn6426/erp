@@ -1,4 +1,4 @@
-package com.canaan.core.util;
+package com.canaan.jgsf.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;

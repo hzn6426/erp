@@ -28,6 +28,10 @@ public class ResponseResult {
 		return new ResponseResult(200, "OK", 0, Lists.newArrayList());
 	}
 	
+	public static ResponseResult builder(int code, String message) {
+		return new ResponseResult(code, message, 0, Lists.newArrayList());
+	}
+	
 	public static ResponseResult builder(int totalSize, List<?> data) {
 		return new ResponseResult(200, "OK",totalSize, data);
 	}

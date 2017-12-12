@@ -3,6 +3,7 @@ package com.canaan.jgsf.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.canaan.common.SearchResult;
@@ -20,7 +21,7 @@ public class MenuController extends BaseController<MenuDTO> {
 
 	
 	@ApiOperation(value = "查询")
-	@RequestMapping("/list")
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseResult list() {
 		MenuDTO menu = new MenuDTO();
 		SearchResult<MenuDTO> menuResult = super.list(menu, 1, 10);

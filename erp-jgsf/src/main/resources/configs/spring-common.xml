@@ -31,5 +31,6 @@
         </property>
     </bean>
     
+    <bean id="collectionMapper" class="com.canaan.jgsf.util.CollectionMapperDecorator"></bean>
     
 </beans>

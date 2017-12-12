@@ -25,9 +25,6 @@ public enum ExceptionEnum implements ExceptionEnumable{
 	}
 
 
-
-
-
 	ExceptionEnum(final int code){
 		this.code = code;
 	}

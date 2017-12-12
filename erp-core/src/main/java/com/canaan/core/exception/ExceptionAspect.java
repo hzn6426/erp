@@ -24,7 +24,7 @@ public class ExceptionAspect {
 
 	private ProtocolExceptionHandler handler = ProtocolExceptionHandler.getInstance();
 	
-	@Around("execution(* com.canaan..*service.*.*(..))")
+	@Around("execution(* com.canaan..service..*(..))")
 	public Object catchException(ProceedingJoinPoint point) throws Throwable {
 		Object r = null;
 		try {
