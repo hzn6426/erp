@@ -25,11 +25,20 @@
 	        <artifactId>dozer-spring</artifactId>
 	    </dependency>
 	    
-	    
-	    <dependency>
-	        <groupId>org.hibernate</groupId>
-	        <artifactId>hibernate-validator</artifactId>
-	    </dependency>
+	    <!-- jooq -->
+           <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+        </dependency>
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
 	    
 	    
 	    <!-- log4j2的RollingRandomAccessFile支持（异步日志记录） -->

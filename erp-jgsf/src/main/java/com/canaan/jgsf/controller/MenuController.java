@@ -1,8 +1,6 @@
 package com.canaan.jgsf.controller;
 
-import javax.annotation.Resource;
 
-import org.dozer.Mapper;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,8 +18,6 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/menu", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class MenuController extends BaseController<MenuDTO> {
 
-	@Resource
-	private Mapper mapper;
 	
 	@ApiOperation(value = "查询")
 	@RequestMapping("/list")

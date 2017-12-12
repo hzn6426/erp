@@ -2,6 +2,7 @@ package com.canaan.privilege.service;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.impl.DSL;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.canaan.common.SearchResult;
 import com.canaan.core.exception.ExceptionEnum;
@@ -23,14 +25,14 @@ import com.canaan.core.util.Checker;
 import com.canaan.common.BaseModel;
 import com.canaan.common.BaseService;
 @SuppressWarnings({"unchecked" })
-public abstract class DefaultBaseService<R extends TableRecord<R>, T extends Table<R>, E extends BaseModel> 
+public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<R>, E extends BaseModel> 
 	implements BaseService<E> {
 
 	private  Class<R> recordClassType;
 	
 	private Class<E> modelClassType;
 	
-	public  DefaultBaseService() {
+	public  BaseServiceImpl() {
 		Type genType = getClass().getGenericSuperclass();  
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
         recordClassType = (Class<R>) params[0];
@@ -40,33 +42,33 @@ public abstract class DefaultBaseService<R extends TableRecord<R>, T extends Tab
 	
 	public abstract Condition condition(E e);
 	
-	public abstract SortField<?> orderby(E e);
+	public abstract List<SortField<?>> orderby(E e);
 	
 	public abstract Condition primaryKeyCondition(E e);
 
 	
-	@Resource
-	private DSLContext dsl;
+	@Autowired
+	protected DSLContext dsl;
 	
-	@Resource
-	private Mapper baseMapper;
+	@Autowired
+	protected Mapper baseMapper;
 	
 	
 	@Override
-	public SearchResult<E> list(E e, int start, int limit) {
+	public SearchResult<E> list(E e, int pageNumber, int pageSize) {
+		int offset =  (pageNumber-1) * pageSize; 
 		Assert.CheckArgument(false, e);
-		int offset =  (limit - 1) * start;
 		R record = baseMapper.map(e, recordClassType);
 		Condition conditions = condition(e);
-		SortField<?> orderbys = orderby(e);
+		List<SortField<?>> orderbys = orderby(e);
 		if (!Checker.BeNotNull(conditions)) {
 			conditions = DSL.trueCondition();
 		}
 		if (!Checker.BeNotNull(orderbys)) {
-			orderbys = DSL.count().desc();
+			orderbys = new ArrayList<SortField<?>>(0);
 		}
-		List<E> dataList = dsl.selectFrom(record.getTable()).where(conditions).orderBy(orderbys).limit(limit).offset(offset).fetchInto(modelClassType);
-		int count = dsl.selectCount().where(conditions).fetchOne(0, Integer.class);
+		List<E> dataList = dsl.selectFrom(record.getTable()).where(conditions).orderBy(orderbys).limit(pageSize).offset(offset).fetchInto(modelClassType);
+		int count = dsl.selectCount().from(record.getTable()).where(conditions).fetchOne(0, Integer.class);
 		SearchResult<E> result = new SearchResult<>(count,dataList);
 		return result;
 	}

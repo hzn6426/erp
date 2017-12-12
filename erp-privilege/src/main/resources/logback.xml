@@ -42,7 +42,7 @@
 
     <appender name="FileError"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${USER_HOMapp.name_NAME}/${byDay}/${app.name}-error.log</file>
+        <file>${log.home}/${app.name}/${byDay}/${app.name}-error.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <fileNamePattern>
@@ -99,17 +99,19 @@
      </appender>  -->
     <appender name="Sentry" class="io.sentry.logback.SentryAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>WARN</level>
+            <level>DEBUG</level>
         </filter>
     </appender>
-    <logger name="com.alibaba.dubbo" level="INFO"/>
-    <logger name="org.springframework" level="INFO"/>
-    <logger name="org.apache.zookeeper" level="INFO"/>
+    
+    <logger name="com.alibaba.dubbo" level="DEBUG"/>
+    <logger name="org.springframework" level="DEBUG"/>
+    <logger name="org.apache.zookeeper" level="DEBUG"/>
     <!-- <logger name="canaan.dao" level="DEBUG"/> -->
-    <logger name="com.alibaba.druid" level="INFO" additivity="false">
-    <logger name="org.jooq" level="DEBUG"/>
-        <appender-ref ref="druid"/>
+    <logger name="com.alibaba.druid" level="DEBUG" additivity="false">
+        <appender-ref ref="Druid"/>
     </logger>
+    <logger name="org.jooq" level="DEBUG"/>
+    
     <root level="${log.level}">
         <appender-ref ref="FileError"/>
         <appender-ref ref="FileInfo"/>
