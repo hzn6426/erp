@@ -3,14 +3,15 @@ package com.canaan.privilege.service;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
 
 import org.dozer.Mapper;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
+import org.jooq.SelectField;
 import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -45,6 +46,10 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 	public abstract List<SortField<?>> orderby(E e);
 	
 	public abstract Condition primaryKeyCondition(E e);
+	
+	public abstract List<SelectField<?>> select();
+	
+	
 
 	
 	@Autowired
@@ -61,13 +66,17 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 		R record = baseMapper.map(e, recordClassType);
 		Condition conditions = condition(e);
 		List<SortField<?>> orderbys = orderby(e);
+		List<SelectField<?>> selecets = select();
 		if (!Checker.BeNotNull(conditions)) {
 			conditions = DSL.trueCondition();
 		}
 		if (!Checker.BeNotNull(orderbys)) {
 			orderbys = new ArrayList<SortField<?>>(0);
 		}
-		List<E> dataList = dsl.selectFrom(record.getTable()).where(conditions).orderBy(orderbys).limit(pageSize).offset(offset).fetchInto(modelClassType);
+		if (!Checker.BeNotNull(selecets)) {
+			selecets = new ArrayList<>(Arrays.asList(record.getTable().fields()));;
+		}
+		List<E> dataList = dsl.select(selecets).from(record.getTable()).where(conditions).orderBy(orderbys).limit(pageSize).offset(offset).fetchInto(modelClassType);
 		int count = dsl.selectCount().from(record.getTable()).where(conditions).fetchOne(0, Integer.class);
 		SearchResult<E> result = new SearchResult<>(count,dataList);
 		return result;
