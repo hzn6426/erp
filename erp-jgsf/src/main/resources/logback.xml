@@ -42,7 +42,7 @@
 
     <appender name="FileError"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${USER_HOMapp.name_NAME}/${byDay}/${app.name}-error.log</file>
+        <file> ${log.home}/${app.name}/${byDay}/${app.name}-error.log</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <fileNamePattern>
