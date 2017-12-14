@@ -30,14 +30,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ClientAuthenticationFilter extends FormAuthenticationFilter {
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
 		Subject subject = getSubject(request, response);
-//		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-		// String url = httpServletRequest.getServletPath();
-		// if (subject.isAuthenticated()) {
-		//
-		// String sessionid = httpServletRequest.getSession().getId();
-		// httpServletRequest.getSession().setAttribute("sessionid", sessionid);
-		// }
-		// return subject.isAuthenticated();
 		return subject.isAuthenticated();
 	}
 
@@ -50,6 +42,19 @@ public class ClientAuthenticationFilter extends FormAuthenticationFilter {
 			return false;
 		}
 		return super.preHandle(request, response);
+	}
+
+	@Override
+	public void afterCompletion(ServletRequest request, ServletResponse response, Exception exception)
+			throws Exception {
+		// TODO Auto-generated method stub
+		super.afterCompletion(request, response, exception);
+	}
+
+	@Override
+	protected void postHandle(ServletRequest request, ServletResponse response) throws Exception {
+		// TODO Auto-generated method stub
+		super.postHandle(request, response);
 	}
 
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {

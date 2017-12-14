@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
 <configuration scan="true" scanPeriod="1800 seconds" debug="false">
     <jmxConfigurator/>
    <!--  <property name="log.home" value="${log.home}"/> -->
