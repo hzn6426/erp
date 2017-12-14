@@ -21,4 +21,6 @@ public class Constants {
 	public static final String LEVEL_TAG_ROOT = "LEVEL_TAG_ROOT";
 	public static final String LEVEL_TAG_NODE = "LEVEL_TAG_NODE";
 	
+	public static final String USER = "SYSTEM_USER";
+	
 }

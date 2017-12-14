@@ -22,7 +22,7 @@ import com.canaan.common.SearchResult;
 import com.canaan.core.exception.ExceptionEnum;
 import com.canaan.core.exception.ServerException;
 import com.canaan.core.util.Assert;
-import com.canaan.core.util.Checker;
+import com.canaan.distribute.util.Checker;
 import com.canaan.common.BaseModel;
 import com.canaan.common.BaseService;
 @SuppressWarnings({"unchecked" })

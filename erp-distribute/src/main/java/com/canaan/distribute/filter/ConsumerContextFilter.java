@@ -11,9 +11,13 @@ import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.canaan.distribute.util.SnowflakeIdWorker;
+import com.canaan.distribute.util.UserUtil;
 import com.canaan.distribute.common.DistributeSignature;
+import com.canaan.distribute.common.User;
 import com.canaan.distribute.constant.Constants;
+import com.canaan.distribute.util.Checker;
 import com.canaan.distribute.util.DistributeSignatureUtil;
 /**
  * 
@@ -38,6 +42,10 @@ public class ConsumerContextFilter implements Filter {
 				chainList.add(ety.getValue());
 			}
 			RpcContext.getContext().setAttachment(Constants.DISTRIBUTE_SIGNATURE, JSONArray.toJSONString(chainList));
+		}
+		User user = UserUtil.get();
+		if (Checker.BeNotNull(user)) {
+			RpcContext.getContext().setAttachment(Constants.USER, JSONObject.toJSONString(user));
 		}
 		Result result =  invoker.invoke(invocation);
 		if (result.getException() == null) {

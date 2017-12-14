@@ -1,8 +1,9 @@
-package com.canaan.core.util;
+package com.canaan.distribute.util;
 
 import java.util.Collection;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
+
 
 public class Checker {
 

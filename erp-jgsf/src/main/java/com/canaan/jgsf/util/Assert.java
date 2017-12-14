@@ -3,6 +3,7 @@ package com.canaan.jgsf.util;
 import java.util.Arrays;
 import java.util.Collection;
 
+import com.canaan.distribute.util.Checker;
 import com.canaan.jgsf.exception.ClientBizException;
 import com.canaan.jgsf.exception.ClientExceptionEnum;
 import com.google.common.base.Preconditions;

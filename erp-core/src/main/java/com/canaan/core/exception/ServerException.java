@@ -3,6 +3,7 @@ package com.canaan.core.exception;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
+
 import lombok.Getter;
 /**
  * 系统业务异常
@@ -30,6 +31,9 @@ public class ServerException extends RuntimeException {
 		String message =  bundle.getString(String.valueOf(code));
 		if (message == null) {
 			message = getBundleMessage(ExceptionEnum.NO_BUNDLE_CODE.getExceptionCode());
+			if (message == null) {
+				message = "NO BUNDLE CODE:" + ExceptionEnum.NO_BUNDLE_CODE.getExceptionCode();
+			}
 		}
 		return message;
 	}

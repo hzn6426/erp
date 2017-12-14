@@ -30,6 +30,7 @@ public class ExceptionAspect {
 		try {
 			r = point.proceed(); 
 		} catch (ServerException | DistributeException bizex) {
+			log.error(Throwables.getStackTraceAsString(bizex));
 			handler.doProtocolException(bizex);
 		} catch (IllegalArgumentException illAex) {
 			log.error(Throwables.getStackTraceAsString(illAex));

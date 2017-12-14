@@ -9,7 +9,15 @@
  
     <!-- scan the package and the sub package -->
     <context:component-scan base-package="com.canaan.jgsf.**"/>
-    
+    <!--
+    | Session 中包含locale信息 
+     -->
+    <bean id="localeSessionResolver"
+          class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+    </bean>
+    <!-- 
+    | 消息转化器
+    -->
     <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
 	    <constructor-arg value="UTF-8" index="0"/>
 	    <property name="supportedMediaTypes">
@@ -26,13 +34,16 @@
             </list>  
         </property>
     </bean>  
-    <!-- if you use annotation you must configure following setting -->
     <mvc:annotation-driven>
 	    <mvc:message-converters>
 	        <ref bean="stringHttpMessageConverter"/>
 	        <ref bean="jackson2HttpMessageConverter"/>
 	    </mvc:message-converters>
 	</mvc:annotation-driven>
+	
+	<!-- 
+	| 静态资源
+	-->
     <mvc:resources mapping="/resources/**" cache-period="3000" location="/resources/" order="0">
         <mvc:resource-chain resource-cache="true">
             <mvc:resolvers>
@@ -45,21 +56,33 @@
     <mvc:resources mapping="/webjars/**" cache-period="3000" location="classpath:/META-INF/resources/webjars/" />
     <mvc:default-servlet-handler default-servlet-name="default" />
  
-    
-     <!-- 以下 validator  ConversionService 在使用 mvc:annotation-driven 会 自动注册-->  
+    <!--
+    | spring validation 配置 
+     -->
+    <mvc:annotation-driven validator="validator" />
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">  
         <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>  
         <property name="validationMessageSource" ref="validateMessageSource"/>  
     </bean>  
-     <!-- 国际化的消息资源文件（本系统中主要用于显示/错误消息定制） -->  
     <bean id="validateMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">  
         <property name="basenames">  
             <list>  
-                <value>classpath:configs/messages</value>  
+                <value>classpath:Validation</value>  
             </list>  
-        </property>  
+        </property>
+        <property name="useCodeAsDefaultMessage" value="false"/>    
+	    <property name="defaultEncoding" value="UTF-8"/>    
+	    <property name="cacheSeconds" value="60"/>     
     </bean>
     
+    <!-- 
+    | shiro 配置
+     -->
+     
+    
+    <!-- 
+    | thymeleaf template
+    -->
     <bean id="templateResolver"
        class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
         <property name="prefix" value="/WEB-INF/templates/" />

@@ -1,6 +1,9 @@
 package com.canaan.jgsf.exception;
 
 
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
+
 import lombok.Getter;
 
 /**
@@ -10,7 +13,7 @@ import lombok.Getter;
  */
 @SuppressWarnings("serial")
 public class ClientBizException extends RuntimeException {
-//	private final static ResourceBundle bundle = ResourceBundle.getBundle("Exception");
+	private final static ResourceBundle bundle = ResourceBundle.getBundle("Exception");
 	
 	@Getter
 	private int code;
@@ -19,23 +22,26 @@ public class ClientBizException extends RuntimeException {
 	private Object[] arguments;
 	
 	public ClientBizException(ClientExceptionEnum exceptionEnum) {
-//		super(getBundleMessage(exceptionEnum.getCode()));
+		super(getBundleMessage(exceptionEnum.getCode()));
 		this.code = exceptionEnum.getCode();
 	}
 	
 	public ClientBizException(ClientExceptionEnum exceptionEnum, Object... arguments) {
-//		super(MessageFormat.format(getBundleMessage(exceptionEnum.getCode()), arguments));
+		super(MessageFormat.format(getBundleMessage(exceptionEnum.getCode()), arguments));
 		this.code = exceptionEnum.getCode();
 		this.arguments = arguments;
 	}
 	
-//	private static String getBundleMessage(int code) {
-//		String message =  bundle.getString(String.valueOf(code));
-//		if (message == null) {
-//			message = getBundleMessage(ClientExceptionEnum.NO_BUNDLE_CODE.getCode());
-//		}
-//		return message;
-//	}
+	private static String getBundleMessage(int code) {
+		String message =  bundle.getString(String.valueOf(code));
+		if (message == null) {
+			message = getBundleMessage(ClientExceptionEnum.NO_BUNDLE_CODE.getCode());
+			if (message == null) {
+				message = "NO BUNDLE CODE:" + ClientExceptionEnum.NO_BUNDLE_CODE.getCode();
+			}
+		}
+		return message;
+	}
 	
 	
 }
