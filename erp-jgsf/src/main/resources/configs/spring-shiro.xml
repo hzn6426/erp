@@ -15,7 +15,7 @@
 
     <!-- 凭证匹配器 -->  
     <bean id="credentialsMatcher"  
-        class="com.canaan.jgsf.common.RetryLimitHashedCredentialsMatcher">  
+        class="com.canaan.jgsf.shiro.RetryLimitHashedCredentialsMatcher">  
         <constructor-arg ref="cacheManager" />  
         <property name="hashAlgorithmName" value="md5" /><!-- md5盐值加密3次 -->  
         <property name="hashIterations" value="3" />  
@@ -45,7 +45,7 @@
     </bean>   
     
     <!-- Realm实现 -->
-    <bean id="userRealm" class="com.canaan.jgsf.common.UserRealm">
+    <bean id="userRealm" class="com.canaan.jgsf.shiro.UserRealm">
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <property name="cachingEnabled" value="true"/>
         <property name="authenticationCachingEnabled" value="true"/>
@@ -55,7 +55,7 @@
     </bean>
     
     <!-- redisSessionDAO -->
-    <bean id="redisSessionDAO" class="com.canaan.jgsf.common.ShiroSessionDAO">
+    <bean id="redisSessionDAO" class="com.canaan.jgsf.shiro.ShiroSessionDAO">
         <constructor-arg index="0" ref="redisTemplate"></constructor-arg>
         <constructor-arg index="1" value="${redis.expire}"></constructor-arg>
     </bean>
@@ -108,12 +108,13 @@
     </bean>
     
     <!-- 基于Form表单的身份验证过滤器 -->
-    <bean id="clientAuthenticationFilter"  class="com.canaan.jgsf.common.ClientAuthenticationFilter">
+    <bean id="rememberMeAuthenticationFilter"  class="com.canaan.jgsf.shiro.RememberMeAuthenticationFilter">
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
         <property name="rememberMeParam" value="rememberMe"/>
     </bean>
     
+    <bean id="authcAuthenticationFilter" class="com.canaan.jgsf.shiro.AuthcAuthenticationFilter"></bean>
     
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -124,7 +125,8 @@
 		<!-- <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" /> -->
 		<property name="filters">
 		    <map>
-		    	<entry key="authc" value-ref="clientAuthenticationFilter"/>  
+		        <entry key="rememberMe" value-ref="rememberMeAuthenticationFilter"></entry>
+		    	<entry key="authc" value-ref="authcAuthenticationFilter"/>  
 		        <entry key="logout" value-ref="logoutFilter" />
 		    </map>
 		</property>
@@ -137,8 +139,17 @@
                 /register* = anon  
                 <!-- 登出 -->  
                 /logout = logout  
+                
+                /add* = authc
+                /save* = authc
+                /*delete* = authc
+                /*insert* = authc
+                /*update* = authc  
+                <!-- remeber业务 -->
+                /** = rememberMe,user
+                
                 <!-- 其他资源需要认证 -->  
-                /** = authc  
+                
                 <!-- perms[user:query]表示访问此连接需要权限为user:query的用户 -->  
                 <!-- /user=perms[user:query] -->  
                 <!-- roles[manager]表示访问此连接需要用户的角色为manager -->  

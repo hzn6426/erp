@@ -1,4 +1,4 @@
-package com.canaan.jgsf.common;
+package com.canaan.jgsf.shiro;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;

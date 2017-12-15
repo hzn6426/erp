@@ -1,4 +1,4 @@
-package com.canaan.jgsf.common;
+package com.canaan.jgsf.shiro;
 import java.util.concurrent.atomic.AtomicInteger;  
 
 import org.apache.shiro.authc.AuthenticationInfo;  

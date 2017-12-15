@@ -8,17 +8,22 @@
  *   
  */
 
-package com.canaan.jgsf.common;
+package com.canaan.jgsf.shiro;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.canaan.distribute.util.Checker;
+import com.canaan.distribute.util.UserUtil;
+import com.canaan.jgsf.constant.Constants;
 
 
 /**
@@ -27,45 +32,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @date 2016年2月16日 上午9:54:33
  * @version V1.0
  */
-public class ClientAuthenticationFilter extends FormAuthenticationFilter {
+public class RememberMeAuthenticationFilter extends FormAuthenticationFilter {
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
 		Subject subject = getSubject(request, response);
-		return subject.isAuthenticated();
+		Session session = subject.getSession();
+		boolean beRememberMe = !subject.isAuthenticated() && subject.isRemembered() && !Checker.BeNotNull(session.getAttribute(Constants.USER_SESSION));
+		if (beRememberMe) {
+			String userName = (String)subject.getPrincipal();
+			//set user session
+		}
+		return subject.isAuthenticated() || subject.isRemembered();
 	}
 
-	@Override
-	protected boolean preHandle(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
-		HttpServletRequest request = (HttpServletRequest) servletRequest;
-		HttpServletResponse response = (HttpServletResponse) servletResponse;
-		if (request.getMethod().equals(RequestMethod.OPTIONS.name())) {
-			response.setStatus(HttpStatus.OK.value());
-			return false;
-		}
-		return super.preHandle(request, response);
-	}
 
 	@Override
 	public void afterCompletion(ServletRequest request, ServletResponse response, Exception exception)
 			throws Exception {
-		// TODO Auto-generated method stub
+		//清楚user缓存
+		if (Checker.BeNotNull(UserUtil.get())) {
+			UserUtil.remove();
+		}
 		super.afterCompletion(request, response, exception);
 	}
 
-	@Override
-	protected void postHandle(ServletRequest request, ServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		super.postHandle(request, response);
-	}
 
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-//		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-//		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-//		String currentUrl = httpServletRequest.getServletPath();// 当前请求的url
-//		if (!IsAjaxCallUtil.isAjaxCall(httpServletRequest)) {
-//			httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+MessageUtil.getFormatMessage("logoutUrl"));
-//		} else {
-//			WebUtils.toHttp(response).sendError(50004);
-//		}
+		
 		return false;
 	}
 }

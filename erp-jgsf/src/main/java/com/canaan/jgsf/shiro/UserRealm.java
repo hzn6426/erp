@@ -1,4 +1,4 @@
-package com.canaan.jgsf.common;
+package com.canaan.jgsf.shiro;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
