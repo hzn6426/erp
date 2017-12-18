@@ -12,14 +12,10 @@ package com.canaan.jgsf.shiro;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.canaan.distribute.util.Checker;
 import com.canaan.distribute.util.UserUtil;
@@ -36,9 +32,10 @@ public class RememberMeAuthenticationFilter extends FormAuthenticationFilter {
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
 		Subject subject = getSubject(request, response);
 		Session session = subject.getSession();
-		boolean beRememberMe = !subject.isAuthenticated() && subject.isRemembered() && !Checker.BeNotNull(session.getAttribute(Constants.USER_SESSION));
+		boolean beRememberMe = !subject.isAuthenticated() && subject.isRemembered() 
+				&& !Checker.BeNotNull(session.getAttribute(Constants.USER_SESSION));
 		if (beRememberMe) {
-			String userName = (String)subject.getPrincipal();
+//			String userName = (String)subject.getPrincipal();
 			//set user session
 		}
 		return subject.isAuthenticated() || subject.isRemembered();

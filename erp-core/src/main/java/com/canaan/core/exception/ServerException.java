@@ -33,6 +33,8 @@ public class ServerException extends RuntimeException {
 			message = getBundleMessage(ExceptionEnum.NO_BUNDLE_CODE.getExceptionCode());
 			if (message == null) {
 				message = "NO BUNDLE CODE:" + ExceptionEnum.NO_BUNDLE_CODE.getExceptionCode();
+			} else {
+				message = MessageFormat.format(message, code);
 			}
 		}
 		return message;

@@ -13,10 +13,13 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
     http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
+    <bean id="shiroRedisCacheManager" class="com.canaan.jgsf.shiro.ShiroRedisCacheManager">
+        <property name="redisTemplate" ref="redisTemplate"></property>
+    </bean>
     <!-- 凭证匹配器 -->  
     <bean id="credentialsMatcher"  
         class="com.canaan.jgsf.shiro.RetryLimitHashedCredentialsMatcher">  
-        <constructor-arg ref="cacheManager" />  
+        <constructor-arg ref="shiroRedisCacheManager" />  
         <property name="hashAlgorithmName" value="md5" /><!-- md5盐值加密3次 -->  
         <property name="hashIterations" value="3" />  
         <property name="storedCredentialsHexEncoded" value="true" />  
@@ -83,7 +86,7 @@
 		<property name="realm" ref="userRealm" />
    		<property name="sessionManager" ref="sessionManager" />
    		<property name="rememberMeManager" ref="rememberMeManager"/>
-		<property name="cacheManager" ref="cacheManager" />
+		<property name="cacheManager" ref="shiroRedisCacheManager" />
 	</bean>
 
     

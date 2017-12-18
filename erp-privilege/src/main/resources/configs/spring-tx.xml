@@ -154,4 +154,6 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="jdkPointcut"/>
 	</aop:config>
 	
+	<!-- AspectJ support -->
+    <aop:aspectj-autoproxy/>
 </beans>

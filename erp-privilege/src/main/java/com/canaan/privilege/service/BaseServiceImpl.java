@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
 
 import org.dozer.Mapper;
 import org.jooq.Condition;
@@ -16,7 +17,6 @@ import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.impl.DSL;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.canaan.common.SearchResult;
 import com.canaan.core.exception.ExceptionEnum;
@@ -52,10 +52,10 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 	
 
 	
-	@Autowired
+	@Resource
 	protected DSLContext dsl;
 	
-	@Autowired
+	@Resource
 	protected Mapper baseMapper;
 	
 	

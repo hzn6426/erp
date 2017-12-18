@@ -1,5 +1,6 @@
 package com.canaan.jgsf.shiro;
 
+import java.io.IOException;
 import java.util.ArrayList;  
 import java.util.Collection;  
 import java.util.Collections;  
@@ -21,71 +22,57 @@ public class ShiroRedisCache<K,V> implements Cache<K,V> {
   
     private Logger logger = LoggerFactory.getLogger(this.getClass());  
       
-    /** 
-     * The wrapped Jedis instance. 
-     */  
-    private RedisTemplate<K, V> cache;  
+    private RedisTemplate<String, byte[]> redisTemplate;  
       
-    /** 
-     * The Redis key prefix for the sessions  
-     */  
-    private String keyPrefix = "shiro_redis_session:";  
-      
-    /** 
-     * Returns the Redis session keys 
-     * prefix. 
-     * @return The prefix 
-     */  
-    public String getKeyPrefix() {  
-        return keyPrefix;  
-    }  
+    private String keyPrefix = "shiro_redis_cache:";  
+    
+    private boolean beKeyPrimitive = false;
   
-    /** 
-     * Sets the Redis sessions key  
-     * prefix. 
-     * @param keyPrefix The prefix 
-     */  
     public void setKeyPrefix(String keyPrefix) {  
         this.keyPrefix = keyPrefix;  
     }  
       
-    /** 
-     * 通过一个JedisManager实例构造RedisCache 
-     */  
-    public ShiroRedisCache(RedisTemplate<K, V> cache){  
-         if (cache == null) {  
+	public ShiroRedisCache(RedisTemplate<String, byte[]> template){  
+         if (template == null) {
              throw new IllegalArgumentException("Cache argument cannot be null.");  
-         }  
-         this.cache = cache;  
+         }
+         this.redisTemplate = template;  
     }  
       
-    /** 
-     * Constructs a cache instance with the specified 
-     * Redis manager and using a custom key prefix. 
-     * @param cache The cache manager instance 
-     * @param prefix The Redis key prefix 
-     */  
-    public ShiroRedisCache(RedisTemplate<K, V> cache,   
+	public ShiroRedisCache(RedisTemplate<String, byte[]> cache,   
                 String prefix){  
            
         this( cache );  
-          
         // set the prefix  
-        this.keyPrefix = prefix;  
+        this.keyPrefix = prefix;
     }  
-      
+    
+    private boolean bePrimitive(K key) {
+    	if (String.class.equals(key.getClass()) || Boolean.class.equals(key.getClass()) || key.getClass().isPrimitive()) {
+    		if (beKeyPrimitive = false) {
+    			beKeyPrimitive = true;
+    		}
+    		return true;
+    	}
+    	return false;
+    }
     /** 
      * 获得byte[]型的key 
      * @param key 
      * @return 
+     * @throws IOException 
      */  
-    private byte[] getByteKey(K key){  
-        if(key instanceof String){  
-            String preKey = this.keyPrefix + key;  
-            return preKey.getBytes();  
-        }else{  
-            return SerializeUtil.serialize(key);  
-        }  
+    private String getBuildKey(K key) throws IOException{  
+    	String theKey = null;
+    	if (key == null) {
+    		throw new NullPointerException("cache key is null.");
+    	}
+        if (bePrimitive(key)){
+        	theKey = this.keyPrefix + key;  
+        } else {
+        	theKey = this.keyPrefix + SerializeUtil.convertToByteString(key);
+        }
+        return theKey;
     }  
       
     @Override  
@@ -95,7 +82,7 @@ public class ShiroRedisCache<K,V> implements Cache<K,V> {
             if (key == null) {  
                 return null;  
             }else{  
-                byte[] rawValue = cache.get(getByteKey(key));  
+                byte[] rawValue = redisTemplate.opsForValue().get(getBuildKey(key));  
                 @SuppressWarnings("unchecked")  
                 V value = (V)SerializeUtil.deserialize(rawValue);  
                 return value;  
@@ -110,7 +97,7 @@ public class ShiroRedisCache<K,V> implements Cache<K,V> {
     public V put(K key, V value) throws CacheException {  
         logger.debug("根据key从存储 key [" + key + "]");  
          try {  
-                cache.set(getByteKey(key), SerializeUtil.serialize(value));  
+                redisTemplate.opsForValue().set(getBuildKey(key), SerializeUtil.serialize(value));  
                 return value;  
             } catch (Throwable t) {  
                 throw new CacheException(t);  
@@ -121,8 +108,8 @@ public class ShiroRedisCache<K,V> implements Cache<K,V> {
     public V remove(K key) throws CacheException {  
         logger.debug("从redis中删除 key [" + key + "]");  
         try {  
-            V previous = get(key);  
-            cache.del(getByteKey(key));  
+            V previous = get(key);
+            redisTemplate.delete(getBuildKey(key));  
             return previous;  
         } catch (Throwable t) {  
             throw new CacheException(t);  
@@ -133,7 +120,7 @@ public class ShiroRedisCache<K,V> implements Cache<K,V> {
     public void clear() throws CacheException {  
         logger.debug("从redis中删除所有元素");  
         try {  
-            cache.flushDB();  
+            redisTemplate.delete(KeyPattern());
         } catch (Throwable t) {  
             throw new CacheException(t);  
         }  
@@ -142,7 +129,7 @@ public class ShiroRedisCache<K,V> implements Cache<K,V> {
     @Override  
     public int size() {  
         try {  
-            Long longSize = new Long(cache.dbSize());  
+            Long longSize = redisTemplate.opsForValue().size(KeyPattern());  
             return longSize.intValue();  
         } catch (Throwable t) {  
             throw new CacheException(t);  
@@ -153,13 +140,17 @@ public class ShiroRedisCache<K,V> implements Cache<K,V> {
     @Override  
     public Set<K> keys() {  
         try {  
-            Set<byte[]> keys = cache.keys(this.keyPrefix + "*");  
+            Set<String> keys = redisTemplate.keys(KeyPattern());  
             if (CollectionUtils.isEmpty(keys)) {  
                 return Collections.emptySet();  
             }else{  
                 Set<K> newKeys = new HashSet<K>();  
-                for(byte[] key:keys){  
-                    newKeys.add((K)key);  
+                for (String key : keys) {
+                	if (beKeyPrimitive) {
+                		newKeys.add((K)key);
+                	} else {
+                		newKeys.add((K)SerializeUtil.convertFromByteString(key.substring(keyPrefix.length())));
+                	}
                 }  
                 return newKeys;  
             }  
@@ -171,10 +162,10 @@ public class ShiroRedisCache<K,V> implements Cache<K,V> {
     @Override  
     public Collection<V> values() {  
         try {  
-            Set<byte[]> keys = cache.keys(this.keyPrefix + "*");  
+            Set<String> keys = redisTemplate.keys(KeyPattern());  
             if (!CollectionUtils.isEmpty(keys)) {  
                 List<V> values = new ArrayList<V>(keys.size());  
-                for (byte[] key : keys) {  
+                for (String key : keys) {  
                     @SuppressWarnings("unchecked")  
                     V value = get((K)key);  
                     if (value != null) {  
@@ -189,4 +180,8 @@ public class ShiroRedisCache<K,V> implements Cache<K,V> {
             throw new CacheException(t);  
         }  
     }  
+    
+    private String KeyPattern() {
+    	return this.keyPrefix + "*";
+    }
 }  

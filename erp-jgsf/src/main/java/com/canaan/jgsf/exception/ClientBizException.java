@@ -21,14 +21,14 @@ public class ClientBizException extends RuntimeException {
 	@Getter
 	private Object[] arguments;
 	
-	public ClientBizException(ClientExceptionEnum exceptionEnum) {
-		super(getBundleMessage(exceptionEnum.getCode()));
-		this.code = exceptionEnum.getCode();
+	public ClientBizException(ClientExceptionEnum clientExceptionEnum) {
+		super(getBundleMessage(clientExceptionEnum.getCode()));
+		this.code = clientExceptionEnum.getCode();
 	}
 	
-	public ClientBizException(ClientExceptionEnum exceptionEnum, Object... arguments) {
-		super(MessageFormat.format(getBundleMessage(exceptionEnum.getCode()), arguments));
-		this.code = exceptionEnum.getCode();
+	public ClientBizException(ClientExceptionEnum clientExceptionEnum, Object... arguments) {
+		super(MessageFormat.format(getBundleMessage(clientExceptionEnum.getCode()), arguments));
+		this.code = clientExceptionEnum.getCode();
 		this.arguments = arguments;
 	}
 	
@@ -38,6 +38,8 @@ public class ClientBizException extends RuntimeException {
 			message = getBundleMessage(ClientExceptionEnum.NO_BUNDLE_CODE.getCode());
 			if (message == null) {
 				message = "NO BUNDLE CODE:" + ClientExceptionEnum.NO_BUNDLE_CODE.getCode();
+			} else {
+				message = MessageFormat.format(message,code);
 			}
 		}
 		return message;

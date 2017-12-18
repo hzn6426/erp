@@ -43,6 +43,17 @@ public class GlobalExceptionHandler {
 		ResponseResult result =  handleBizException(bizException);
 		return result;
 	}
+	@ExceptionHandler(value = {NullPointerException.class, IllegalArgumentException.class})
+	public ResponseResult CommonRunTimeExceptionHandler(RuntimeException rex) {
+		if (NullPointerException.class.isInstance(rex)) {
+			String message = rex.getMessage() == null ? "" : rex.getMessage();
+			throw new ClientBizException(ClientExceptionEnum.OBJECT_IS_NULL,message);
+		} else if (IllegalArgumentException.class.isInstance(rex)) {
+			String message = rex.getMessage() == null ? "" : rex.getMessage();
+			throw new ClientBizException(ClientExceptionEnum.ILLEGAL_ARGUMENT,message);
+		}
+		return exceptionHandler(rex);
+	}
 	
 	@ExceptionHandler(value = Exception.class)
 	public ResponseResult exceptionHandler(Exception ex) {
@@ -61,7 +72,8 @@ public class GlobalExceptionHandler {
 	}
 	
 	private ResponseResult handleException(Exception ex) {
-		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.UN_CHECKED_EXCEPTION);
+		String message = ex.getMessage() == null ? "" : ex.getMessage();
+		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.UN_CHECKED_EXCEPTION, message);
 		return ResponseResult.builder(clientException.getCode(), clientException.getMessage());
 	}
 	private ResponseResult handleBindException(BindException bindException) {

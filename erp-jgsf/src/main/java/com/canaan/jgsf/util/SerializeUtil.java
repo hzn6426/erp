@@ -2,9 +2,14 @@ package com.canaan.jgsf.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,6 +17,21 @@ import lombok.extern.slf4j.Slf4j;
 public class SerializeUtil {
 	private static final int DEFAULT_BUFF_SIZE = 1024;
 
+	public static String convertToByteString(Object object) throws IOException {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream(); ObjectOutput out = new ObjectOutputStream(bos)) {
+            out.writeObject(object);
+            final byte[] byteArray = bos.toByteArray();
+            return new String(Base64.getEncoder().encode(byteArray), StandardCharsets.UTF_8);
+//            return Base64.getEncoder().encodeToString(byteArray);
+        }
+    }
+
+	public static Object convertFromByteString(String byteString) throws IOException, ClassNotFoundException {
+        final byte[] bytes = Base64.getDecoder().decode(byteString.getBytes(StandardCharsets.UTF_8));
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes); ObjectInput in = new ObjectInputStream(bis)) {
+            return in.readObject();
+        }
+    }
 	public static byte[] serialize(Object target) {
 		byte[] result = null;
 		if (null == target) {
@@ -32,7 +52,7 @@ public class SerializeUtil {
 		}
 	}
 
-	public Object deserialize(byte[] bytes) {
+	public static Object deserialize(byte[] bytes) {
 		Object result = null;
 		if (isEmpty(bytes)) {
 			return null;

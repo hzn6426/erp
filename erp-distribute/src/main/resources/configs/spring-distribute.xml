@@ -13,4 +13,5 @@
     <dubbo:provider filter="-exception,ProviderDistributeFilter,CustomerExceptionFilter" ></dubbo:provider>
     <!-- 消费方拦截器-用于记录上下文信息和调用信息 -->
     <dubbo:consumer filter="ConsumerDistributeFilter" cluster="CustomerCluster"/>
+    
 </beans>
