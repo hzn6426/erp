@@ -76,11 +76,6 @@
     </bean>
     
     <!-- 
-    | shiro 配置
-     -->
-     
-    
-    <!-- 
     | thymeleaf template
     -->
     <bean id="templateResolver"

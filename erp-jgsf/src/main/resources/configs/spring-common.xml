@@ -33,5 +33,5 @@
     
     <bean id="collectionMapper" class="com.canaan.jgsf.util.CollectionMapperDecorator"></bean>
     
-    <bean class="com.canaan.jgsf.common.URLWebMvcConfig"/>
+    <!-- <bean class="com.canaan.jgsf.common.URLWebMvcConfig"/> -->
 </beans>

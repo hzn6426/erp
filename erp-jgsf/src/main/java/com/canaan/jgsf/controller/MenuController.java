@@ -3,6 +3,7 @@ package com.canaan.jgsf.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +17,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "菜单管理")
-@RestController
-@RequestMapping("/menu")
+@RestController("/menu")
+//@RequestMapping("/menu")
 public class MenuController  {
 
 	
@@ -32,7 +33,7 @@ public class MenuController  {
 	
 	@ApiOperation(value = "新增")
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public String add(MenuVO menu) {
+	public String add(@RequestBody MenuVO menu) {
 		return ResponseResult.builder().json();
 	}
 }

@@ -3,6 +3,7 @@ package com.canaan.jgsf.exception;
 import lombok.Getter;
 
 public enum ClientExceptionEnum {
+	REQUEST_NOT_FOUND(404),
 	UN_CHECKED_EXCEPTION(1000),
 	NO_BUNDLE_CODE(1001),
 	OBJECT_IS_NULL(1002),

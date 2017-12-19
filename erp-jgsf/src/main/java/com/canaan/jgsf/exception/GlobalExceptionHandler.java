@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.canaan.distribute.exception.BizException;
@@ -65,7 +66,6 @@ public class GlobalExceptionHandler {
 		ResponseResult result = handleException(ex);
 		return result;
 	}
-	
 	private ResponseResult handleBizException(BizException bizException) {
 		log.error("BizException(" + bizException.getUuid() + "):" + Throwables.getStackTraceAsString(Throwables.getRootCause(bizException)));
 		return ResponseResult.builder(bizException.getCode(), bizException.getMessage());

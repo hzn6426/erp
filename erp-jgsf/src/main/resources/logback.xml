@@ -114,6 +114,6 @@
         <appender-ref ref="FileError"/>
         <appender-ref ref="FileInfo"/>
         <appender-ref ref="Stdout"/>
-        <appender-ref ref="Sentry"/>
+        <!-- <appender-ref ref="Sentry"/> -->
     </root>
 </configuration>
