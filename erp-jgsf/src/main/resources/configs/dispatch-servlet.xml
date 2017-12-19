@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd ">                    
  
     <!-- scan the package and the sub package -->
-    <context:component-scan base-package="com.canaan.jgsf.**"/>
+    <context:component-scan base-package="com.canaan.**"/>
     <!--
     | Session 中包含locale信息 
      -->
@@ -44,17 +44,17 @@
 	<!-- 
 	| 静态资源
 	-->
-    <mvc:resources mapping="/resources/**" cache-period="3000" location="/resources/" order="0">
+    <!-- <mvc:resources mapping="/resources/**" cache-period="3000" location="/resources/" order="0">
         <mvc:resource-chain resource-cache="true">
             <mvc:resolvers>
                 <bean class="org.springframework.web.servlet.resource.GzipResourceResolver"/>
             </mvc:resolvers>
         </mvc:resource-chain>
-    </mvc:resources>
-    <mvc:resources mapping="/static/**" cache-period="30" location="/static/" order="0"/>
-    <mvc:resources mapping="swagger-ui.html" cache-period="3000" location="classpath:/META-INF/resources/" />  
-    <mvc:resources mapping="/webjars/**" cache-period="3000" location="classpath:/META-INF/resources/webjars/" />
-    <mvc:default-servlet-handler default-servlet-name="default" />
+    </mvc:resources> -->
+    <!-- <mvc:resources mapping="/static/**" cache-period="30" location="/static/" order="0"/> -->
+    <mvc:resources mapping="swagger-ui.html"  location="classpath:/META-INF/resources/" />  
+    <mvc:resources mapping="/webjars/**"  location="classpath:/META-INF/resources/webjars/" />
+    <mvc:default-servlet-handler />
  
     <!--
     | spring validation 配置 

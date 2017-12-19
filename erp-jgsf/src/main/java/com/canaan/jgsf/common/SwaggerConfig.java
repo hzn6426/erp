@@ -18,12 +18,12 @@ public class SwaggerConfig {
 	@Bean
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
+        	.apiInfo(apiInfo())
         	.forCodeGeneration(true)
             .select()
-            .apis(RequestHandlerSelectors.any())
+            .apis(RequestHandlerSelectors.basePackage("com.canaan.jgsf.controller"))
             .paths(PathSelectors.any())
-            .build()
-            .apiInfo(apiInfo());
+            .build();
     }
 
     private ApiInfo apiInfo() {

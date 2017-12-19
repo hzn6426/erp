@@ -8,8 +8,9 @@ public class BizException extends RuntimeException {
 	private String uuid;
 	@Getter
 	private int code;
-	public BizException(int code,String message) {
-		super(message);
+	public BizException(String uuid, int code, String message,Throwable throwable) {
+		super(message, throwable);
 		this.code = code;
+		this.uuid = uuid;
 	}
 }

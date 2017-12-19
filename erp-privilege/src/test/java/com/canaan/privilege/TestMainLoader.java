@@ -3,7 +3,6 @@ package com.canaan.privilege;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.canaan.privilege.dto.MenuDTO;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

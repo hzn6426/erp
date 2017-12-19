@@ -1,6 +1,5 @@
 package com.canaan.core.util;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import com.canaan.core.exception.ExceptionEnum;
@@ -85,7 +84,10 @@ public class Assert {
 	
 	
 	public static void CheckArgument(boolean beStrict, Object... references) {
-		Arrays.asList(references).stream().forEach(reference -> Preconditions.checkArgument(BeNotNull(reference, beStrict)));
+		for (Object object : references) {
+			Preconditions.checkArgument(BeNotNull(object, beStrict));
+		}
+//		Arrays.asList(references).stream().forEach(reference -> Preconditions.checkArgument(BeNotNull(reference, beStrict)));
 	}
 	
 	public static <T> T checkArgument(T reference) {

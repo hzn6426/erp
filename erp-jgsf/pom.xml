@@ -17,6 +17,66 @@
 		<filters>
 			<filter>src/main/envs/env-${env}.properties</filter>
 		</filters>
+		<!-- <plugins>
+		<plugin>
+		<groupId>com.github.kongchen</groupId>
+		<artifactId>swagger-maven-plugin</artifactId>
+		<configuration>
+		    <apiSources>
+		        <apiSource>
+		            <springmvc>true</springmvc>
+		            <locations>com.canaan.jgsf.controller</locations>Controller所在的位置
+		            <basePath>/</basePath>
+		            <schemes>http,https</schemes>
+		            <info>
+		                <title>${artifactId}</title>
+		                <version>v1</version>
+		                <description>Click Link Below for Help</description>
+		                <termsOfService>http://www.github.com/kongchen/swagger-maven-plugin</termsOfService>
+		            </info>
+		            html文档输出功能的模板文件
+		            <templatePath>${basedir}/src/test/resources/swagger_template/strapdown.html.hbs</templatePath>
+		            html文档输出的位置
+		            <outputPath>${project.build.directory}/swagger-ui/swagger_document.html</outputPath>
+		            <swaggerDirectory>${project.build.directory}/swagger-ui</swaggerDirectory>定义API描述文档的输出目录
+		            <outputFormats>yaml,json</outputFormats>支持yaml和json格式
+		        </apiSource>
+		    </apiSources>
+		</configuration>
+		<executions>
+		    <execution>
+		        <phase>compile</phase>
+		        <goals>
+		            <goal>generate</goal>
+		        </goals>
+		    </execution>
+		</executions>
+		</plugin>
+		<plugin>
+		<groupId>io.github.swagger2markup</groupId>
+		<artifactId>swagger2markup-maven-plugin</artifactId>
+		<configuration>
+		    The URL or file path to the Swagger specification
+		    <swaggerInput>${project.build.directory}/swagger-ui/swagger.yaml</swaggerInput>
+		    <outputDir>${project.build.directory}/swagger-ui</outputDir>
+		    <outputFile>${project.build.directory}/swagger-ui/swagger.md</outputFile>
+		    <config>
+		        设置输出文件的语言：ASCIIDOC, MARKDOWN, CONFLUENCE_MARKUP
+		        <swagger2markup.markupLanguage>MARKDOWN</swagger2markup.markupLanguage>
+		        设置目录的展现方式
+		        <swagger2markup.pathsGroupedBy>TAGS</swagger2markup.pathsGroupedBy>
+		    </config>
+		</configuration>
+		<executions>
+		    <execution>
+		        <phase>compile</phase>
+		        <goals>
+		            <goal>convertSwagger2markup</goal>
+		        </goals>
+		    </execution>
+		</executions>
+        </plugin>
+		</plugins> -->
 	</build>
   
   
