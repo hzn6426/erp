@@ -2,17 +2,21 @@ package com.canaan.jgsf.exception;
 
 import java.util.Iterator;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.canaan.distribute.exception.BizException;
 import com.canaan.distribute.exception.DistributeException;
 import com.canaan.jgsf.common.ResponseResult;
+import com.canaan.jgsf.util.WebUtil;
 import com.google.common.base.Optional;
 import com.google.common.base.Throwables;
 
@@ -21,7 +25,10 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-
+	@ExceptionHandler(NoHandlerFoundException.class)
+    public String handle(Exception ex) {
+        return "redirect:/404";
+    }
 	@ExceptionHandler(value = ClientBizException.class)
 	public ResponseResult defaultExceptionHandler(ClientBizException clientException) throws Exception {
 		log.error(Throwables.getStackTraceAsString(clientException));
@@ -68,20 +75,20 @@ public class GlobalExceptionHandler {
 	}
 	private ResponseResult handleBizException(BizException bizException) {
 		log.error("BizException(" + bizException.getUuid() + "):" + Throwables.getStackTraceAsString(Throwables.getRootCause(bizException)));
-		return ResponseResult.builder(bizException.getCode(), bizException.getMessage());
+		return ResponseResult.build(bizException.getCode(), bizException.getMessage());
 	}
 	
 	private ResponseResult handleDistributeException(DistributeException distributeException) {
 		log.error("DistributeException:" + distributeException.getMessage());
 		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.DISTRIBUTE_EXCEPTION);
-		return ResponseResult.builder(clientException.getCode(), clientException.getMessage());
+		return ResponseResult.build(clientException.getCode(), clientException.getMessage());
 	}
 	
 	private ResponseResult handleException(Exception ex) {
 		String message = Optional.fromNullable(ex.getMessage()).or("");
 		log.info(message);
 		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.UN_CHECKED_EXCEPTION, message);
-		return ResponseResult.builder(clientException.getCode(), clientException.getMessage());
+		return ResponseResult.build(clientException.getCode(), clientException.getMessage());
 	}
 	
 	private ResponseResult handleCommonBindException(BindingResult bindResult) {
@@ -95,7 +102,7 @@ public class GlobalExceptionHandler {
 			}
 		}
 		
-		return ResponseResult.builder(clientBizException.getCode(), errorBuilder.toString());
+		return ResponseResult.build(clientBizException.getCode(), errorBuilder.toString());
 	}
 	private ResponseResult handleBindException(MethodArgumentNotValidException methodArgumentException) {
 		log.error(Throwables.getStackTraceAsString(methodArgumentException));
@@ -108,6 +115,6 @@ public class GlobalExceptionHandler {
 	}
 	
 	private ResponseResult handleClientBizException(ClientBizException ex) {
-		return ResponseResult.builder(ex.getCode(), ex.getMessage());
+		return ResponseResult.build(ex.getCode(), ex.getMessage());
 	}
 }

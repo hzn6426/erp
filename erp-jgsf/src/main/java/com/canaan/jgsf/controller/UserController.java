@@ -3,9 +3,6 @@ package com.canaan.jgsf.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
-import org.joda.time.DateTime;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,13 +22,13 @@ public class UserController {
 	@ApiOperation(value="新增")
 	@RequestMapping(value="/user",method=RequestMethod.POST)
 	public String add(@RequestBody @Validated UserVO user) {
-		return ResponseResult.builder().json();
+		return ResponseResult.build().json();
 	}
 	
 	@ApiOperation(value="更新")
 	@RequestMapping(value="/user",method=RequestMethod.PUT, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public String update() {
-		return ResponseResult.builder().json();
+		return ResponseResult.build().json();
 	}
 	@ApiOperation(value="查询")
 	@RequestMapping(value="/user",method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -49,6 +46,6 @@ public class UserController {
 	@ApiOperation(value="删除")
 	@RequestMapping(value="/user",method=RequestMethod.DELETE)
 	public String delete(){
-		return ResponseResult.builder().json();
+		return ResponseResult.build().json();
 	}
 }

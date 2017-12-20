@@ -1,11 +1,9 @@
 package com.canaan.jgsf.common;
 
-import java.util.List;
 
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.google.common.collect.Lists;
 
 import lombok.Getter;
 @JsonInclude(Include.NON_NULL)
@@ -14,29 +12,29 @@ public class ResponseResult {
 
 	private int code;
 	private String message;
-	private List<?> data;
+	private Object data;
 	private Integer totalSize;
 	
-	private ResponseResult(int code, String message, int totalSize, List<?> data) {
+	private ResponseResult(int code, String message, int totalSize, Object data) {
 		this.code = code;
 		this.message = message;
 		this.totalSize = totalSize;
 		this.data = data;
 	}
 	
-	public static ResponseResult builder() {
-		return new ResponseResult(200, "OK", 0, Lists.newArrayList());
+	public static ResponseResult build() {
+		return new ResponseResult(200, "OK", 0, new Object());
 	}
 	
-	public static ResponseResult builder(int code, String message) {
-		return new ResponseResult(code, message, 0, Lists.newArrayList());
+	public static ResponseResult build(int code, String message) {
+		return new ResponseResult(code, message, 0, new Object());
 	}
 	
-	public static ResponseResult builder(int totalSize, List<?> data) {
+	public static ResponseResult build(int totalSize, Object data) {
 		return new ResponseResult(200, "OK",totalSize, data);
 	}
 	
-	public static ResponseResult builder(int code, String message, int totalSize, List<?> data) {
+	public static ResponseResult build(int code, String message, int totalSize, Object data) {
 		return new ResponseResult(code, message,totalSize, data);
 	}
 	

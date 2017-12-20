@@ -25,15 +25,15 @@ public class MenuController  {
 	@ApiOperation(value = "查询")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseResult list() {
-		MenuDTO menu = new MenuDTO();
+//		MenuDTO menu = new MenuDTO();
 //		SearchResult<MenuDTO> menuResult = super.list(menu, 1, 10);
 		SearchResult<MenuDTO> menuResult = new SearchResult<>(0,new ArrayList<MenuDTO>());
-		return ResponseResult.builder(menuResult.getTotalSize(), menuResult.getDataList());
+		return ResponseResult.build(menuResult.getTotalSize(), menuResult.getDataList());
 	}
 	
 	@ApiOperation(value = "新增")
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public String add(@RequestBody MenuVO menu) {
-		return ResponseResult.builder().json();
+		return ResponseResult.build().json();
 	}
 }
