@@ -44,17 +44,17 @@
 	<!-- 
 	| 静态资源
 	-->
-    <!-- <mvc:resources mapping="/resources/**" cache-period="3000" location="/resources/" order="0">
+    <mvc:resources mapping="/html/**" cache-period="3000" location="/html/" order="0">
         <mvc:resource-chain resource-cache="true">
             <mvc:resolvers>
                 <bean class="org.springframework.web.servlet.resource.GzipResourceResolver"/>
             </mvc:resolvers>
         </mvc:resource-chain>
-    </mvc:resources> -->
+    </mvc:resources>
     <!-- <mvc:resources mapping="/static/**" cache-period="30" location="/static/" order="0"/> -->
     <mvc:resources mapping="swagger-ui.html"  location="classpath:/META-INF/resources/" />  
     <mvc:resources mapping="/webjars/**"  location="classpath:/META-INF/resources/webjars/" />
-    <mvc:default-servlet-handler />
+    <!-- <mvc:default-servlet-handler /> -->
  
     <!--
     | spring validation 配置 
@@ -80,11 +80,11 @@
     -->
     <bean id="templateResolver"
        class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
-        <property name="prefix" value="/templates/" />
+        <property name="prefix" value="/html/" />
         <property name="suffix" value=".html" />
         <property name="templateMode" value="HTML" />
-        <!-- Template cache is true by default. Set to false if you want             -->
-        <!-- templates to be automatically updated when modified.                    -->
+        <!-- Template cache is true by default. Set to false if you want            
+        templates to be automatically updated when modified. -->                   
         <property name="cacheable" value="false" />
         <property name="order" value="1"></property>
     </bean>
@@ -96,4 +96,16 @@
     <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine" />
     </bean>
+    
+    <!-- <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">    
+       <property name="templateLoaderPath">    
+           <value>/html</value>    
+       </property>    
+   </bean>    
+    <bean id="htmlviewResolver"    
+       class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">    
+       <property name="suffix" value=".html" />   
+       <property name="order" value="0"></property>   
+       <property name="contentType" value="text/html;charset=UTF-8"></property>           
+   </bean> -->
 </beans>

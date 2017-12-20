@@ -26,7 +26,7 @@ import com.canaan.jgsf.util.WebUtil;
  * @date 2017年12月20日 上午9:28:34
  * @version V1.0
  */
-@RestControllerAdvice
+//@RestControllerAdvice
 public class ReturnHandlerAdvice implements ResponseBodyAdvice<Object> {
 
 	@Override

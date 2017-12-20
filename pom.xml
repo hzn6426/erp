@@ -44,6 +44,7 @@
         <dozer.version>5.5.1</dozer.version>
         
         <fastjson.version>1.2.32</fastjson.version>
+        <freemarker.version>2.3.22</freemarker.version>
         
         <guava.version>18.0</guava.version>
         
@@ -770,6 +771,12 @@
                 <artifactId>sentry-logback</artifactId>
                 <version>${sentry.version}</version>
             </dependency>
+            
+            <dependency>
+	            <groupId>org.freemarker</groupId>
+	            <artifactId>freemarker</artifactId>
+	            <version>${freemarker.version}</version>
+	        </dependency>
             
             <dependency>
 		      <groupId>junit</groupId>
