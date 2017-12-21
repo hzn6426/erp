@@ -1,21 +1,37 @@
 package com.canaan.jgsf.common;
 
 
+import java.util.List;
+
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.google.common.collect.Lists;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
+/**
+ * Ajax请求返回结果，所有的Ajax请求都返回该对象的反序列化串，包括发生异常，
+ * <tt>code</tt> 与 <tt>message</tt> 对应请参考<b> Exception_zh_CN.properties</b>
+ * @author zening
+ * @date 2017年12月21日 上午9:10:32
+ * @version V1.0
+ */
 @JsonInclude(Include.NON_NULL)
 @Getter 
+@ApiModel("Ajax返回结果")
 public class ResponseResult {
-
+	@ApiModelProperty("状态码")
 	private int code;
+	@ApiModelProperty("消息")
 	private String message;
-	private Object data;
+	@ApiModelProperty("返回数据")
+	private List<?> data;
+	@ApiModelProperty("数据总条数")
 	private Integer totalSize;
 	
-	private ResponseResult(int code, String message, int totalSize, Object data) {
+	private ResponseResult(int code, String message, int totalSize, List<?> data) {
 		this.code = code;
 		this.message = message;
 		this.totalSize = totalSize;
@@ -23,18 +39,18 @@ public class ResponseResult {
 	}
 	
 	public static ResponseResult build() {
-		return new ResponseResult(200, "OK", 0, new Object());
+		return new ResponseResult(200, "OK", 0, Lists.newArrayList());
 	}
 	
 	public static ResponseResult build(int code, String message) {
-		return new ResponseResult(code, message, 0, new Object());
+		return new ResponseResult(code, message, 0, Lists.newArrayList());
 	}
 	
-	public static ResponseResult build(int totalSize, Object data) {
+	public static ResponseResult build(int totalSize, List<?> data) {
 		return new ResponseResult(200, "OK",totalSize, data);
 	}
 	
-	public static ResponseResult build(int code, String message, int totalSize, Object data) {
+	public static ResponseResult build(int code, String message, int totalSize, List<?> data) {
 		return new ResponseResult(code, message,totalSize, data);
 	}
 	

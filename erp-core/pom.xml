@@ -13,6 +13,11 @@
     <dependencies>
         <dependency>
             <groupId>com.canaan</groupId>
+            <artifactId>erp-common</artifactId>
+        </dependency>
+    
+        <dependency>
+            <groupId>com.canaan</groupId>
             <artifactId>erp-distribute</artifactId>
         </dependency>
     

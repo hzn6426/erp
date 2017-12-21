@@ -12,10 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import com.canaan.jgsf.constant.SystemConstants;
-import com.canaan.jgsf.util.WebUtil;
+import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
+
 
 /**
- * 封装统一返回结果
+ * 封装统一返回结果，仅对本项目<tt>com.canaan</tt>包下的方法进行返回结果封装，避免影响swagger相关请求及其他插件的请求
  * <ul>
  * 	<li>void类型会统一封装成{@link ResponseResult}</li>
  * 	<li>ModelAndView会原样返回</li>
@@ -26,12 +28,13 @@ import com.canaan.jgsf.util.WebUtil;
  * @date 2017年12月20日 上午9:28:34
  * @version V1.0
  */
-//@RestControllerAdvice
+@RestControllerAdvice
 public class ReturnHandlerAdvice implements ResponseBodyAdvice<Object> {
 
 	@Override
 	public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
 		String name = returnType.getMethod().getDeclaringClass().getName();
+		//仅对本项目结果进行封装
 		return name.startsWith("com.canaan");
 	}
 
@@ -45,7 +48,12 @@ public class ReturnHandlerAdvice implements ResponseBodyAdvice<Object> {
 		}
 		
 		if (ModelAndView.class.isInstance(body)) {
-			return (ModelAndView) body;
+			ModelAndView mv = (ModelAndView) body;
+			Object v =  mv.getModel().get(SystemConstants.ERROR_ATTRIBUTE);
+			if (v != null) {
+				return (ResponseResult) v;
+			}
+			return mv;
 		}
 		
 		if (ResponseResult.class.isInstance(body)) {
@@ -54,10 +62,10 @@ public class ReturnHandlerAdvice implements ResponseBodyAdvice<Object> {
 		
 		if (Collection.class.isInstance(body)) {
 			Collection<?> ction = (Collection<?>) body;
-			return ResponseResult.build(ction.size(), body);
+			return ResponseResult.build(ction.size(), Lists.newArrayList(body));
 		}
 		
-		return ResponseResult.build(0, body);
+		return ResponseResult.build(0, Lists.newArrayList(body));
 	}
 
 }

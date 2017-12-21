@@ -7,9 +7,10 @@ import java.util.ResourceBundle;
 import lombok.Getter;
 
 /**
- * PC端异常
- * @author Frog
- *
+ * 
+ * @author zening
+ * @date 2017年12月21日 上午9:29:38
+ * @version V1.0
  */
 @SuppressWarnings("serial")
 public class ClientBizException extends RuntimeException {

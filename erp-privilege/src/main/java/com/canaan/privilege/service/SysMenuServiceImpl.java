@@ -9,6 +9,7 @@ import org.jooq.SortField;
 import org.jooq.impl.DSL;
 
 import com.canaan.common.SearchResult;
+import com.canaan.core.common.BaseServiceImpl;
 import com.canaan.privilege.api.SysMenuService;
 import com.canaan.privilege.db.tables.SysMenu;
 import com.canaan.privilege.db.tables.records.SysMenuRecord;

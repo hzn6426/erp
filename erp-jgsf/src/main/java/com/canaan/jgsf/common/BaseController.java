@@ -6,7 +6,12 @@ import com.canaan.common.SearchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.canaan.common.BaseModel;
-
+/**
+ * controller基类封装，针对单一对象提供增、删、改、查封装
+ * @author zening
+ * @date 2017年12月21日 上午9:22:46
+ * @version V1.0
+ */
 public class BaseController<E extends BaseModel> {
 	
 	@Autowired
@@ -18,5 +23,13 @@ public class BaseController<E extends BaseModel> {
 	
 	protected void save(E e) {
 		baseService.save(e);
+	}
+	
+	protected void update(E e) {
+		baseService.update(e);
+	}
+	
+	protected void delete(E e) {
+		baseService.delete(e);
 	}
 }

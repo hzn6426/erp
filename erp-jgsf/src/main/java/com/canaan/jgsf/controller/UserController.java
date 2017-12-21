@@ -27,8 +27,8 @@ public class UserController {
 	
 	@ApiOperation(value="更新")
 	@RequestMapping(value="/user",method=RequestMethod.PUT, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public String update() {
-		return ResponseResult.build().json();
+	public void update() {
+//		return ResponseResult.build().json();
 	}
 	@ApiOperation(value="查询")
 	@RequestMapping(value="/user",method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -108,7 +108,7 @@
     <!-- <logger name="canaan.dao" level="DEBUG"/> -->
     <logger name="com.alibaba.druid" level="INFO" additivity="false">
     <logger name="org.jooq" level="DEBUG"/>
-        <appender-ref ref="druid"/>
+        <appender-ref ref="Druid"/>
     </logger>
     <root level="${log.level}">
         <appender-ref ref="FileError"/>

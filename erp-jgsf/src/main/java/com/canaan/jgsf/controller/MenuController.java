@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.canaan.common.SearchResult;
 import com.canaan.jgsf.common.ResponseResult;
+import com.canaan.jgsf.exception.ClientBizException;
+import com.canaan.jgsf.exception.ClientExceptionEnum;
 import com.canaan.jgsf.vo.MenuVO;
 import com.canaan.privilege.dto.MenuDTO;
 
@@ -33,7 +35,7 @@ public class MenuController  {
 	
 	@ApiOperation(value = "新增")
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public String add(@RequestBody MenuVO menu) {
-		return ResponseResult.build().json();
+	public void add(@RequestBody MenuVO menu) {
+		throw new ClientBizException(ClientExceptionEnum.ILLEGAL_ARGUMENT);
 	}
 }

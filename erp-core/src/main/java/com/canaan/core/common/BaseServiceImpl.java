@@ -1,4 +1,4 @@
-package com.canaan.privilege.service;
+package com.canaan.core.common;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
