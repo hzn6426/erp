@@ -15,7 +15,7 @@ import com.canaan.jgsf.vo.UserVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-@Api(tags = "用户管理")
+@Api(tags = "用户管理", description = "用户的增删改查功能!")
 @RestController
 public class UserController {
 

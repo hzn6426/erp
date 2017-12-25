@@ -13,7 +13,9 @@ public enum ExceptionEnum implements ExceptionEnumable{
 	INVALID_UPDATE_NUM(10007),
 	INVALID_DELETE_NUM(10008),
 	INVALID_PK_FOR_UPDATE(10009),
-	INVALID_PK_FOR_DELETE(10010);
+	INVALID_PK_FOR_DELETE(10010),
+	INVALID_PK_FOR_GET(10011);
+	
 	
 	
 	private  int code;

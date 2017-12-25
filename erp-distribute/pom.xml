@@ -13,7 +13,7 @@
     <url>http://maven.apache.org</url>
   
     <dependencies>
-	
+	   
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -142,5 +142,15 @@
            <artifactId>sentry-logback</artifactId>
        </dependency>
 	
+	   <!-- spring-data-redis -->
+       <dependency>
+           <groupId>org.springframework.data</groupId>
+           <artifactId>spring-data-redis</artifactId>
+       </dependency>
+       <!-- redis -->
+       <dependency>
+           <groupId>redis.clients</groupId>
+           <artifactId>jedis</artifactId>
+       </dependency>
     </dependencies>
 </project>

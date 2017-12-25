@@ -119,7 +119,7 @@
                 <filtering>false</filtering>
             </resource>
             <resource><!-- 不对指定的资源文件进行资源替�?-->
-                <directory>src/main/resources</directory>
+                <directory>${basedir}/src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
@@ -232,6 +232,22 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <!-- 依赖插件，复制依赖的资源到当前项目中 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <!-- 清理插件 -->
             <plugin>
@@ -364,12 +380,7 @@
         	</dependency>
         	<dependency>
         		<groupId>com.canaan</groupId>
-        		<artifactId>erp-privilege</artifactId>
-        		<version>${project.version}</version>
-        	</dependency>
-        	<dependency>
-        		<groupId>com.redis</groupId>
-        		<artifactId>erp-privilege</artifactId>
+        		<artifactId>erp-redis</artifactId>
         		<version>${project.version}</version>
         	</dependency>
         	

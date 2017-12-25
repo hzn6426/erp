@@ -29,7 +29,7 @@ public class GloableExceptionHandler {
 	@ResponseStatus(value=HttpStatus.NOT_FOUND)
 	@ExceptionHandler(NoHandlerFoundException.class)
 	protected Object handler404(NoHandlerFoundException ex, WebRequest request) {
-		ResponseResult result = handleNotFundException((NoHandlerFoundException) ex);
+		ResponseResult<?> result = handleNotFundException((NoHandlerFoundException) ex);
 		if (WebUtil.isAjaxRequest(request)) {
 			return result;
 		}
@@ -38,7 +38,7 @@ public class GloableExceptionHandler {
 	}
 	@ExceptionHandler(Exception.class)
 	protected Object handleCustomerException(Exception ex, WebRequest request) {
-		ResponseResult result = null;
+		ResponseResult<?> result = null;
 		if (BizException.class.isInstance(ex)) {
 			result = handleBizException((BizException) ex);
 		} else if (DistributeException.class.isInstance(ex)) {
@@ -63,43 +63,43 @@ public class GloableExceptionHandler {
 		return mv;
     }
 	
-	private ResponseResult handleIllegalArgumentException(IllegalArgumentException illex) {
+	private ResponseResult<?> handleIllegalArgumentException(IllegalArgumentException illex) {
 		log.error("ClientBizException:" + Throwables.getStackTraceAsString(illex));
 		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.ILLEGAL_ARGUMENT);
 		return ResponseResult.build(clientException.getCode(), clientException.getMessage());
 	}
 	
-	private ResponseResult handleNullPointException(NullPointerException npe) {
+	private ResponseResult<?> handleNullPointException(NullPointerException npe) {
 		log.error("ClientBizException:" + Throwables.getStackTraceAsString(npe));
 		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.OBJECT_IS_NULL);
 		return ResponseResult.build(clientException.getCode(), clientException.getMessage());
 	}
 	
-	private ResponseResult handleNotFundException(NoHandlerFoundException nfe) {
+	private ResponseResult<?> handleNotFundException(NoHandlerFoundException nfe) {
 		log.error("ClientBizException:" + Throwables.getStackTraceAsString(nfe));
 		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.REQUEST_NOT_FOUND);
 		return ResponseResult.build(clientException.getCode(), clientException.getMessage());
 	}
 	
-	private ResponseResult handleBizException(BizException bizException) {
+	private ResponseResult<?> handleBizException(BizException bizException) {
 		log.error("BizException(" + bizException.getUuid() + "):" + Throwables.getStackTraceAsString(Throwables.getRootCause(bizException)));
 		return ResponseResult.build(bizException.getCode(), bizException.getMessage());
 	}
 	
-	private ResponseResult handleDistributeException(DistributeException distributeException) {
+	private ResponseResult<?> handleDistributeException(DistributeException distributeException) {
 		log.error("DistributeException:" + distributeException.getMessage());
 		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.DISTRIBUTE_EXCEPTION);
 		return ResponseResult.build(clientException.getCode(), clientException.getMessage());
 	}
 	
-	private ResponseResult handleException(Exception ex) {
+	private ResponseResult<?> handleException(Exception ex) {
 		String message = Optional.fromNullable(ex.getMessage()).or("");
 		log.info("ClientBizException:" + message);
 		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.UN_CHECKED_EXCEPTION, message);
 		return ResponseResult.build(clientException.getCode(), clientException.getMessage());
 	}
 	
-	private ResponseResult handleCommonBindException(BindingResult bindResult) {
+	private ResponseResult<?> handleCommonBindException(BindingResult bindResult) {
 		ClientBizException clientBizException =  new ClientBizException(ClientExceptionEnum.DATA_IS_NOT_VALID);
 		Iterator<ObjectError> errorIt = bindResult.getAllErrors().iterator();
 		StringBuilder errorBuilder = new StringBuilder(clientBizException.getMessage());
@@ -113,17 +113,17 @@ public class GloableExceptionHandler {
 		return ResponseResult.build(clientBizException.getCode(), errorBuilder.toString());
 	}
 	
-	private ResponseResult handleBindException(MethodArgumentNotValidException methodArgumentException) {
+	private ResponseResult<?> handleBindException(MethodArgumentNotValidException methodArgumentException) {
 		log.error("ClientBizException:" + Throwables.getStackTraceAsString(methodArgumentException));
 		return handleCommonBindException(methodArgumentException.getBindingResult());
 	}
-	private ResponseResult handleBindException(BindException bindException) {
+	private ResponseResult<?> handleBindException(BindException bindException) {
 		log.error("ClientBizException:" + Throwables.getStackTraceAsString(bindException));
 		return handleCommonBindException(bindException.getBindingResult());
 		
 	}
 	
-	private ResponseResult handleClientBizException(ClientBizException ex) {
+	private ResponseResult<?> handleClientBizException(ClientBizException ex) {
 		log.error(Throwables.getStackTraceAsString(ex));
 		return ResponseResult.build(ex.getCode(), ex.getMessage());
 	}

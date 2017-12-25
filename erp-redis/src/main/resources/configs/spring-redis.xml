@@ -34,8 +34,6 @@
 		<property name="maxIdle" value="30" />  
 		<!-- 最小空闲连接数 -->  
 		<property name="minIdle" value="10" /> 
-		<!--最大分配的对象数--> 
-		<property name="maxTotal" value="60000"/>
 		<!-- 获取连接时的最大等待毫秒数,小于零:阻塞不确定的时间,默认-1 -->  
 		<property name="maxWaitMillis" value="3000" />  
 		<!-- 每次释放连接的最大数目 -->  
@@ -64,14 +62,14 @@
     </bean>
 
     <!-- redisTemplate模板 -->
-    <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
-        <property name="connectionFactory" ref="jedisConnectionFactory"/>
-        <property name="keySerializer">
-            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
-        </property>
-        <property name="valueSerializer">
-            <bean class="com.canaan.core.cache.FastJson2JsonRedisSerializer"/>
-        </property>
-    </bean>
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+       <property name="connectionFactory" ref="jedisConnectionFactory" />
+       <property name="keySerializer">
+           <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+       </property>
+       <property name="valueSerializer">
+           <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+       </property>
+     </bean>
 
 </beans>

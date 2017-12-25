@@ -12,8 +12,6 @@ import lombok.Setter;
 @ApiModel(value="菜单对象")
 public class MenuDTO extends BaseModel {
 	private static final long serialVersionUID = -2913587203203194413L;
-	@ApiModelProperty(value = "ID")
-	private Integer id;
 	@ApiModelProperty(value = "编码")
     private String  code;
 	@ApiModelProperty(value = "名称")

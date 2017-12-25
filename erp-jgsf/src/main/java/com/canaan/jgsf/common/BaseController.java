@@ -21,6 +21,10 @@ public class BaseController<E extends BaseModel> {
 		return baseService.list(e, start, limit);
 	}
 	
+	protected E get(E e) {
+		return baseService.get(e);
+	}
+	
 	protected void save(E e) {
 		baseService.save(e);
 	}

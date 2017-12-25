@@ -21,37 +21,37 @@ import lombok.Getter;
 @JsonInclude(Include.NON_NULL)
 @Getter 
 @ApiModel("Ajax返回结果")
-public class ResponseResult {
+public class ResponseResult<E> {
 	@ApiModelProperty("状态码")
 	private int code;
 	@ApiModelProperty("消息")
 	private String message;
 	@ApiModelProperty("返回数据")
-	private List<?> data;
+	private List<E> data;
 	@ApiModelProperty("数据总条数")
 	private Integer totalSize;
 	
-	private ResponseResult(int code, String message, int totalSize, List<?> data) {
+	private ResponseResult(int code, String message, int totalSize, List<E> data) {
 		this.code = code;
 		this.message = message;
 		this.totalSize = totalSize;
 		this.data = data;
 	}
 	
-	public static ResponseResult build() {
-		return new ResponseResult(200, "OK", 0, Lists.newArrayList());
+	public static <E> ResponseResult<E> build() {
+		return new ResponseResult<E>(200, "OK", 0, Lists.newArrayList());
 	}
 	
-	public static ResponseResult build(int code, String message) {
-		return new ResponseResult(code, message, 0, Lists.newArrayList());
+	public static <E> ResponseResult<E> build(int code, String message) {
+		return new ResponseResult<E>(code, message, 0, Lists.newArrayList());
 	}
 	
-	public static ResponseResult build(int totalSize, List<?> data) {
-		return new ResponseResult(200, "OK",totalSize, data);
+	public static <E> ResponseResult<E> build(int totalSize, List<E> data) {
+		return new ResponseResult<E>(200, "OK",totalSize, data);
 	}
 	
-	public static ResponseResult build(int code, String message, int totalSize, List<?> data) {
-		return new ResponseResult(code, message,totalSize, data);
+	public static <E> ResponseResult<E> build(int code, String message, int totalSize, List<E> data) {
+		return new ResponseResult<E>(code, message,totalSize, data);
 	}
 	
 	public  String json() {

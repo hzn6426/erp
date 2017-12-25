@@ -82,6 +82,18 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 		return result;
 	}
 	
+	
+	@Override
+	public E get(E e) {
+		Assert.checkArgument(e);
+		Condition pkConditon = primaryKeyCondition(e);
+		Assert.CheckNotNull(pkConditon, ExceptionEnum.INVALID_PK_FOR_GET);
+		R record = baseMapper.map(e, recordClassType);
+		E data = dsl.selectFrom(record.getTable()).where(pkConditon).fetchOneInto(modelClassType);
+		return data;
+	}
+
+
 	@Override
 	public void save(E e) {
 		Assert.checkArgument(e);
@@ -101,24 +113,24 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 	public void update(E e) {
 		Assert.checkArgument(e);
 		Assert.CheckNotNull(e.getId(), ExceptionEnum.INVALID_ID_FOR_UPDATE);
-		Condition ctn = primaryKeyCondition(e);
-		Assert.CheckNotNull(ctn, ExceptionEnum.INVALID_PK_FOR_UPDATE);
+		Condition pkConditon = primaryKeyCondition(e);
+		Assert.CheckNotNull(pkConditon, ExceptionEnum.INVALID_PK_FOR_UPDATE);
 		long misecond = new Date().getTime();
 		//TODO user getid
 //		e.setUpdateId(updateId);
 		e.setUpdateTime(misecond);
 		R record = baseMapper.map(e, recordClassType);
-		int num = dsl.update(record.getTable()).set(record).where(primaryKeyCondition(e)).execute();
+		int num = dsl.update(record.getTable()).set(record).where(pkConditon).execute();
 		Assert.checkNotEqual(num, 1, ExceptionEnum.INVALID_UPDATE_NUM);
 	}
 	
 	public void delete(E e) {
 		Assert.checkArgument(e);
 		Assert.CheckNotNull(e.getId(), ExceptionEnum.INVALID_ID_FOR_DELETE);
-		Condition ctn = primaryKeyCondition(e);
-		Assert.CheckNotNull(ctn, ExceptionEnum.INVALID_PK_FOR_DELETE);
+		Condition pkConditon = primaryKeyCondition(e);
+		Assert.CheckNotNull(pkConditon, ExceptionEnum.INVALID_PK_FOR_DELETE);
 		R record = baseMapper.map(e, recordClassType);
-		int num = dsl.deleteFrom(record.getTable()).where(primaryKeyCondition(e)).execute();
+		int num = dsl.deleteFrom(record.getTable()).where(pkConditon).execute();
 		Assert.checkNotEqual(num, 1, ExceptionEnum.INVALID_DELETE_NUM);
 	}
 }
