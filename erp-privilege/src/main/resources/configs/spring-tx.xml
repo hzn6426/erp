@@ -122,7 +122,7 @@
 
     <!-- Invoking an internal, package-private constructor for the example
          Implement your own Configuration for more reliable behaviour -->
-    <bean class="org.jooq.impl.DefaultConfiguration" id="config">
+    <bean class="org.jooq.impl.DefaultConfiguration" name="config">
         <property name="SQLDialect"><value type="org.jooq.SQLDialect">MYSQL</value></property>
         <property name="connectionProvider" ref="connectionProvider" />
         <property name="transactionProvider" ref="transactionProvider" />
@@ -149,8 +149,9 @@
 			<tx:method name="*" propagation="REQUIRED" read-only="true" />
 		</tx:attributes>
 	</tx:advice>
+	
 	<aop:config proxy-target-class="true">
-		<aop:pointcut expression="execution(* com.canaan..service..*(..)) " id="jdkPointcut"/>
+		<aop:pointcut expression="execution(* com.canaan..service..*.*(..)) " id="jdkPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="jdkPointcut"/>
 	</aop:config>
 	

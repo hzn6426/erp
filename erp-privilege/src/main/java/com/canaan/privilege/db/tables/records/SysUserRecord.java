@@ -7,6 +7,8 @@ package com.canaan.privilege.db.tables.records;
 import com.canaan.privilege.db.tables.SysUser;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements Record5<Integer, String, String, String, String> {
 
-    private static final long serialVersionUID = 1655562092;
+    private static final long serialVersionUID = -1666377943;
 
     /**
      * Setter for <code>dubbo_test.sys_user.id</code>.
@@ -40,63 +42,68 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
     /**
      * Getter for <code>dubbo_test.sys_user.id</code>.
      */
+    @NotNull
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_user.name</code>.
+     * Setter for <code>dubbo_test.sys_user.user_name</code>.
      */
-    public void setName(String value) {
+    public void setUserName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_user.name</code>.
+     * Getter for <code>dubbo_test.sys_user.user_name</code>.
      */
-    public String getName() {
+    @Size(max = 20)
+    public String getUserName() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_user.passwd</code>.
+     * Setter for <code>dubbo_test.sys_user.user_passwd</code>.
      */
-    public void setPasswd(String value) {
+    public void setUserPasswd(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_user.passwd</code>.
+     * Getter for <code>dubbo_test.sys_user.user_passwd</code>.
      */
-    public String getPasswd() {
+    @Size(max = 20)
+    public String getUserPasswd() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_user.mobile</code>.
+     * Setter for <code>dubbo_test.sys_user.user_mobile</code>.
      */
-    public void setMobile(String value) {
+    public void setUserMobile(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_user.mobile</code>.
+     * Getter for <code>dubbo_test.sys_user.user_mobile</code>.
      */
-    public String getMobile() {
+    @Size(max = 12)
+    public String getUserMobile() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_user.real_name</code>.
+     * Setter for <code>dubbo_test.sys_user.user_real_name</code>.
      */
-    public void setRealName(String value) {
+    public void setUserRealName(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_user.real_name</code>.
+     * Getter for <code>dubbo_test.sys_user.user_real_name</code>.
      */
-    public String getRealName() {
+    @Size(max = 16)
+    public String getUserRealName() {
         return (String) get(4);
     }
 
@@ -145,7 +152,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public Field<String> field2() {
-        return SysUser.SYS_USER.NAME;
+        return SysUser.SYS_USER.USER_NAME;
     }
 
     /**
@@ -153,7 +160,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public Field<String> field3() {
-        return SysUser.SYS_USER.PASSWD;
+        return SysUser.SYS_USER.USER_PASSWD;
     }
 
     /**
@@ -161,7 +168,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public Field<String> field4() {
-        return SysUser.SYS_USER.MOBILE;
+        return SysUser.SYS_USER.USER_MOBILE;
     }
 
     /**
@@ -169,7 +176,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public Field<String> field5() {
-        return SysUser.SYS_USER.REAL_NAME;
+        return SysUser.SYS_USER.USER_REAL_NAME;
     }
 
     /**
@@ -185,7 +192,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public String value2() {
-        return getName();
+        return getUserName();
     }
 
     /**
@@ -193,7 +200,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public String value3() {
-        return getPasswd();
+        return getUserPasswd();
     }
 
     /**
@@ -201,7 +208,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public String value4() {
-        return getMobile();
+        return getUserMobile();
     }
 
     /**
@@ -209,7 +216,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public String value5() {
-        return getRealName();
+        return getUserRealName();
     }
 
     /**
@@ -226,7 +233,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public SysUserRecord value2(String value) {
-        setName(value);
+        setUserName(value);
         return this;
     }
 
@@ -235,7 +242,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public SysUserRecord value3(String value) {
-        setPasswd(value);
+        setUserPasswd(value);
         return this;
     }
 
@@ -244,7 +251,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public SysUserRecord value4(String value) {
-        setMobile(value);
+        setUserMobile(value);
         return this;
     }
 
@@ -253,7 +260,7 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
      */
     @Override
     public SysUserRecord value5(String value) {
-        setRealName(value);
+        setUserRealName(value);
         return this;
     }
 
@@ -284,13 +291,13 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
     /**
      * Create a detached, initialised SysUserRecord
      */
-    public SysUserRecord(Integer id, String name, String passwd, String mobile, String realName) {
+    public SysUserRecord(Integer id, String userName, String userPasswd, String userMobile, String userRealName) {
         super(SysUser.SYS_USER);
 
         set(0, id);
-        set(1, name);
-        set(2, passwd);
-        set(3, mobile);
-        set(4, realName);
+        set(1, userName);
+        set(2, userPasswd);
+        set(3, userMobile);
+        set(4, userRealName);
     }
 }

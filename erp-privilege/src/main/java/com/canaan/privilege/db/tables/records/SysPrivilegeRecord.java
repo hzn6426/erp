@@ -7,6 +7,8 @@ package com.canaan.privilege.db.tables.records;
 import com.canaan.privilege.db.tables.SysPrivilege;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysPrivilegeRecord extends UpdatableRecordImpl<SysPrivilegeRecord> implements Record5<Integer, String, String, String, Integer> {
 
-    private static final long serialVersionUID = 1418525187;
+    private static final long serialVersionUID = -112323894;
 
     /**
      * Setter for <code>dubbo_test.sys_privilege.id</code>.
@@ -40,35 +42,38 @@ public class SysPrivilegeRecord extends UpdatableRecordImpl<SysPrivilegeRecord> 
     /**
      * Getter for <code>dubbo_test.sys_privilege.id</code>.
      */
+    @NotNull
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_privilege.code</code>.
+     * Setter for <code>dubbo_test.sys_privilege.privilege_code</code>.
      */
-    public void setCode(String value) {
+    public void setPrivilegeCode(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_privilege.code</code>.
+     * Getter for <code>dubbo_test.sys_privilege.privilege_code</code>.
      */
-    public String getCode() {
+    @Size(max = 20)
+    public String getPrivilegeCode() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_privilege.name</code>.
+     * Setter for <code>dubbo_test.sys_privilege.privilege_name</code>.
      */
-    public void setName(String value) {
+    public void setPrivilegeName(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_privilege.name</code>.
+     * Getter for <code>dubbo_test.sys_privilege.privilege_name</code>.
      */
-    public String getName() {
+    @Size(max = 50)
+    public String getPrivilegeName() {
         return (String) get(2);
     }
 
@@ -82,6 +87,7 @@ public class SysPrivilegeRecord extends UpdatableRecordImpl<SysPrivilegeRecord> 
     /**
      * Getter for <code>dubbo_test.sys_privilege.source_type</code>.
      */
+    @Size(max = 20)
     public String getSourceType() {
         return (String) get(3);
     }
@@ -145,7 +151,7 @@ public class SysPrivilegeRecord extends UpdatableRecordImpl<SysPrivilegeRecord> 
      */
     @Override
     public Field<String> field2() {
-        return SysPrivilege.SYS_PRIVILEGE.CODE;
+        return SysPrivilege.SYS_PRIVILEGE.PRIVILEGE_CODE;
     }
 
     /**
@@ -153,7 +159,7 @@ public class SysPrivilegeRecord extends UpdatableRecordImpl<SysPrivilegeRecord> 
      */
     @Override
     public Field<String> field3() {
-        return SysPrivilege.SYS_PRIVILEGE.NAME;
+        return SysPrivilege.SYS_PRIVILEGE.PRIVILEGE_NAME;
     }
 
     /**
@@ -185,7 +191,7 @@ public class SysPrivilegeRecord extends UpdatableRecordImpl<SysPrivilegeRecord> 
      */
     @Override
     public String value2() {
-        return getCode();
+        return getPrivilegeCode();
     }
 
     /**
@@ -193,7 +199,7 @@ public class SysPrivilegeRecord extends UpdatableRecordImpl<SysPrivilegeRecord> 
      */
     @Override
     public String value3() {
-        return getName();
+        return getPrivilegeName();
     }
 
     /**
@@ -226,7 +232,7 @@ public class SysPrivilegeRecord extends UpdatableRecordImpl<SysPrivilegeRecord> 
      */
     @Override
     public SysPrivilegeRecord value2(String value) {
-        setCode(value);
+        setPrivilegeCode(value);
         return this;
     }
 
@@ -235,7 +241,7 @@ public class SysPrivilegeRecord extends UpdatableRecordImpl<SysPrivilegeRecord> 
      */
     @Override
     public SysPrivilegeRecord value3(String value) {
-        setName(value);
+        setPrivilegeName(value);
         return this;
     }
 
@@ -284,12 +290,12 @@ public class SysPrivilegeRecord extends UpdatableRecordImpl<SysPrivilegeRecord> 
     /**
      * Create a detached, initialised SysPrivilegeRecord
      */
-    public SysPrivilegeRecord(Integer id, String code, String name, String sourceType, Integer sourceId) {
+    public SysPrivilegeRecord(Integer id, String privilegeCode, String privilegeName, String sourceType, Integer sourceId) {
         super(SysPrivilege.SYS_PRIVILEGE);
 
         set(0, id);
-        set(1, code);
-        set(2, name);
+        set(1, privilegeCode);
+        set(2, privilegeName);
         set(3, sourceType);
         set(4, sourceId);
     }

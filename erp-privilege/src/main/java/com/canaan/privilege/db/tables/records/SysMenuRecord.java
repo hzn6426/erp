@@ -7,6 +7,8 @@ package com.canaan.privilege.db.tables.records;
 import com.canaan.privilege.db.tables.SysMenu;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements Record5<Integer, String, String, String, Integer> {
 
-    private static final long serialVersionUID = 413659379;
+    private static final long serialVersionUID = -708713355;
 
     /**
      * Setter for <code>dubbo_test.sys_menu.id</code>.
@@ -40,49 +42,53 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
     /**
      * Getter for <code>dubbo_test.sys_menu.id</code>.
      */
+    @NotNull
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_menu.code</code>.
+     * Setter for <code>dubbo_test.sys_menu.menu_code</code>.
      */
-    public void setCode(String value) {
+    public void setMenuCode(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_menu.code</code>.
+     * Getter for <code>dubbo_test.sys_menu.menu_code</code>.
      */
-    public String getCode() {
+    @Size(max = 20)
+    public String getMenuCode() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_menu.name</code>.
+     * Setter for <code>dubbo_test.sys_menu.menu_name</code>.
      */
-    public void setName(String value) {
+    public void setMenuName(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_menu.name</code>.
+     * Getter for <code>dubbo_test.sys_menu.menu_name</code>.
      */
-    public String getName() {
+    @Size(max = 50)
+    public String getMenuName() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_menu.url</code>.
+     * Setter for <code>dubbo_test.sys_menu.menu_url</code>.
      */
-    public void setUrl(String value) {
+    public void setMenuUrl(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_menu.url</code>.
+     * Getter for <code>dubbo_test.sys_menu.menu_url</code>.
      */
-    public String getUrl() {
+    @Size(max = 50)
+    public String getMenuUrl() {
         return (String) get(3);
     }
 
@@ -145,7 +151,7 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
      */
     @Override
     public Field<String> field2() {
-        return SysMenu.SYS_MENU.CODE;
+        return SysMenu.SYS_MENU.MENU_CODE;
     }
 
     /**
@@ -153,7 +159,7 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
      */
     @Override
     public Field<String> field3() {
-        return SysMenu.SYS_MENU.NAME;
+        return SysMenu.SYS_MENU.MENU_NAME;
     }
 
     /**
@@ -161,7 +167,7 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
      */
     @Override
     public Field<String> field4() {
-        return SysMenu.SYS_MENU.URL;
+        return SysMenu.SYS_MENU.MENU_URL;
     }
 
     /**
@@ -185,7 +191,7 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
      */
     @Override
     public String value2() {
-        return getCode();
+        return getMenuCode();
     }
 
     /**
@@ -193,7 +199,7 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
      */
     @Override
     public String value3() {
-        return getName();
+        return getMenuName();
     }
 
     /**
@@ -201,7 +207,7 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
      */
     @Override
     public String value4() {
-        return getUrl();
+        return getMenuUrl();
     }
 
     /**
@@ -226,7 +232,7 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
      */
     @Override
     public SysMenuRecord value2(String value) {
-        setCode(value);
+        setMenuCode(value);
         return this;
     }
 
@@ -235,7 +241,7 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
      */
     @Override
     public SysMenuRecord value3(String value) {
-        setName(value);
+        setMenuName(value);
         return this;
     }
 
@@ -244,7 +250,7 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
      */
     @Override
     public SysMenuRecord value4(String value) {
-        setUrl(value);
+        setMenuUrl(value);
         return this;
     }
 
@@ -284,13 +290,13 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
     /**
      * Create a detached, initialised SysMenuRecord
      */
-    public SysMenuRecord(Integer id, String code, String name, String url, Integer parentId) {
+    public SysMenuRecord(Integer id, String menuCode, String menuName, String menuUrl, Integer parentId) {
         super(SysMenu.SYS_MENU);
 
         set(0, id);
-        set(1, code);
-        set(2, name);
-        set(3, url);
+        set(1, menuCode);
+        set(2, menuName);
+        set(3, menuUrl);
         set(4, parentId);
     }
 }

@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysPrivilege extends TableImpl<SysPrivilegeRecord> {
 
-    private static final long serialVersionUID = -148668489;
+    private static final long serialVersionUID = 763372816;
 
     /**
      * The reference instance of <code>dubbo_test.sys_privilege</code>
@@ -55,14 +55,14 @@ public class SysPrivilege extends TableImpl<SysPrivilegeRecord> {
     public final TableField<SysPrivilegeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>dubbo_test.sys_privilege.code</code>.
+     * The column <code>dubbo_test.sys_privilege.privilege_code</code>.
      */
-    public final TableField<SysPrivilegeRecord, String> CODE = createField("code", org.jooq.impl.SQLDataType.VARCHAR.length(16), this, "");
+    public final TableField<SysPrivilegeRecord, String> PRIVILEGE_CODE = createField("privilege_code", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
 
     /**
-     * The column <code>dubbo_test.sys_privilege.name</code>.
+     * The column <code>dubbo_test.sys_privilege.privilege_name</code>.
      */
-    public final TableField<SysPrivilegeRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<SysPrivilegeRecord, String> PRIVILEGE_NAME = createField("privilege_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
     /**
      * The column <code>dubbo_test.sys_privilege.source_type</code>.

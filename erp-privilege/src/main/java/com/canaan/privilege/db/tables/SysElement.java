@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysElement extends TableImpl<SysElementRecord> {
 
-    private static final long serialVersionUID = -1242875395;
+    private static final long serialVersionUID = -2131528057;
 
     /**
      * The reference instance of <code>dubbo_test.sys_element</code>
@@ -55,19 +55,19 @@ public class SysElement extends TableImpl<SysElementRecord> {
     public final TableField<SysElementRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>dubbo_test.sys_element.code</code>.
+     * The column <code>dubbo_test.sys_element.element_code</code>.
      */
-    public final TableField<SysElementRecord, String> CODE = createField("code", org.jooq.impl.SQLDataType.VARCHAR.length(16), this, "");
+    public final TableField<SysElementRecord, String> ELEMENT_CODE = createField("element_code", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
 
     /**
-     * The column <code>dubbo_test.sys_element.name</code>.
+     * The column <code>dubbo_test.sys_element.element_name</code>.
      */
-    public final TableField<SysElementRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<SysElementRecord, String> ELEMENT_NAME = createField("element_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
     /**
-     * The column <code>dubbo_test.sys_element.url</code>.
+     * The column <code>dubbo_test.sys_element.element_url</code>.
      */
-    public final TableField<SysElementRecord, String> URL = createField("url", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<SysElementRecord, String> ELEMENT_URL = createField("element_url", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
     /**
      * The column <code>dubbo_test.sys_element.element_type</code>.

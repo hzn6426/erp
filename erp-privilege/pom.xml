@@ -15,8 +15,8 @@
         <filters>
             <filter>src/main/envs/env-${env}.properties</filter>
         </filters>
-        <!-- <plugins>
-        数据库代码生成的插件 
+        <!-- 数据库代码生成的插件 --> 
+        <plugins>
         <plugin>
             <groupId>org.jooq</groupId>
             <artifactId>jooq-codegen-maven</artifactId>
@@ -53,7 +53,7 @@
 	               </target>
 	               <generate>
 	                   <daos>false</daos>
-	                   <pojos>true</pojos>
+	                   <pojos>false</pojos>
 	                   <immutablePojos>false</immutablePojos>
 	                   <jpaAnnotations>false</jpaAnnotations>
 	                   <validationAnnotations>true</validationAnnotations>
@@ -62,7 +62,7 @@
 	           </generator>
             </configuration>
         </plugin>
-        </plugins> -->
+        </plugins>
     </build>
     
     <profiles>

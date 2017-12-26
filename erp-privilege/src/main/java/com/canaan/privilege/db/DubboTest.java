@@ -8,7 +8,9 @@ import com.canaan.privilege.db.tables.SysElement;
 import com.canaan.privilege.db.tables.SysMenu;
 import com.canaan.privilege.db.tables.SysPrivilege;
 import com.canaan.privilege.db.tables.SysRole;
+import com.canaan.privilege.db.tables.SysRolePrivilege;
 import com.canaan.privilege.db.tables.SysUser;
+import com.canaan.privilege.db.tables.SysUserRole;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +36,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DubboTest extends SchemaImpl {
 
-    private static final long serialVersionUID = -647040796;
+    private static final long serialVersionUID = -1965448306;
 
     /**
      * The reference instance of <code>dubbo_test</code>
@@ -62,9 +64,19 @@ public class DubboTest extends SchemaImpl {
     public final SysRole SYS_ROLE = com.canaan.privilege.db.tables.SysRole.SYS_ROLE;
 
     /**
+     * The table <code>dubbo_test.sys_role_privilege</code>.
+     */
+    public final SysRolePrivilege SYS_ROLE_PRIVILEGE = com.canaan.privilege.db.tables.SysRolePrivilege.SYS_ROLE_PRIVILEGE;
+
+    /**
      * The table <code>dubbo_test.sys_user</code>.
      */
     public final SysUser SYS_USER = com.canaan.privilege.db.tables.SysUser.SYS_USER;
+
+    /**
+     * The table <code>dubbo_test.sys_user_role</code>.
+     */
+    public final SysUserRole SYS_USER_ROLE = com.canaan.privilege.db.tables.SysUserRole.SYS_USER_ROLE;
 
     /**
      * No further instances allowed
@@ -95,6 +107,8 @@ public class DubboTest extends SchemaImpl {
             SysMenu.SYS_MENU,
             SysPrivilege.SYS_PRIVILEGE,
             SysRole.SYS_ROLE,
-            SysUser.SYS_USER);
+            SysRolePrivilege.SYS_ROLE_PRIVILEGE,
+            SysUser.SYS_USER,
+            SysUserRole.SYS_USER_ROLE);
     }
 }

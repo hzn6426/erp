@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysRole extends TableImpl<SysRoleRecord> {
 
-    private static final long serialVersionUID = -127925627;
+    private static final long serialVersionUID = 1015514995;
 
     /**
      * The reference instance of <code>dubbo_test.sys_role</code>
@@ -55,9 +55,14 @@ public class SysRole extends TableImpl<SysRoleRecord> {
     public final TableField<SysRoleRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>dubbo_test.sys_role.name</code>.
+     * The column <code>dubbo_test.sys_role.role_code</code>.
      */
-    public final TableField<SysRoleRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<SysRoleRecord, String> ROLE_CODE = createField("role_code", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+
+    /**
+     * The column <code>dubbo_test.sys_role.role_name</code>.
+     */
+    public final TableField<SysRoleRecord, String> ROLE_NAME = createField("role_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
 
     /**
      * The column <code>dubbo_test.sys_role.note</code>.

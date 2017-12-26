@@ -65,8 +65,9 @@ public class ProtocolExceptionHandler {
 		} else {
 			se = new ServerException(ExceptionEnum.UN_CHECKED_EXCEPTION, message);
 		}
-		log.error("ServerException (" + uuid + "):" + Throwables.getStackTraceAsString(re));
-		throw new BizException(name + "(" + uuid + ")", se.getCode(), se.getMessage(), re);
+		String stackMessage = Throwables.getStackTraceAsString(re);
+		log.error("ServerException (" + uuid + "):" + stackMessage);
+		throw new BizException(name + "(" + uuid + ")", se.getCode(), se.getMessage(), stackMessage);
 	}
 	
 	private void handleOtherProtocolException(String protocol,Exception re) {

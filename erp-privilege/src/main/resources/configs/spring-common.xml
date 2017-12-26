@@ -11,6 +11,8 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-4.3.xsd ">
 
+
+    <context:component-scan base-package="com.canaan.**"/>
     <!--
     | 
     | dubbo config 
@@ -37,6 +39,7 @@
     </bean>
     
     <bean id="collectionMapper" class="com.canaan.core.util.CollectionMapperDecorator"></bean>
+   
     
     <!--
     | 
@@ -46,6 +49,5 @@
     | 2.提供autoware,component等spring标签支持
     |
     -->
-    <bean class="com.canaan.core.exception.ExceptionAspect"></bean>
-    <context:component-scan base-package="com.canaan.**"/>
+    <bean id="exceptionAspect" class="com.canaan.core.exception.ExceptionAspect"></bean>
 </beans>

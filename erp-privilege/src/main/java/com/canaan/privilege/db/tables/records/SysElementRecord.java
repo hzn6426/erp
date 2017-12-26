@@ -7,6 +7,8 @@ package com.canaan.privilege.db.tables.records;
 import com.canaan.privilege.db.tables.SysElement;
 
 import javax.annotation.Generated;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -28,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> implements Record6<Integer, String, String, String, String, Integer> {
 
-    private static final long serialVersionUID = 1385592996;
+    private static final long serialVersionUID = -546472318;
 
     /**
      * Setter for <code>dubbo_test.sys_element.id</code>.
@@ -40,49 +42,53 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
     /**
      * Getter for <code>dubbo_test.sys_element.id</code>.
      */
+    @NotNull
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_element.code</code>.
+     * Setter for <code>dubbo_test.sys_element.element_code</code>.
      */
-    public void setCode(String value) {
+    public void setElementCode(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_element.code</code>.
+     * Getter for <code>dubbo_test.sys_element.element_code</code>.
      */
-    public String getCode() {
+    @Size(max = 20)
+    public String getElementCode() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_element.name</code>.
+     * Setter for <code>dubbo_test.sys_element.element_name</code>.
      */
-    public void setName(String value) {
+    public void setElementName(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_element.name</code>.
+     * Getter for <code>dubbo_test.sys_element.element_name</code>.
      */
-    public String getName() {
+    @Size(max = 50)
+    public String getElementName() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_element.url</code>.
+     * Setter for <code>dubbo_test.sys_element.element_url</code>.
      */
-    public void setUrl(String value) {
+    public void setElementUrl(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_element.url</code>.
+     * Getter for <code>dubbo_test.sys_element.element_url</code>.
      */
-    public String getUrl() {
+    @Size(max = 50)
+    public String getElementUrl() {
         return (String) get(3);
     }
 
@@ -96,6 +102,7 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
     /**
      * Getter for <code>dubbo_test.sys_element.element_type</code>.
      */
+    @Size(max = 20)
     public String getElementType() {
         return (String) get(4);
     }
@@ -159,7 +166,7 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
      */
     @Override
     public Field<String> field2() {
-        return SysElement.SYS_ELEMENT.CODE;
+        return SysElement.SYS_ELEMENT.ELEMENT_CODE;
     }
 
     /**
@@ -167,7 +174,7 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
      */
     @Override
     public Field<String> field3() {
-        return SysElement.SYS_ELEMENT.NAME;
+        return SysElement.SYS_ELEMENT.ELEMENT_NAME;
     }
 
     /**
@@ -175,7 +182,7 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
      */
     @Override
     public Field<String> field4() {
-        return SysElement.SYS_ELEMENT.URL;
+        return SysElement.SYS_ELEMENT.ELEMENT_URL;
     }
 
     /**
@@ -207,7 +214,7 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
      */
     @Override
     public String value2() {
-        return getCode();
+        return getElementCode();
     }
 
     /**
@@ -215,7 +222,7 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
      */
     @Override
     public String value3() {
-        return getName();
+        return getElementName();
     }
 
     /**
@@ -223,7 +230,7 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
      */
     @Override
     public String value4() {
-        return getUrl();
+        return getElementUrl();
     }
 
     /**
@@ -256,7 +263,7 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
      */
     @Override
     public SysElementRecord value2(String value) {
-        setCode(value);
+        setElementCode(value);
         return this;
     }
 
@@ -265,7 +272,7 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
      */
     @Override
     public SysElementRecord value3(String value) {
-        setName(value);
+        setElementName(value);
         return this;
     }
 
@@ -274,7 +281,7 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
      */
     @Override
     public SysElementRecord value4(String value) {
-        setUrl(value);
+        setElementUrl(value);
         return this;
     }
 
@@ -324,13 +331,13 @@ public class SysElementRecord extends UpdatableRecordImpl<SysElementRecord> impl
     /**
      * Create a detached, initialised SysElementRecord
      */
-    public SysElementRecord(Integer id, String code, String name, String url, String elementType, Integer menuId) {
+    public SysElementRecord(Integer id, String elementCode, String elementName, String elementUrl, String elementType, Integer menuId) {
         super(SysElement.SYS_ELEMENT);
 
         set(0, id);
-        set(1, code);
-        set(2, name);
-        set(3, url);
+        set(1, elementCode);
+        set(2, elementName);
+        set(3, elementUrl);
         set(4, elementType);
         set(5, menuId);
     }

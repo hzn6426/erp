@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysUser extends TableImpl<SysUserRecord> {
 
-    private static final long serialVersionUID = 1183551463;
+    private static final long serialVersionUID = 1027244238;
 
     /**
      * The reference instance of <code>dubbo_test.sys_user</code>
@@ -55,24 +55,24 @@ public class SysUser extends TableImpl<SysUserRecord> {
     public final TableField<SysUserRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>dubbo_test.sys_user.name</code>.
+     * The column <code>dubbo_test.sys_user.user_name</code>.
      */
-    public final TableField<SysUserRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(16), this, "");
+    public final TableField<SysUserRecord, String> USER_NAME = createField("user_name", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
 
     /**
-     * The column <code>dubbo_test.sys_user.passwd</code>.
+     * The column <code>dubbo_test.sys_user.user_passwd</code>.
      */
-    public final TableField<SysUserRecord, String> PASSWD = createField("passwd", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+    public final TableField<SysUserRecord, String> USER_PASSWD = createField("user_passwd", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
 
     /**
-     * The column <code>dubbo_test.sys_user.mobile</code>.
+     * The column <code>dubbo_test.sys_user.user_mobile</code>.
      */
-    public final TableField<SysUserRecord, String> MOBILE = createField("mobile", org.jooq.impl.SQLDataType.VARCHAR.length(12), this, "");
+    public final TableField<SysUserRecord, String> USER_MOBILE = createField("user_mobile", org.jooq.impl.SQLDataType.VARCHAR.length(12), this, "");
 
     /**
-     * The column <code>dubbo_test.sys_user.real_name</code>.
+     * The column <code>dubbo_test.sys_user.user_real_name</code>.
      */
-    public final TableField<SysUserRecord, String> REAL_NAME = createField("real_name", org.jooq.impl.SQLDataType.VARCHAR.length(16), this, "");
+    public final TableField<SysUserRecord, String> USER_REAL_NAME = createField("user_real_name", org.jooq.impl.SQLDataType.VARCHAR.length(16), this, "");
 
     /**
      * Create a <code>dubbo_test.sys_user</code> table reference

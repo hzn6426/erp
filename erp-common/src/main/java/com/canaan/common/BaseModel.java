@@ -10,8 +10,6 @@ import lombok.Setter;
 @Getter @Setter @JsonIgnoreType
 public class BaseModel implements Serializable {
 	private static final long serialVersionUID = 3106470533624582061L;
-	@ApiModelProperty(value = "通用ID")
-	private Integer id;
 	@ApiModelProperty(value = "创建时间", hidden=true)
 	private Long createTime;
 	@ApiModelProperty(value = "更新时间", hidden=true)

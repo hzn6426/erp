@@ -8,7 +8,9 @@ import com.canaan.privilege.db.tables.SysElement;
 import com.canaan.privilege.db.tables.SysMenu;
 import com.canaan.privilege.db.tables.SysPrivilege;
 import com.canaan.privilege.db.tables.SysRole;
+import com.canaan.privilege.db.tables.SysRolePrivilege;
 import com.canaan.privilege.db.tables.SysUser;
+import com.canaan.privilege.db.tables.SysUserRole;
 
 import javax.annotation.Generated;
 
@@ -47,7 +49,17 @@ public class Tables {
     public static final SysRole SYS_ROLE = com.canaan.privilege.db.tables.SysRole.SYS_ROLE;
 
     /**
+     * The table <code>dubbo_test.sys_role_privilege</code>.
+     */
+    public static final SysRolePrivilege SYS_ROLE_PRIVILEGE = com.canaan.privilege.db.tables.SysRolePrivilege.SYS_ROLE_PRIVILEGE;
+
+    /**
      * The table <code>dubbo_test.sys_user</code>.
      */
     public static final SysUser SYS_USER = com.canaan.privilege.db.tables.SysUser.SYS_USER;
+
+    /**
+     * The table <code>dubbo_test.sys_user_role</code>.
+     */
+    public static final SysUserRole SYS_USER_ROLE = com.canaan.privilege.db.tables.SysUserRole.SYS_USER_ROLE;
 }

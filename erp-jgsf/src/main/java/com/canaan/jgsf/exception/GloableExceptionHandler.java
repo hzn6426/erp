@@ -82,7 +82,7 @@ public class GloableExceptionHandler {
 	}
 	
 	private ResponseResult<?> handleBizException(BizException bizException) {
-		log.error("BizException(" + bizException.getUuid() + "):" + Throwables.getStackTraceAsString(Throwables.getRootCause(bizException)));
+		log.error("BizException(" + bizException.getUuid() + "):" + bizException.getStackMessage());
 		return ResponseResult.build(bizException.getCode(), bizException.getMessage());
 	}
 	

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.canaan.jgsf.common.ResponseResult;
-import com.canaan.jgsf.vo.UserVO;
+import com.canaan.privilege.dto.UserDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,8 +21,8 @@ public class UserController {
 
 	@ApiOperation(value="新增")
 	@RequestMapping(value="/user",method=RequestMethod.POST)
-	public String add(@RequestBody @Validated UserVO user) {
-		return ResponseResult.build().json();
+	public void add(@RequestBody @Validated UserDTO user) {
+//		return ResponseResult.build().json();
 	}
 	
 	@ApiOperation(value="更新")
@@ -32,8 +32,8 @@ public class UserController {
 	}
 	@ApiOperation(value="查询")
 	@RequestMapping(value="/user",method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<UserVO> get() {
-		List<UserVO> userList = new ArrayList<UserVO>(2);
+	public List<UserDTO> get() {
+		List<UserDTO> userList = new ArrayList<UserDTO>(2);
 //		userList.add(UserVO.builder()
 //				.address(null).birth(new DateTime().toDate())
 //				.id("37028219880101").name("john").tel("15166059493").build());

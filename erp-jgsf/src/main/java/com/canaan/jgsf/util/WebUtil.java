@@ -16,8 +16,10 @@ public class WebUtil {
 	public static boolean isAjaxRequest(HttpServletRequest request){  
 	    String header = request.getHeader("X-Requested-With");  
 	    String contentType = Optional.fromNullable(request.getHeader("Content-Type")).or("");
+	    String accept = Optional.fromNullable(request.getHeader("Accept")).or("");
 	    boolean isAjax = "XMLHttpRequest".equals(header) ? true:false 
-	    		|| contentType.toLowerCase().contains("application/json");  
+	    		|| contentType.toLowerCase().contains("application/json") 
+	    		|| accept.toLowerCase().contains("application/json");  
 	    return isAjax;  
 	}
 	
@@ -27,16 +29,28 @@ public class WebUtil {
 			return false;
 		}
 		MediaType mediaType = header.getContentType();
+		boolean beJson = false;
+		List<MediaType> acceptList = header.getAccept();
+		if (!CollectionUtils.isEmpty(acceptList)) {
+			for (MediaType aceept : acceptList) {
+				if (aceept.includes(MediaType.APPLICATION_JSON)) {
+					beJson = true;
+					break;
+				}
+			}
+		}
 		boolean isAjax = "XMLHttpRequest".equals(headerList.get(0)) ? true:false 
-				|| mediaType.includes(MediaType.APPLICATION_JSON);
+				|| mediaType.includes(MediaType.APPLICATION_JSON) || beJson;
 		return isAjax;
 	}
 	
 	public static boolean isAjaxRequest(WebRequest request) {
 		String header = request.getHeader("X-Requested-With"); 
 		String contentType = Optional.fromNullable(request.getHeader("Content-Type")).or("");
+		String accept = Optional.fromNullable(request.getHeader("Accept")).or("");
 	    boolean isAjax = "XMLHttpRequest".equals(header) ? true:false 
-	    		|| contentType.toLowerCase().contains("application/json");  
+	    		|| contentType.toLowerCase().contains("application/json") 
+	    		|| accept.toLowerCase().contains("application/json");  
 	    return isAjax;
 	}
 }
