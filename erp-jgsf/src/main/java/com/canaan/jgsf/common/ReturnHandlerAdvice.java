@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import com.canaan.jgsf.constant.SystemConstants;
-import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 
 
@@ -51,13 +50,13 @@ public class ReturnHandlerAdvice implements ResponseBodyAdvice<Object> {
 			ModelAndView mv = (ModelAndView) body;
 			Object v =  mv.getModel().get(SystemConstants.ERROR_ATTRIBUTE);
 			if (v != null) {
-				return (ResponseResult) v;
+				return (ResponseResult<?>) v;
 			}
 			return mv;
 		}
 		
 		if (ResponseResult.class.isInstance(body)) {
-			return (ResponseResult) body;
+			return (ResponseResult<?>) body;
 		}
 		
 		if (Collection.class.isInstance(body)) {
