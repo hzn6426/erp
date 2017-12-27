@@ -4,11 +4,11 @@
 package com.canaan.privilege.db;
 
 
-import com.canaan.privilege.db.tables.SysElement;
+import com.canaan.privilege.db.tables.SysButton;
 import com.canaan.privilege.db.tables.SysMenu;
-import com.canaan.privilege.db.tables.SysPrivilege;
 import com.canaan.privilege.db.tables.SysRole;
-import com.canaan.privilege.db.tables.SysRolePrivilege;
+import com.canaan.privilege.db.tables.SysRoleButton;
+import com.canaan.privilege.db.tables.SysRoleMenu;
 import com.canaan.privilege.db.tables.SysUser;
 import com.canaan.privilege.db.tables.SysUserRole;
 
@@ -36,7 +36,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DubboTest extends SchemaImpl {
 
-    private static final long serialVersionUID = -1965448306;
+    private static final long serialVersionUID = -2043779164;
 
     /**
      * The reference instance of <code>dubbo_test</code>
@@ -44,9 +44,9 @@ public class DubboTest extends SchemaImpl {
     public static final DubboTest DUBBO_TEST = new DubboTest();
 
     /**
-     * The table <code>dubbo_test.sys_element</code>.
+     * The table <code>dubbo_test.sys_button</code>.
      */
-    public final SysElement SYS_ELEMENT = com.canaan.privilege.db.tables.SysElement.SYS_ELEMENT;
+    public final SysButton SYS_BUTTON = com.canaan.privilege.db.tables.SysButton.SYS_BUTTON;
 
     /**
      * The table <code>dubbo_test.sys_menu</code>.
@@ -54,19 +54,19 @@ public class DubboTest extends SchemaImpl {
     public final SysMenu SYS_MENU = com.canaan.privilege.db.tables.SysMenu.SYS_MENU;
 
     /**
-     * The table <code>dubbo_test.sys_privilege</code>.
-     */
-    public final SysPrivilege SYS_PRIVILEGE = com.canaan.privilege.db.tables.SysPrivilege.SYS_PRIVILEGE;
-
-    /**
      * The table <code>dubbo_test.sys_role</code>.
      */
     public final SysRole SYS_ROLE = com.canaan.privilege.db.tables.SysRole.SYS_ROLE;
 
     /**
-     * The table <code>dubbo_test.sys_role_privilege</code>.
+     * The table <code>dubbo_test.sys_role_button</code>.
      */
-    public final SysRolePrivilege SYS_ROLE_PRIVILEGE = com.canaan.privilege.db.tables.SysRolePrivilege.SYS_ROLE_PRIVILEGE;
+    public final SysRoleButton SYS_ROLE_BUTTON = com.canaan.privilege.db.tables.SysRoleButton.SYS_ROLE_BUTTON;
+
+    /**
+     * The table <code>dubbo_test.sys_role_menu</code>.
+     */
+    public final SysRoleMenu SYS_ROLE_MENU = com.canaan.privilege.db.tables.SysRoleMenu.SYS_ROLE_MENU;
 
     /**
      * The table <code>dubbo_test.sys_user</code>.
@@ -103,11 +103,11 @@ public class DubboTest extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
-            SysElement.SYS_ELEMENT,
+            SysButton.SYS_BUTTON,
             SysMenu.SYS_MENU,
-            SysPrivilege.SYS_PRIVILEGE,
             SysRole.SYS_ROLE,
-            SysRolePrivilege.SYS_ROLE_PRIVILEGE,
+            SysRoleButton.SYS_ROLE_BUTTON,
+            SysRoleMenu.SYS_ROLE_MENU,
             SysUser.SYS_USER,
             SysUserRole.SYS_USER_ROLE);
     }

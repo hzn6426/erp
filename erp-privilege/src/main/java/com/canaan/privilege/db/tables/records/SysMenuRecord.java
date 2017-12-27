@@ -30,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements Record5<Integer, String, String, String, Integer> {
 
-    private static final long serialVersionUID = -708713355;
+    private static final long serialVersionUID = -139579165;
 
     /**
      * Setter for <code>dubbo_test.sys_menu.id</code>.
@@ -48,14 +48,14 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_menu.menu_code</code>.
+     * Setter for <code>dubbo_test.sys_menu.menu_code</code>. 菜单编码
      */
     public void setMenuCode(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_menu.menu_code</code>.
+     * Getter for <code>dubbo_test.sys_menu.menu_code</code>. 菜单编码
      */
     @Size(max = 20)
     public String getMenuCode() {
@@ -63,14 +63,14 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_menu.menu_name</code>.
+     * Setter for <code>dubbo_test.sys_menu.menu_name</code>. 菜单名称
      */
     public void setMenuName(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_menu.menu_name</code>.
+     * Getter for <code>dubbo_test.sys_menu.menu_name</code>. 菜单名称
      */
     @Size(max = 50)
     public String getMenuName() {
@@ -78,14 +78,14 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_menu.menu_url</code>.
+     * Setter for <code>dubbo_test.sys_menu.menu_url</code>. 菜单URL
      */
     public void setMenuUrl(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_menu.menu_url</code>.
+     * Getter for <code>dubbo_test.sys_menu.menu_url</code>. 菜单URL
      */
     @Size(max = 50)
     public String getMenuUrl() {
@@ -93,14 +93,14 @@ public class SysMenuRecord extends UpdatableRecordImpl<SysMenuRecord> implements
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_menu.parent_id</code>.
+     * Setter for <code>dubbo_test.sys_menu.parent_id</code>. 父菜单ID
      */
     public void setParentId(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_menu.parent_id</code>.
+     * Getter for <code>dubbo_test.sys_menu.parent_id</code>. 父菜单ID
      */
     public Integer getParentId() {
         return (Integer) get(4);

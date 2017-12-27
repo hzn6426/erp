@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -34,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysUser extends TableImpl<SysUserRecord> {
 
-    private static final long serialVersionUID = 1027244238;
+    private static final long serialVersionUID = 127490772;
 
     /**
      * The reference instance of <code>dubbo_test.sys_user</code>
@@ -50,29 +51,29 @@ public class SysUser extends TableImpl<SysUserRecord> {
     }
 
     /**
-     * The column <code>dubbo_test.sys_user.id</code>.
+     * The column <code>dubbo_test.sys_user.id</code>. 用户ID
      */
-    public final TableField<SysUserRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<SysUserRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "用户ID");
 
     /**
-     * The column <code>dubbo_test.sys_user.user_name</code>.
+     * The column <code>dubbo_test.sys_user.user_name</code>. 用户名
      */
-    public final TableField<SysUserRecord, String> USER_NAME = createField("user_name", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+    public final TableField<SysUserRecord, String> USER_NAME = createField("user_name", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "用户名");
 
     /**
-     * The column <code>dubbo_test.sys_user.user_passwd</code>.
+     * The column <code>dubbo_test.sys_user.user_passwd</code>. 密码
      */
-    public final TableField<SysUserRecord, String> USER_PASSWD = createField("user_passwd", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+    public final TableField<SysUserRecord, String> USER_PASSWD = createField("user_passwd", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "密码");
 
     /**
-     * The column <code>dubbo_test.sys_user.user_mobile</code>.
+     * The column <code>dubbo_test.sys_user.user_mobile</code>. 手机
      */
-    public final TableField<SysUserRecord, String> USER_MOBILE = createField("user_mobile", org.jooq.impl.SQLDataType.VARCHAR.length(12), this, "");
+    public final TableField<SysUserRecord, String> USER_MOBILE = createField("user_mobile", org.jooq.impl.SQLDataType.VARCHAR.length(12), this, "手机");
 
     /**
-     * The column <code>dubbo_test.sys_user.user_real_name</code>.
+     * The column <code>dubbo_test.sys_user.user_real_name</code>. 真实姓名
      */
-    public final TableField<SysUserRecord, String> USER_REAL_NAME = createField("user_real_name", org.jooq.impl.SQLDataType.VARCHAR.length(16), this, "");
+    public final TableField<SysUserRecord, String> USER_REAL_NAME = createField("user_real_name", org.jooq.impl.SQLDataType.VARCHAR.length(16), this, "真实姓名");
 
     /**
      * Create a <code>dubbo_test.sys_user</code> table reference
@@ -102,6 +103,14 @@ public class SysUser extends TableImpl<SysUserRecord> {
     @Override
     public Schema getSchema() {
         return DubboTest.DUBBO_TEST;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<SysUserRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_SYS_USER;
     }
 
     /**

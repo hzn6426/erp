@@ -57,8 +57,82 @@
 	// pagefunction
 	
 	var pagefunction = function() {
-		loadScript("static/js/menu.js", function() {
-		});	
+		$('#tt').treegrid({    
+	        //url:'static/data.json',    
+	        idField:'id',    
+	        method: 'get',
+	        checkbox:true,
+	    //    fitColumns: true,
+	        rownumbers: true,
+	        animate: true,
+	        treeField:'name',
+	    //    checkbox: function(row){
+	    //      var names = ['Java','eclipse.exe','eclipse.ini'];
+	    //      if ($.inArray(row.name, names)>=0){
+	    //          return true;
+	    //      }
+	    //  },
+	        columns:[[    
+	            {field:'name',title:'Name',width:300},    
+	            {field:'size',title:'Size',align:'right'},    
+	            {field:'date',title:'Modified Date'} 
+	        ]],
+	        loader:function(param,success,error) {
+	           
+		        var data1 = [{
+	                    "id":221,
+	                    "name":"my.ini",
+	                    "size":"10 KB",
+	                    "date":"02/26/2009",
+	                    "parentId": 0,
+	                    state: "closed"
+	                },{
+	                    "id":222,
+	                    "name":"my-huge.ini",
+	                    "size":"5 KB",
+	                    "date":"02/26/2009",
+	                     "parentId": 0
+	                },{
+	                    "id":223,
+	                    "name":"my-large.ini",
+	                    "size":"5 KB",
+	                    "date":"02/26/2009",
+	                     "parentId": 0
+	                }];
+	                 var data2 = [{
+                        "id":331,
+                        "name":"my.eee",
+                        "size":"10 KB",
+                        "date":"02/26/2009"
+                    },{
+                        "id":332,
+                        "name":"my-eee.ini",
+                        "size":"5 KB",
+                        "date":"02/26/2009"
+                    },{
+                        "id":333,
+                        "name":"my-sss.ini",
+                        "size":"5 KB",
+                        "date":"02/26/2009"
+                    }]
+                 if (!param.id){
+                     success(data1);
+                 } else {
+                     success(data2);
+                 }
+             }
+	        //onExpand:function(row) {
+	           
+	          //  $('#tt').treegrid('append',{
+			//	    parent: row.id,  // the node has a 'id' value that defined through 'idField' property
+			//	    data: data
+             //   });
+	           //alert(row.name);
+	       // }
+	    }); 
+		//loadScript("static/js/menu.js", function() {
+		//  alert();
+		//});	
 	};
 	
 	// end pagefunction

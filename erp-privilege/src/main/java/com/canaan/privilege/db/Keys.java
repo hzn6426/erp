@@ -4,17 +4,17 @@
 package com.canaan.privilege.db;
 
 
-import com.canaan.privilege.db.tables.SysElement;
+import com.canaan.privilege.db.tables.SysButton;
 import com.canaan.privilege.db.tables.SysMenu;
-import com.canaan.privilege.db.tables.SysPrivilege;
 import com.canaan.privilege.db.tables.SysRole;
-import com.canaan.privilege.db.tables.SysRolePrivilege;
+import com.canaan.privilege.db.tables.SysRoleButton;
+import com.canaan.privilege.db.tables.SysRoleMenu;
 import com.canaan.privilege.db.tables.SysUser;
 import com.canaan.privilege.db.tables.SysUserRole;
-import com.canaan.privilege.db.tables.records.SysElementRecord;
+import com.canaan.privilege.db.tables.records.SysButtonRecord;
 import com.canaan.privilege.db.tables.records.SysMenuRecord;
-import com.canaan.privilege.db.tables.records.SysPrivilegeRecord;
-import com.canaan.privilege.db.tables.records.SysRolePrivilegeRecord;
+import com.canaan.privilege.db.tables.records.SysRoleButtonRecord;
+import com.canaan.privilege.db.tables.records.SysRoleMenuRecord;
 import com.canaan.privilege.db.tables.records.SysRoleRecord;
 import com.canaan.privilege.db.tables.records.SysUserRecord;
 import com.canaan.privilege.db.tables.records.SysUserRoleRecord;
@@ -44,17 +44,20 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
+    public static final Identity<SysButtonRecord, Integer> IDENTITY_SYS_BUTTON = Identities0.IDENTITY_SYS_BUTTON;
     public static final Identity<SysMenuRecord, Integer> IDENTITY_SYS_MENU = Identities0.IDENTITY_SYS_MENU;
+    public static final Identity<SysRoleRecord, Integer> IDENTITY_SYS_ROLE = Identities0.IDENTITY_SYS_ROLE;
+    public static final Identity<SysUserRecord, Integer> IDENTITY_SYS_USER = Identities0.IDENTITY_SYS_USER;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<SysElementRecord> KEY_SYS_ELEMENT_PRIMARY = UniqueKeys0.KEY_SYS_ELEMENT_PRIMARY;
+    public static final UniqueKey<SysButtonRecord> KEY_SYS_BUTTON_PRIMARY = UniqueKeys0.KEY_SYS_BUTTON_PRIMARY;
     public static final UniqueKey<SysMenuRecord> KEY_SYS_MENU_PRIMARY = UniqueKeys0.KEY_SYS_MENU_PRIMARY;
-    public static final UniqueKey<SysPrivilegeRecord> KEY_SYS_PRIVILEGE_PRIMARY = UniqueKeys0.KEY_SYS_PRIVILEGE_PRIMARY;
     public static final UniqueKey<SysRoleRecord> KEY_SYS_ROLE_PRIMARY = UniqueKeys0.KEY_SYS_ROLE_PRIMARY;
-    public static final UniqueKey<SysRolePrivilegeRecord> KEY_SYS_ROLE_PRIVILEGE_PRIMARY = UniqueKeys0.KEY_SYS_ROLE_PRIVILEGE_PRIMARY;
+    public static final UniqueKey<SysRoleButtonRecord> KEY_SYS_ROLE_BUTTON_PRIMARY = UniqueKeys0.KEY_SYS_ROLE_BUTTON_PRIMARY;
+    public static final UniqueKey<SysRoleMenuRecord> KEY_SYS_ROLE_MENU_PRIMARY = UniqueKeys0.KEY_SYS_ROLE_MENU_PRIMARY;
     public static final UniqueKey<SysUserRecord> KEY_SYS_USER_PRIMARY = UniqueKeys0.KEY_SYS_USER_PRIMARY;
     public static final UniqueKey<SysUserRoleRecord> KEY_SYS_USER_ROLE_PRIMARY = UniqueKeys0.KEY_SYS_USER_ROLE_PRIMARY;
 
@@ -68,15 +71,18 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class Identities0 extends AbstractKeys {
+        public static Identity<SysButtonRecord, Integer> IDENTITY_SYS_BUTTON = createIdentity(SysButton.SYS_BUTTON, SysButton.SYS_BUTTON.ID);
         public static Identity<SysMenuRecord, Integer> IDENTITY_SYS_MENU = createIdentity(SysMenu.SYS_MENU, SysMenu.SYS_MENU.ID);
+        public static Identity<SysRoleRecord, Integer> IDENTITY_SYS_ROLE = createIdentity(SysRole.SYS_ROLE, SysRole.SYS_ROLE.ID);
+        public static Identity<SysUserRecord, Integer> IDENTITY_SYS_USER = createIdentity(SysUser.SYS_USER, SysUser.SYS_USER.ID);
     }
 
     private static class UniqueKeys0 extends AbstractKeys {
-        public static final UniqueKey<SysElementRecord> KEY_SYS_ELEMENT_PRIMARY = createUniqueKey(SysElement.SYS_ELEMENT, "KEY_sys_element_PRIMARY", SysElement.SYS_ELEMENT.ID);
+        public static final UniqueKey<SysButtonRecord> KEY_SYS_BUTTON_PRIMARY = createUniqueKey(SysButton.SYS_BUTTON, "KEY_sys_button_PRIMARY", SysButton.SYS_BUTTON.ID);
         public static final UniqueKey<SysMenuRecord> KEY_SYS_MENU_PRIMARY = createUniqueKey(SysMenu.SYS_MENU, "KEY_sys_menu_PRIMARY", SysMenu.SYS_MENU.ID);
-        public static final UniqueKey<SysPrivilegeRecord> KEY_SYS_PRIVILEGE_PRIMARY = createUniqueKey(SysPrivilege.SYS_PRIVILEGE, "KEY_sys_privilege_PRIMARY", SysPrivilege.SYS_PRIVILEGE.ID);
         public static final UniqueKey<SysRoleRecord> KEY_SYS_ROLE_PRIMARY = createUniqueKey(SysRole.SYS_ROLE, "KEY_sys_role_PRIMARY", SysRole.SYS_ROLE.ID);
-        public static final UniqueKey<SysRolePrivilegeRecord> KEY_SYS_ROLE_PRIVILEGE_PRIMARY = createUniqueKey(SysRolePrivilege.SYS_ROLE_PRIVILEGE, "KEY_sys_role_privilege_PRIMARY", SysRolePrivilege.SYS_ROLE_PRIVILEGE.ROLE_ID, SysRolePrivilege.SYS_ROLE_PRIVILEGE.PRIVILEGE_ID);
+        public static final UniqueKey<SysRoleButtonRecord> KEY_SYS_ROLE_BUTTON_PRIMARY = createUniqueKey(SysRoleButton.SYS_ROLE_BUTTON, "KEY_sys_role_button_PRIMARY", SysRoleButton.SYS_ROLE_BUTTON.ROLE_ID, SysRoleButton.SYS_ROLE_BUTTON.BUTTON_ID);
+        public static final UniqueKey<SysRoleMenuRecord> KEY_SYS_ROLE_MENU_PRIMARY = createUniqueKey(SysRoleMenu.SYS_ROLE_MENU, "KEY_sys_role_menu_PRIMARY", SysRoleMenu.SYS_ROLE_MENU.ROLE_ID, SysRoleMenu.SYS_ROLE_MENU.MENU_ID);
         public static final UniqueKey<SysUserRecord> KEY_SYS_USER_PRIMARY = createUniqueKey(SysUser.SYS_USER, "KEY_sys_user_PRIMARY", SysUser.SYS_USER.ID);
         public static final UniqueKey<SysUserRoleRecord> KEY_SYS_USER_ROLE_PRIMARY = createUniqueKey(SysUserRole.SYS_USER_ROLE, "KEY_sys_user_role_PRIMARY", SysUserRole.SYS_USER_ROLE.USER_ID, SysUserRole.SYS_USER_ROLE.ROLE_ID);
     }

@@ -9,10 +9,8 @@ import org.jooq.SortField;
 import org.jooq.impl.DSL;
 
 import com.canaan.common.SearchResult;
-import com.canaan.core.exception.ServerException;
 import com.canaan.core.service.BaseServiceImpl;
 import com.canaan.privilege.api.SysMenuService;
-import com.canaan.privilege.common.PrivilegeExceptionEnum;
 import com.canaan.privilege.db.tables.SysMenu;
 import com.canaan.privilege.db.tables.records.SysMenuRecord;
 import com.canaan.privilege.dto.MenuDTO;
@@ -44,8 +42,8 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuRecord, SysMenu, 
 //		int count = dsl.selectCount().from(SYS_MENU).where(condition(e)).fetchOne(0, Integer.class);
 //		SearchResult<MenuDTO> result = new SearchResult<>(count,dataList);
 //		return result;
-		throw new ServerException(PrivilegeExceptionEnum.EXCEPTION_SAMPLE);
-//		return super.list(e, pageNumber, pageSize);
+//		throw new ServerException(PrivilegeExceptionEnum.EXCEPTION_SAMPLE);
+		return super.list(e, pageNumber, pageSize);
 	}
 
 	@Override

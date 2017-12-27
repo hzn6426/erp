@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysUserRole extends TableImpl<SysUserRoleRecord> {
 
-    private static final long serialVersionUID = 1358247112;
+    private static final long serialVersionUID = -1551408302;
 
     /**
      * The reference instance of <code>dubbo_test.sys_user_role</code>
@@ -50,14 +50,14 @@ public class SysUserRole extends TableImpl<SysUserRoleRecord> {
     }
 
     /**
-     * The column <code>dubbo_test.sys_user_role.user_id</code>.
+     * The column <code>dubbo_test.sys_user_role.user_id</code>. 用户ID
      */
-    public final TableField<SysUserRoleRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<SysUserRoleRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "用户ID");
 
     /**
-     * The column <code>dubbo_test.sys_user_role.role_id</code>.
+     * The column <code>dubbo_test.sys_user_role.role_id</code>. 角色ID
      */
-    public final TableField<SysUserRoleRecord, Integer> ROLE_ID = createField("role_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<SysUserRoleRecord, Integer> ROLE_ID = createField("role_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "角色ID");
 
     /**
      * Create a <code>dubbo_test.sys_user_role</code> table reference

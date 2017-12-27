@@ -30,17 +30,17 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysRoleRecord extends UpdatableRecordImpl<SysRoleRecord> implements Record4<Integer, String, String, String> {
 
-    private static final long serialVersionUID = 1526200400;
+    private static final long serialVersionUID = -785501224;
 
     /**
-     * Setter for <code>dubbo_test.sys_role.id</code>.
+     * Setter for <code>dubbo_test.sys_role.id</code>. 角色ID
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_role.id</code>.
+     * Getter for <code>dubbo_test.sys_role.id</code>. 角色ID
      */
     @NotNull
     public Integer getId() {
@@ -48,14 +48,14 @@ public class SysRoleRecord extends UpdatableRecordImpl<SysRoleRecord> implements
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_role.role_code</code>.
+     * Setter for <code>dubbo_test.sys_role.role_code</code>. 角色编码
      */
     public void setRoleCode(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_role.role_code</code>.
+     * Getter for <code>dubbo_test.sys_role.role_code</code>. 角色编码
      */
     @Size(max = 20)
     public String getRoleCode() {
@@ -63,14 +63,14 @@ public class SysRoleRecord extends UpdatableRecordImpl<SysRoleRecord> implements
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_role.role_name</code>.
+     * Setter for <code>dubbo_test.sys_role.role_name</code>. 角色名称
      */
     public void setRoleName(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_role.role_name</code>.
+     * Getter for <code>dubbo_test.sys_role.role_name</code>. 角色名称
      */
     @Size(max = 50)
     public String getRoleName() {
@@ -78,14 +78,14 @@ public class SysRoleRecord extends UpdatableRecordImpl<SysRoleRecord> implements
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_role.note</code>.
+     * Setter for <code>dubbo_test.sys_role.note</code>. 角色备注
      */
     public void setNote(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_role.note</code>.
+     * Getter for <code>dubbo_test.sys_role.note</code>. 角色备注
      */
     @Size(max = 255)
     public String getNote() {

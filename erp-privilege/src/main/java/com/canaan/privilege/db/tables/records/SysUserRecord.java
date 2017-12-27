@@ -30,17 +30,17 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements Record5<Integer, String, String, String, String> {
 
-    private static final long serialVersionUID = -1666377943;
+    private static final long serialVersionUID = 117593987;
 
     /**
-     * Setter for <code>dubbo_test.sys_user.id</code>.
+     * Setter for <code>dubbo_test.sys_user.id</code>. 用户ID
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_user.id</code>.
+     * Getter for <code>dubbo_test.sys_user.id</code>. 用户ID
      */
     @NotNull
     public Integer getId() {
@@ -48,14 +48,14 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_user.user_name</code>.
+     * Setter for <code>dubbo_test.sys_user.user_name</code>. 用户名
      */
     public void setUserName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_user.user_name</code>.
+     * Getter for <code>dubbo_test.sys_user.user_name</code>. 用户名
      */
     @Size(max = 20)
     public String getUserName() {
@@ -63,14 +63,14 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_user.user_passwd</code>.
+     * Setter for <code>dubbo_test.sys_user.user_passwd</code>. 密码
      */
     public void setUserPasswd(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_user.user_passwd</code>.
+     * Getter for <code>dubbo_test.sys_user.user_passwd</code>. 密码
      */
     @Size(max = 20)
     public String getUserPasswd() {
@@ -78,14 +78,14 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_user.user_mobile</code>.
+     * Setter for <code>dubbo_test.sys_user.user_mobile</code>. 手机
      */
     public void setUserMobile(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_user.user_mobile</code>.
+     * Getter for <code>dubbo_test.sys_user.user_mobile</code>. 手机
      */
     @Size(max = 12)
     public String getUserMobile() {
@@ -93,14 +93,14 @@ public class SysUserRecord extends UpdatableRecordImpl<SysUserRecord> implements
     }
 
     /**
-     * Setter for <code>dubbo_test.sys_user.user_real_name</code>.
+     * Setter for <code>dubbo_test.sys_user.user_real_name</code>. 真实姓名
      */
     public void setUserRealName(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>dubbo_test.sys_user.user_real_name</code>.
+     * Getter for <code>dubbo_test.sys_user.user_real_name</code>. 真实姓名
      */
     @Size(max = 16)
     public String getUserRealName() {

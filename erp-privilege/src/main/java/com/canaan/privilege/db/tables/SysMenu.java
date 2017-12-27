@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysMenu extends TableImpl<SysMenuRecord> {
 
-    private static final long serialVersionUID = -430052181;
+    private static final long serialVersionUID = -715744805;
 
     /**
      * The reference instance of <code>dubbo_test.sys_menu</code>
@@ -56,24 +56,24 @@ public class SysMenu extends TableImpl<SysMenuRecord> {
     public final TableField<SysMenuRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>dubbo_test.sys_menu.menu_code</code>.
+     * The column <code>dubbo_test.sys_menu.menu_code</code>. 菜单编码
      */
-    public final TableField<SysMenuRecord, String> MENU_CODE = createField("menu_code", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+    public final TableField<SysMenuRecord, String> MENU_CODE = createField("menu_code", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "菜单编码");
 
     /**
-     * The column <code>dubbo_test.sys_menu.menu_name</code>.
+     * The column <code>dubbo_test.sys_menu.menu_name</code>. 菜单名称
      */
-    public final TableField<SysMenuRecord, String> MENU_NAME = createField("menu_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<SysMenuRecord, String> MENU_NAME = createField("menu_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "菜单名称");
 
     /**
-     * The column <code>dubbo_test.sys_menu.menu_url</code>.
+     * The column <code>dubbo_test.sys_menu.menu_url</code>. 菜单URL
      */
-    public final TableField<SysMenuRecord, String> MENU_URL = createField("menu_url", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<SysMenuRecord, String> MENU_URL = createField("menu_url", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "菜单URL");
 
     /**
-     * The column <code>dubbo_test.sys_menu.parent_id</code>.
+     * The column <code>dubbo_test.sys_menu.parent_id</code>. 父菜单ID
      */
-    public final TableField<SysMenuRecord, Integer> PARENT_ID = createField("parent_id", org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("-1", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<SysMenuRecord, Integer> PARENT_ID = createField("parent_id", org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("-1", org.jooq.impl.SQLDataType.INTEGER)), this, "父菜单ID");
 
     /**
      * Create a <code>dubbo_test.sys_menu</code> table reference

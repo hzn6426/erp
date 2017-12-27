@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -34,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SysRole extends TableImpl<SysRoleRecord> {
 
-    private static final long serialVersionUID = 1015514995;
+    private static final long serialVersionUID = -300199599;
 
     /**
      * The reference instance of <code>dubbo_test.sys_role</code>
@@ -50,24 +51,24 @@ public class SysRole extends TableImpl<SysRoleRecord> {
     }
 
     /**
-     * The column <code>dubbo_test.sys_role.id</code>.
+     * The column <code>dubbo_test.sys_role.id</code>. 角色ID
      */
-    public final TableField<SysRoleRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<SysRoleRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "角色ID");
 
     /**
-     * The column <code>dubbo_test.sys_role.role_code</code>.
+     * The column <code>dubbo_test.sys_role.role_code</code>. 角色编码
      */
-    public final TableField<SysRoleRecord, String> ROLE_CODE = createField("role_code", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+    public final TableField<SysRoleRecord, String> ROLE_CODE = createField("role_code", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "角色编码");
 
     /**
-     * The column <code>dubbo_test.sys_role.role_name</code>.
+     * The column <code>dubbo_test.sys_role.role_name</code>. 角色名称
      */
-    public final TableField<SysRoleRecord, String> ROLE_NAME = createField("role_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "");
+    public final TableField<SysRoleRecord, String> ROLE_NAME = createField("role_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), this, "角色名称");
 
     /**
-     * The column <code>dubbo_test.sys_role.note</code>.
+     * The column <code>dubbo_test.sys_role.note</code>. 角色备注
      */
-    public final TableField<SysRoleRecord, String> NOTE = createField("note", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+    public final TableField<SysRoleRecord, String> NOTE = createField("note", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "角色备注");
 
     /**
      * Create a <code>dubbo_test.sys_role</code> table reference
@@ -97,6 +98,14 @@ public class SysRole extends TableImpl<SysRoleRecord> {
     @Override
     public Schema getSchema() {
         return DubboTest.DUBBO_TEST;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<SysRoleRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_SYS_ROLE;
     }
 
     /**

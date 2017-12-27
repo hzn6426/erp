@@ -4,11 +4,11 @@
 package com.canaan.privilege.db;
 
 
-import com.canaan.privilege.db.tables.SysElement;
+import com.canaan.privilege.db.tables.SysButton;
 import com.canaan.privilege.db.tables.SysMenu;
-import com.canaan.privilege.db.tables.SysPrivilege;
 import com.canaan.privilege.db.tables.SysRole;
-import com.canaan.privilege.db.tables.SysRolePrivilege;
+import com.canaan.privilege.db.tables.SysRoleButton;
+import com.canaan.privilege.db.tables.SysRoleMenu;
 import com.canaan.privilege.db.tables.SysUser;
 import com.canaan.privilege.db.tables.SysUserRole;
 
@@ -29,9 +29,9 @@ import javax.annotation.Generated;
 public class Tables {
 
     /**
-     * The table <code>dubbo_test.sys_element</code>.
+     * The table <code>dubbo_test.sys_button</code>.
      */
-    public static final SysElement SYS_ELEMENT = com.canaan.privilege.db.tables.SysElement.SYS_ELEMENT;
+    public static final SysButton SYS_BUTTON = com.canaan.privilege.db.tables.SysButton.SYS_BUTTON;
 
     /**
      * The table <code>dubbo_test.sys_menu</code>.
@@ -39,19 +39,19 @@ public class Tables {
     public static final SysMenu SYS_MENU = com.canaan.privilege.db.tables.SysMenu.SYS_MENU;
 
     /**
-     * The table <code>dubbo_test.sys_privilege</code>.
-     */
-    public static final SysPrivilege SYS_PRIVILEGE = com.canaan.privilege.db.tables.SysPrivilege.SYS_PRIVILEGE;
-
-    /**
      * The table <code>dubbo_test.sys_role</code>.
      */
     public static final SysRole SYS_ROLE = com.canaan.privilege.db.tables.SysRole.SYS_ROLE;
 
     /**
-     * The table <code>dubbo_test.sys_role_privilege</code>.
+     * The table <code>dubbo_test.sys_role_button</code>.
      */
-    public static final SysRolePrivilege SYS_ROLE_PRIVILEGE = com.canaan.privilege.db.tables.SysRolePrivilege.SYS_ROLE_PRIVILEGE;
+    public static final SysRoleButton SYS_ROLE_BUTTON = com.canaan.privilege.db.tables.SysRoleButton.SYS_ROLE_BUTTON;
+
+    /**
+     * The table <code>dubbo_test.sys_role_menu</code>.
+     */
+    public static final SysRoleMenu SYS_ROLE_MENU = com.canaan.privilege.db.tables.SysRoleMenu.SYS_ROLE_MENU;
 
     /**
      * The table <code>dubbo_test.sys_user</code>.
