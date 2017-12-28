@@ -23,7 +23,7 @@
     | 配置spring bean
     -->
     <bean id="sysMenuService" class="com.canaan.privilege.service.SysMenuServiceImpl"></bean>
-    
+    <bean id="sysUserService" class="com.canaan.privilege.service.SysUserServiceImpl"></bean>
     <!--
     | dubbo provider configuration
     | 配置 dubbo provider
@@ -31,4 +31,6 @@
     <dubbo:service ref="sysMenuService" interface="com.canaan.privilege.api.SysMenuService" timeout="${dubbo.provider.timeout}"
         retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/>
    
+   <dubbo:service ref="sysUserService" interface="com.canaan.privilege.api.SysUserService" timeout="${dubbo.provider.timeout}"
+        retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/>
 </beans>

@@ -5,13 +5,20 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 
 /**
  * 全局异常监控，AOP方式监控方法的执行进行异常捕获及处理
+ * <ol>
+ * <li>ExceptionAspect: 全局异常监控，任何service包中的异常都会进行捕捉，根据协议封装成相应的exception</li>
+ * <li>dubbo协议：内部协议，会封装为BizException，调用端获取后BizException后进行统一处理</li>
+ * <li> Rest协议：此为以后进行扩展，对外支持接口协议，封装成通用数据格式。</li>
+ * </ol>
  * @author Frog
  * @since 2017年11月16日
  */
+@Component
 @Aspect
 @Order(1000)
 public class ExceptionAspect {

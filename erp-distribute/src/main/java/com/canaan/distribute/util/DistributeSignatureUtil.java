@@ -178,7 +178,7 @@ public class DistributeSignatureUtil {
 		for (Map.Entry<String, DistributeSignature> ety : invokerChain.get().entrySet()) {
 			if (ety.getValue() != null 
 					&& Constants.METHOD_EXE_SUCCESS.equalsIgnoreCase(ety.getValue().getState()) 
-					&& Constants.LEVEL_TAG_ROOT.equalsIgnoreCase(ety.getValue().getLevelTag())
+					//&& Constants.LEVEL_TAG_ROOT.equalsIgnoreCase(ety.getValue().getLevelTag())
 					&& ety.getValue().getBeDurable() == Boolean.TRUE) return true;
 		}
 		return false;

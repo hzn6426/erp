@@ -17,8 +17,8 @@ public class BaseController<E extends BaseModel> {
 	@Autowired
 	private BaseService<E> baseService;
 	
-	protected SearchResult<E> list(E e, int start, int limit) {
-		return baseService.list(e, start, limit);
+	protected SearchResult<E> list(E e, int pageSize, int pageNumber) {
+		return baseService.list(e, pageSize, pageNumber);
 	}
 	
 	protected E get(E e) {

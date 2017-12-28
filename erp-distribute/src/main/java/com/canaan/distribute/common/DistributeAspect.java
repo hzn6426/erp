@@ -7,9 +7,14 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.rpc.RpcException;
 import com.canaan.distribute.util.SnowflakeIdWorker;
+
+import ch.qos.logback.classic.Logger;
+import lombok.extern.slf4j.Slf4j;
+
 import com.canaan.distribute.constant.Constants;
 import com.canaan.distribute.exception.DistributeException;
 import com.canaan.distribute.util.DistributeSignatureUtil;
@@ -24,8 +29,10 @@ import com.canaan.distribute.util.DistributeSignatureUtil;
  * @since 2017年9月1日 下午1:52:57
  * @version V1.0
  */
+@Component
 @Aspect
 @Order(100)
+@Slf4j
 public class DistributeAspect {
 
 //	private static final Logger logger = LoggerFactory.getLogger(DistributeAspect.class);  
@@ -65,6 +72,7 @@ public class DistributeAspect {
 			ex = de;
 			throw de;
 		} catch (Exception te) {
+//			log.error(DistributeSignatureUtil.getMethodInvokeChain());
 			ex = te;
 			ex.printStackTrace();
 			if (DistributeSignatureUtil.hasMethodChainDurable()) {

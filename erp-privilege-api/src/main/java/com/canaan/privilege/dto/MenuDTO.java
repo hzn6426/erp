@@ -16,11 +16,11 @@ public class MenuDTO extends BaseModel {
 	@ApiModelProperty(value = "主键ID")
 	private Integer id;
 	@ApiModelProperty(value = "编码")
-    private String  code;
+    private String  menuCode;
 	@ApiModelProperty(value = "名称")
-    private String  name;
+    private String  menuName;
 	@ApiModelProperty(value = "菜单链接")
-    private String  url;
+    private String  menuUrl;
 	@ApiModelProperty(value = "父菜单")
     private Integer parentId;
 }

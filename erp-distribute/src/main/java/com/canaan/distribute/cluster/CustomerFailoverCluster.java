@@ -22,8 +22,11 @@ import com.alibaba.dubbo.rpc.cluster.Cluster;
 import com.alibaba.dubbo.rpc.cluster.Directory;
 import com.alibaba.dubbo.rpc.cluster.LoadBalance;
 import com.alibaba.dubbo.rpc.cluster.support.AbstractClusterInvoker;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.canaan.distribute.common.DistributeSignature;
 import com.canaan.distribute.exception.DistributeException;
+import com.canaan.distribute.util.BeanUtil;
 import com.canaan.distribute.util.DistributeSignatureUtil;
 import com.google.common.base.Throwables;
 
@@ -124,13 +127,22 @@ public class CustomerFailoverCluster implements Cluster {
 			if (ds != null) {
 				
 				String exString = "分布式异常:id-" + ds.getDsuuid() + "，调用者-"  + ds.getInvokerName() 
-					+ ",服务名-" + invocation.getMethodName();
+					+ ",服务名-" + invocation.getInvoker().getInterface().getName() + ",方法名" + invocation.getMethodName();
 				Object[] args = invocation.getArguments();
 				int argsLength = 0;
 				if (args != null && (argsLength = args.length) > 0) {
 					exString += ",\n 参数列表-";
 					for (int i=0; i < argsLength; i++) {
-						exString += "[param]-" + (i + 1) + ",[value]-" +args[i];
+						String avalue = "";
+						if (BeanUtil.bePrimitive(args[i])) {
+							avalue = args[i].toString();
+						} else {
+							try {
+								avalue = JSONObject.toJSONString(args[i], SerializerFeature.WriteMapNullValue);
+							} catch(Exception e) {}
+						}
+							
+						exString += "[param]-" + (i + 1) + ",[value]-" + avalue;
 					}
 				}
 				

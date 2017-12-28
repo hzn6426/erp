@@ -2,6 +2,8 @@ package com.canaan.jgsf.controller;
 
 
 
+import javax.annotation.Resource;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.canaan.common.SearchResult;
+import com.canaan.distribute.common.Distribute;
 import com.canaan.jgsf.common.BaseController;
 import com.canaan.jgsf.common.ResponseResult;
 import com.canaan.jgsf.util.Assert;
+import com.canaan.privilege.api.SysUserService;
 import com.canaan.privilege.dto.MenuDTO;
+import com.canaan.privilege.dto.UserDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,6 +29,8 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value="/menu", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class MenuController extends BaseController<MenuDTO> {
 
+	@Resource
+	private SysUserService userService;
 	
 	@ApiOperation(value = "查询列表")
 	@RequestMapping(method = RequestMethod.GET)
@@ -47,11 +54,14 @@ public class MenuController extends BaseController<MenuDTO> {
 		super.save(menu);
 	}
 	
+	@Distribute
 	@ApiOperation(value = "更新")
 	@RequestMapping(method=RequestMethod.PUT)
 	public void update(@RequestBody MenuDTO menu) {
 		Assert.checkArgument(menu);
 		super.update(menu);
+		UserDTO udto = new UserDTO();
+		userService.save(udto);
 	}
 	
 	

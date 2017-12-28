@@ -30,7 +30,7 @@ public class ConsumerContextFilter implements Filter {
 
 	@Override
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-		String name = invocation.getClass() + "-" + invocation.getMethodName();
+		String name = invoker.getInterface().getName() + "-" + invocation.getMethodName();
 		String uuid = SnowflakeIdWorker.getId();
 		Map<String,DistributeSignature> chainMap = DistributeSignatureUtil.getMethodChain();
 		if (chainMap != null ) {

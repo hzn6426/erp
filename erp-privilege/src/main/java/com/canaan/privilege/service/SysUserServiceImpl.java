@@ -6,8 +6,10 @@ import org.jooq.Condition;
 import org.jooq.SelectField;
 import org.jooq.SortField;
 
+import com.canaan.core.exception.ServerException;
 import com.canaan.core.service.BaseServiceImpl;
 import com.canaan.privilege.api.SysUserService;
+import com.canaan.privilege.common.PrivilegeExceptionEnum;
 import com.canaan.privilege.db.tables.SysUser;
 import com.canaan.privilege.db.tables.records.SysUserRecord;
 import com.canaan.privilege.dto.UserDTO;
@@ -24,6 +26,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserRecord, SysUser, 
 	public List<SortField<?>> orderby(UserDTO e) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void save(UserDTO e) {
+		throw new ServerException(PrivilegeExceptionEnum.EXCEPTION_SAMPLE);
 	}
 
 	@Override

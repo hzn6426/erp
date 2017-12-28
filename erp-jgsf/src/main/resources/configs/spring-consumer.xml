@@ -13,4 +13,8 @@
         lazy="true" retries="${dubbo.consumer.retries}" protocol="${dubbo.consumer.protocol}" 
         timeout="${dubbo.comsumer.timeout}" check="false" version="${dubbo.consumer.version}"/>
     
+    <dubbo:reference id="sysUserService"
+        interface="com.canaan.privilege.api.SysUserService"
+        lazy="true" retries="${dubbo.consumer.retries}" protocol="${dubbo.consumer.protocol}" 
+        timeout="${dubbo.comsumer.timeout}" check="false" version="${dubbo.consumer.version}"/>
 </beans>
