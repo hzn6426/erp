@@ -46,6 +46,10 @@ public class ResponseResult<E> {
 		return new ResponseResult<E>(code, message, 0, Lists.newArrayList());
 	}
 	
+	public static <E> ResponseResult<E> build(List<E> data) {
+		return new ResponseResult<E>(200, "OK", data == null ? 0 : data.size(), data);
+	}
+	
 	public static <E> ResponseResult<E> build(int totalSize, List<E> data) {
 		return new ResponseResult<E>(200, "OK",totalSize, data);
 	}

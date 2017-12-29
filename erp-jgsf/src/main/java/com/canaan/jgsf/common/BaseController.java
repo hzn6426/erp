@@ -3,6 +3,8 @@ package com.canaan.jgsf.common;
 import com.canaan.common.BaseService;
 import com.canaan.common.SearchResult;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.canaan.common.BaseModel;
@@ -19,6 +21,10 @@ public class BaseController<E extends BaseModel> {
 	
 	protected SearchResult<E> list(E e, int pageSize, int pageNumber) {
 		return baseService.list(e, pageSize, pageNumber);
+	}
+	
+	protected List<E> list(E e) {
+		return baseService.list(e);
 	}
 	
 	protected E get(E e) {

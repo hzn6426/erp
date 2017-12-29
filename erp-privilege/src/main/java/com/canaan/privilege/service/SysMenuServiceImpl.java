@@ -10,6 +10,7 @@ import org.jooq.impl.DSL;
 
 import com.canaan.common.SearchResult;
 import com.canaan.core.service.BaseServiceImpl;
+import com.canaan.distribute.util.Checker;
 import com.canaan.privilege.api.SysMenuService;
 import com.canaan.privilege.db.tables.SysMenu;
 import com.canaan.privilege.db.tables.records.SysMenuRecord;
@@ -21,7 +22,20 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuRecord, SysMenu, 
 
 	@Override
 	public Condition condition(MenuDTO e) {
-		return DSL.trueCondition();
+		if (!Checker.BeNotNull(e)) return null;
+		Condition cdn = DSL.trueCondition();
+		if (Checker.BeNotNull(e.getParentId())) {
+			cdn = cdn.and(SYS_MENU.PARENT_ID.eq(e.getParentId()));
+		}
+		if (Checker.BeNotNull(e.getMenuCode())) {
+			cdn = cdn.and(SYS_MENU.MENU_CODE.eq(e.getMenuCode()));
+		}
+		if (Checker.BeNotNull(e.getMenuName())) {
+			cdn = cdn.and(SYS_MENU.MENU_NAME.eq(e.getMenuName()));
+		}
+//		cdn = cdn.and(Checker.BeNotNull(e.getParentId()) 
+//				? SYS_MENU.PARENT_ID.eq(e.getParentId()) : SYS_MENU.PARENT_ID.isNull());
+		return cdn;
 	}
 
 	@Override

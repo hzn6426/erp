@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-@Getter @Setter @JsonInclude(Include.NON_NULL)
+@Getter @Setter @JsonInclude(Include.NON_NULL) 
 @ApiModel(value="菜单对象")
 public class MenuDTO extends BaseModel {
 	private static final long serialVersionUID = -2913587203203194413L;
@@ -23,4 +23,6 @@ public class MenuDTO extends BaseModel {
     private String  menuUrl;
 	@ApiModelProperty(value = "父菜单")
     private Integer parentId;
+	
+	
 }

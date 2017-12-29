@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import org.dozer.Mapper;
 import org.jooq.Condition;
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.SelectField;
 import org.jooq.SortField;
 import org.jooq.Table;
@@ -48,6 +49,9 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 	
 	public abstract List<SelectField<?>> select();
 	
+	protected <V> Condition eqOrIsNull(Field<V> fld, V val) {
+	    return val==null ? fld.isNull() : fld.eq(val);
+	}
 	
 
 	
@@ -63,6 +67,7 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 		int offset =  (pageNumber-1) * pageSize; 
 		Assert.CheckArgument(false, e);
 		R record = baseMapper.map(e, recordClassType);
+		
 		Condition conditions = condition(e);
 		List<SortField<?>> orderbys = orderby(e);
 		List<SelectField<?>> selecets = select();
@@ -75,13 +80,44 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 		if (!Checker.BeNotNull(selecets)) {
 			selecets = new ArrayList<>(Arrays.asList(record.getTable().fields()));;
 		}
-		List<E> dataList = dsl.select(selecets).from(record.getTable()).where(conditions).orderBy(orderbys).limit(pageSize).offset(offset).fetchInto(modelClassType);
+		List<E> dataList = dsl.select(selecets)
+				.from(record.getTable())
+				.where(conditions)
+				.orderBy(orderbys)
+				.limit(pageSize)
+				.offset(offset)
+				.fetchInto(modelClassType);
 		int count = dsl.selectCount().from(record.getTable()).where(conditions).fetchOne(0, Integer.class);
 		SearchResult<E> result = new SearchResult<>(count,dataList);
 		return result;
 	}
 	
 	
+	@Override
+	public List<E> list(E e) {
+		Assert.CheckArgument(false, e);
+		R record = baseMapper.map(e, recordClassType);
+		Condition conditions = condition(e);
+		List<SortField<?>> orderbys = orderby(e);
+		List<SelectField<?>> selecets = select();
+		if (!Checker.BeNotNull(conditions)) {
+			conditions = DSL.trueCondition();
+		}
+		if (!Checker.BeNotNull(orderbys)) {
+			orderbys = new ArrayList<SortField<?>>(0);
+		}
+		if (!Checker.BeNotNull(selecets)) {
+			selecets = new ArrayList<>(Arrays.asList(record.getTable().fields()));;
+		}
+		List<E> dataList = dsl.select(selecets)
+				.from(record.getTable())
+				.where(conditions)
+				.orderBy(orderbys)
+				.fetchInto(modelClassType);
+		return dataList;
+	}
+
+
 	@Override
 	public E get(E e) {
 		Assert.checkArgument(e);

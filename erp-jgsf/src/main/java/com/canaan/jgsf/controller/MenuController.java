@@ -2,6 +2,8 @@ package com.canaan.jgsf.controller;
 
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.http.MediaType;
@@ -13,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.canaan.common.SearchResult;
-import com.canaan.distribute.common.Distribute;
+import com.canaan.distribute.util.Checker;
 import com.canaan.jgsf.common.BaseController;
 import com.canaan.jgsf.common.ResponseResult;
 import com.canaan.jgsf.util.Assert;
 import com.canaan.privilege.api.SysUserService;
 import com.canaan.privilege.dto.MenuDTO;
-import com.canaan.privilege.dto.UserDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +32,18 @@ public class MenuController extends BaseController<MenuDTO> {
 
 	@Resource
 	private SysUserService userService;
+	
+	@ApiOperation(value = "查询子节点")
+	@RequestMapping(value = "listByParent", method = RequestMethod.GET)
+	public ResponseResult<MenuDTO> listByParentId(@RequestParam Integer parentId) {
+		if (!Checker.BeNotNull(parentId)) {
+			parentId = -1;
+		}
+		MenuDTO menu = new MenuDTO();
+		menu.setParentId(parentId);
+		List<MenuDTO> list = super.list(menu);
+		return ResponseResult.build(list);
+	}
 	
 	@ApiOperation(value = "查询列表")
 	@RequestMapping(method = RequestMethod.GET)
@@ -54,14 +67,14 @@ public class MenuController extends BaseController<MenuDTO> {
 		super.save(menu);
 	}
 	
-	@Distribute
+//	@Distribute
 	@ApiOperation(value = "更新")
 	@RequestMapping(method=RequestMethod.PUT)
 	public void update(@RequestBody MenuDTO menu) {
 		Assert.checkArgument(menu);
 		super.update(menu);
-		UserDTO udto = new UserDTO();
-		userService.save(udto);
+//		UserDTO udto = new UserDTO();
+//		userService.save(udto);
 	}
 	
 	
