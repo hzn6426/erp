@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+    <!--  jedis客户端连接工厂 -->
+    <bean id="clusterRedisNodes1"   class="org.springframework.data.redis.connection.RedisNode"> 
+      <constructor-arg value="${cluster1.host}" />
+      <constructor-arg value="${cluster1.port}" type="int" />
+    </bean>
+    <bean id="clusterRedisNodes2"   class="org.springframework.data.redis.connection.RedisNode"> 
+      <constructor-arg value="${cluster2.host}" />
+      <constructor-arg value="${cluster2.port}" type="int" />
+    </bean>
+    <bean id="clusterRedisNodes3"   class="org.springframework.data.redis.connection.RedisNode"> 
+      <constructor-arg value="${cluster3.host}" />
+      <constructor-arg value="${cluster3.port}" type="int" />
+    </bean>
+    <bean id="redisClusterConfiguration" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
+        <property name="clusterNodes">
+            <set>
+                <ref bean="clusterRedisNodes1"/>
+                <ref bean="clusterRedisNodes2"/>
+                <ref bean="clusterRedisNodes3"/>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <!-- 最大连接数 -->  
+		<property name="maxTotal" value="30" />  
+		<!-- 最大空闲连接数 -->  
+		<property name="maxIdle" value="30" />  
+		<!-- 最小空闲连接数 -->  
+		<property name="minIdle" value="10" /> 
+		<!-- 获取连接时的最大等待毫秒数,小于零:阻塞不确定的时间,默认-1 -->  
+		<property name="maxWaitMillis" value="3000" />  
+		<!-- 每次释放连接的最大数目 -->  
+		<property name="numTestsPerEvictionRun" value="100" />  
+		<!-- 释放连接的扫描间隔（毫秒） -->  
+		<property name="timeBetweenEvictionRunsMillis" value="3000" />  
+		<!-- 连接最小空闲时间 -->  
+		<property name="minEvictableIdleTimeMillis" value="1800000" />  
+		<!-- 连接空闲多久后释放, 当空闲时间>该值 且 空闲连接>最大空闲连接数 时直接释放 -->  
+		<property name="softMinEvictableIdleTimeMillis" value="10000" />  
+		<!-- 在获取连接的时候检查有效性, 默认false -->  
+		<property name="testOnBorrow" value="true" />  
+		<!-- 在空闲时检查有效性, 默认false -->  
+		<property name="testWhileIdle" value="true" />  
+		<!-- 在归还给pool时，是否提前进行validate操作 -->  
+		<property name="testOnReturn" value="true" />  
+		<!-- 连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true -->  
+		<property name="blockWhenExhausted" value="false" />
+    </bean>
+
+    <!--  jedis客户端连接工厂 -->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <constructor-arg index="0" ref="redisClusterConfiguration"/>
+        <constructor-arg index="1" ref="jedisPoolConfig"/>
+        <property name="password" value="${redis.cluster.password}"/>
+    </bean>
+
+    <!-- redisTemplate模板 -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+       <property name="connectionFactory" ref="jedisConnectionFactory" />
+       <property name="keySerializer">
+           <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+       </property>
+       <property name="valueSerializer">
+           <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+       </property>
+     </bean>
+
+</beans>
