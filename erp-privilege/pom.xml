@@ -15,7 +15,7 @@
         <filters>
             <filter>src/main/envs/env-${env}.properties</filter>
         </filters>
-        <!-- 数据库代码生成的插件 --> 
+        <!-- 数据库代码生成的插件
         <plugins>
         <plugin>
             <groupId>org.jooq</groupId>
@@ -62,7 +62,7 @@
 	           </generator>
             </configuration>
         </plugin>
-        </plugins>
+        </plugins> --> 
     </build>
     
     <profiles>

@@ -102,11 +102,11 @@
 		<!-- mybatis config file -->
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<!-- mybatis mapper file -->
-		<property name="mapperLocations" value="classpath:com.canaan.product.mapper.xml"></property>
+		<property name="mapperLocations" value="classpath:com/canaan/product/mapper/xml/*Mapper.xml"></property>
 		<!-- 配置实体扫描路径，多个package可以用分号; 逗号, 分隔， 支持通配符*-->
 		<!-- com.a.b.entity;com.a.c.entity;com.d.*.entity-->
-		<property name="typeAliasesPackage" value="com.canaan.product.api.dto"/>
-		<property name="configuration" ref="mybatisConfig"/>
+		<property name="typeAliasesPackage" value="com.canaan.product.dto"/>
+		<!-- <property name="configuration" ref="mybatisConfig"/> -->
 		<!-- MP 全局配置注入 -->
 		<!-- <property name="globalConfig" ref="globalConfig"/> -->
 		<property name="plugins">
@@ -132,13 +132,10 @@
         <property name="basePackage" value="com.canaan.product.mapper"/>
     </bean>
 
-    <bean id="mybatisConfig" class="com.baomidou.mybatisplus.MybatisConfiguration">
+   <!--  <bean id="mybatisConfig" class="com.baomidou.mybatisplus.MybatisConfiguration">
 	    <property name="mapUnderscoreToCamelCase" value="true"/>
-	    <!-- 部分数据库不识别默认的NULL类型（比如oracle，需要配置该属性 -->
-	    <property name="jdbcTypeForNull">
-	        <util:constant static-field="org.apache.ibatis.type.JdbcType.NULL"/>
-	    </property>
-    </bean>
+	    部分数据库不识别默认的NULL类型（比如oracle，需要配置该属性
+    </bean> -->
 
 	<!-- 定义 MP 全局策略 -->
 	<!-- <bean id="globalConfig" class="com.baomidou.mybatisplus.entity.GlobalConfiguration">

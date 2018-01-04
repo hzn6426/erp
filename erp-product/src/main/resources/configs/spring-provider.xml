@@ -22,10 +22,11 @@
     | spring bean configuration
     | 配置spring bean
     -->
-    
+    <bean id="productService" class="com.canaan.product.service.ProductServiceImpl"></bean>
     <!--
     | dubbo provider configuration
     | 配置 dubbo provider
     -->
-    
+    <dubbo:service ref="productService" interface="com.canaan.product.api.ProductService" timeout="${dubbo.provider.timeout}"
+        retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/>
 </beans>

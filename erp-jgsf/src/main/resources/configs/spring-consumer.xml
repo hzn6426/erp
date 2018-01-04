@@ -7,7 +7,9 @@
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-
+    <!-- 
+    | privilege module
+    -->
     <dubbo:reference id="sysMenuService"
         interface="com.canaan.privilege.api.SysMenuService"
         lazy="true" retries="${dubbo.consumer.retries}" protocol="${dubbo.consumer.protocol}" 
@@ -17,4 +19,13 @@
         interface="com.canaan.privilege.api.SysUserService"
         lazy="true" retries="${dubbo.consumer.retries}" protocol="${dubbo.consumer.protocol}" 
         timeout="${dubbo.comsumer.timeout}" check="false" version="${dubbo.consumer.version}"/>
+        
+    <!--
+    | product module 
+    -->
+    <dubbo:reference id="productService"
+        interface="com.canaan.product.api.ProductService"
+        lazy="true" retries="${dubbo.consumer.retries}" protocol="${dubbo.consumer.protocol}" 
+        timeout="${dubbo.comsumer.timeout}" check="false" version="${dubbo.consumer.version}"/>
+    
 </beans>

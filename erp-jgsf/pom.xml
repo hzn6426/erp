@@ -113,6 +113,11 @@
     		<artifactId>erp-privilege-api</artifactId>
     	</dependency>
     	
+    	<dependency>
+            <groupId>com.canaan</groupId>
+            <artifactId>erp-product-api</artifactId>
+        </dependency>
+    	
 		<dependency>
 			<groupId>com.canaan</groupId>
 			<artifactId>erp-distribute</artifactId>

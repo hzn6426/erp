@@ -396,6 +396,12 @@
 			    <artifactId>mybatis-plus</artifactId>
 			    <version>${mybatis-plus.version}</version>
 			</dependency>
+			
+			<dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-support</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
         	<!-- java persistence -->
         	<dependency>
 			   <groupId>javax.persistence</groupId>
