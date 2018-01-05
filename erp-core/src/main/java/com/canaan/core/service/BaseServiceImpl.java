@@ -4,7 +4,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -23,10 +22,9 @@ import com.canaan.common.SearchResult;
 import com.canaan.core.exception.ExceptionEnum;
 import com.canaan.core.util.Assert;
 import com.canaan.distribute.util.Checker;
-import com.canaan.common.BaseModel;
 import com.canaan.common.BaseService;
 @SuppressWarnings({"unchecked" })
-public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<R>, E extends BaseModel> 
+public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<R>, E> 
 	implements BaseService<E> {
 
 	private  Class<R> recordClassType;
@@ -136,11 +134,11 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 //			throw new ServerException(ExceptionEnum.INVALID_ID_FOR_INSERT);
 //		}
 		//TODO user getid
-		long misecond = new Date().getTime();
+//		long misecond = new Date().getTime();
 //		e.setCreateId(createId);
-		e.setCreateTime(misecond);
+//		e.setCreateTime(misecond);
 //		e.setUpdateId(updateId);
-		e.setUpdateTime(misecond);
+//		e.setUpdateTime(misecond);
 		R record = baseMapper.map(e, recordClassType);
 		dsl.insertInto(record.getTable()).set(record).execute();
 	}
@@ -150,10 +148,10 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 //		Assert.CheckNotNull(e.getId(), ExceptionEnum.INVALID_ID_FOR_UPDATE);
 		Condition pkConditon = primaryKeyCondition(e);
 		Assert.CheckNotNull(pkConditon, ExceptionEnum.INVALID_PK_FOR_UPDATE);
-		long misecond = new Date().getTime();
+//		long misecond = new Date().getTime();
 		//TODO user getid
 //		e.setUpdateId(updateId);
-		e.setUpdateTime(misecond);
+//		e.setUpdateTime(misecond);
 		R record = baseMapper.map(e, recordClassType);
 		int num = dsl.update(record.getTable()).set(record).where(pkConditon).execute();
 		Assert.checkNotEqual(num, 1, ExceptionEnum.INVALID_UPDATE_NUM);

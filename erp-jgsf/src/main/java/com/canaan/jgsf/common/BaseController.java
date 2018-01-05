@@ -7,14 +7,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.canaan.common.BaseModel;
 /**
  * controller基类封装，针对单一对象提供增、删、改、查封装
  * @author zening
  * @date 2017年12月21日 上午9:22:46
  * @version V1.0
  */
-public class BaseController<E extends BaseModel> {
+public class BaseController<E> {
 	
 	@Autowired
 	private BaseService<E> baseService;

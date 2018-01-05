@@ -1,18 +1,20 @@
 package com.canaan.product.dto;
 
 
+import java.io.Serializable;
+
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.canaan.common.BaseModel;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-@Getter @Setter
-@TableName("mch_product")
+@JsonInclude(Include.NON_NULL)
+@Getter @Setter 
 @ApiModel(value="商品对象")
-public class ProductDTO extends BaseModel {
+public class ProductDTO implements Serializable  {
 	private static final long serialVersionUID = 1863419141498676171L;
 
 	@TableId

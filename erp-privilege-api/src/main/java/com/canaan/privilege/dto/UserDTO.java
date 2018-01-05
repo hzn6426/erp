@@ -1,5 +1,6 @@
 package com.canaan.privilege.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.Past;
@@ -7,7 +8,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.canaan.common.BaseModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -19,7 +19,7 @@ import lombok.Setter;
 @JsonInclude(Include.NON_NULL)
 @Getter @Setter @NoArgsConstructor
 @ApiModel(value="用户对象")
-public class UserDTO extends BaseModel {
+public class UserDTO implements Serializable  {
 	private static final long serialVersionUID = -8133164815820007379L;
 	
 	@ApiModelProperty(value="主键ID")

@@ -1,5 +1,7 @@
 package com.canaan.core.service;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,18 +18,42 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.canaan.common.MBaseService;
 import com.canaan.common.SearchResult;
 import com.canaan.core.batisplus.OrderBy;
+import com.canaan.core.common.BaseModel;
 import com.canaan.core.exception.ExceptionEnum;
 import com.canaan.core.util.Assert;
 import com.canaan.core.util.CollectionMapperDecorator;
 import com.canaan.distribute.util.Checker;
-public abstract class MBaseServiceImpl<M extends BaseMapper<E>, E> extends ServiceImpl<M, E> implements MBaseService<E> {
+import com.google.common.collect.Lists;
+/**
+ * 通用基于mybatis-plus的服务方法基类
+ * <ul>
+ * 	<li>T是数据库对应的实体对象</li>
+ * 	<li>M是实体对象对应的Mapper</li>
+ * 	<li>V是传过来的DTO对象</li>
+ * </ul>
+ * @author zening
+ * @date 2018年1月5日 上午11:54:53
+ * @version V1.0
+ */
+public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel, V> extends ServiceImpl<M, T> implements MBaseService<V> {
 
+	private  Class<T> entityClassType;
 	
+	private Class<V> vmodelClassType;
+	
+	@SuppressWarnings("unchecked")
+	public  MBaseServiceImpl() {
+		//获取泛型参数的Class类型
+		Type genType = getClass().getGenericSuperclass();  
+        Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
+        entityClassType = (Class<T>) params[1];
+        vmodelClassType = (Class<V>) params[2];
+	}
 	
 	protected abstract Columns select();
-	protected abstract Wrapper<E> condition(E e);
+	protected abstract Wrapper<T> condition(V v);
 	protected abstract OrderBy orderby();
-	protected abstract Wrapper<E> primaryKeyCondition(E e);
+	protected abstract Wrapper<T> primaryKeyCondition(V v);
 	
 	@Resource
 	protected Mapper beanMapper;
@@ -35,13 +61,48 @@ public abstract class MBaseServiceImpl<M extends BaseMapper<E>, E> extends Servi
 	@Resource
 	protected CollectionMapperDecorator collectionMapper;
 	
-	private Wrapper<E> wrapperIt(E e) {
-		Assert.CheckArgument(false, e);
-		Wrapper<E> wrapper = null;
+	/**
+	 * 将 {@link V}类型对象(<code>dto</code>)转化成{@link T}类型对象(<code>entity</code>)
+	 * @param v dto对象
+	 * @return entity对象
+	 */
+	protected T mapper(V v) {
+		Assert.checkArgument(v);
+		return beanMapper.map(v, entityClassType);
+	}
+	
+	/**
+	 * 将{@link T} 类型对象(<code>entity</code>)转化成 {@link V} 类型对象(<code>dto</code>)
+	 * @param t entity对象
+	 * @return dto对象
+	 */
+	protected V mapper(T t) {
+		Assert.checkArgument(t);
+		return beanMapper.map(t, vmodelClassType);
+	}
+	
+	/**
+	 * 将{@link T} 类型对象(<code>entity</code>)集合转化成 {@link V} 类型对象(<code>dto</code>)集合
+	 * @param tlist
+	 * @return
+	 */
+	protected List<V> mapper(List<T> tlist) {
+		Assert.checkArgument(tlist);
+		return Lists.newArrayList(collectionMapper.mapCollection(tlist, vmodelClassType));
+	}
+	
+	/**
+	 * 封装<code>select</code>部分和<code>where</code>部分
+	 * @param v
+	 * @return
+	 */
+	private Wrapper<T> wrapperIt(V v) {
+		Assert.CheckArgument(false, v);
+		Wrapper<T> wrapper = null;
 		
-		wrapper = condition(e);
+		wrapper = condition(v);
 		if (!Checker.BeNotNull(wrapper)) {
-			wrapper = new EntityWrapper<E>(e);
+			wrapper = new EntityWrapper<T>();
 		}
 		
 		Columns cmns = select();
@@ -49,64 +110,67 @@ public abstract class MBaseServiceImpl<M extends BaseMapper<E>, E> extends Servi
 			wrapper.setSqlSelect(cmns);
 		}
 		
-		
-		
 		return wrapper;
 	}
 	
 	@Override
-	public SearchResult<E> list(E e, int pageNumber, int pageSize) {
+	public SearchResult<V> list(V v, int pageNumber, int pageSize) {
 		
-		Wrapper<E> wrapper = wrapperIt(e);
+		Wrapper<T> wrapper = wrapperIt(v);
 		
-		Page<E> page = new Page<E>(pageNumber,pageSize);
+		Page<T> page = new Page<T>(pageNumber,pageSize);
 		
 		OrderBy orders = orderby();
 		if (Checker.BeNotNull(orders)) {
 			if (CollectionUtils.isNotEmpty(orders.getAscList())) {
-				page.setAsc(orders.getAscList());
+				page.setAscs(orders.getAscList());
 			}
 			if (CollectionUtils.isNotEmpty(orders.getDescList())) {
-				page.setDesc(orders.getDescList());
+				page.setDescs(orders.getDescList());
 			}
 		}
 		
-		List<E> list = this.baseMapper.selectPage(page, wrapper);
+		List<T> list = this.baseMapper.selectPage(page, wrapper);
+		List<V> vlist = Lists.newArrayList(collectionMapper.mapCollection(list, vmodelClassType));
 		int count = this.selectCount(wrapper);
-		return new SearchResult<E>(count, list);
+		return new SearchResult<V>(count, vlist);
 	}
 
 	@Override
-	public List<E> list(E e) {
-		Wrapper<E> wrapper = wrapperIt(e);
-		return this.selectList(wrapper);
+	public List<V> list(V v) {
+		Wrapper<T> wrapper = wrapperIt(v);
+		List<T> list = this.selectList(wrapper);
+		return Lists.newArrayList(collectionMapper.mapCollection(list, vmodelClassType));
 	}
 
 	@Override
-	public E get(Long pk) {
+	public V get(Long pk) {
 		Assert.checkArgument(pk);
-		return this.selectById(pk);
+		T t =  this.selectById(pk);
+		return beanMapper.map(t, vmodelClassType);
 	}
 
 	@Override
-	public void save(E e) {
-		Assert.checkArgument(e);
-		this.insert(e);
+	public void save(V v) {
+		Assert.checkArgument(v);
+		T t = beanMapper.map(v, entityClassType);
+		this.insert(t);
 	}
 
 	@Override
-	public void update(E e) {
-		Assert.checkArgument(e);
-		Wrapper<E> wrapper = primaryKeyCondition(e);
+	public void update(V v) {
+		Assert.checkArgument(v);
+		Wrapper<T> wrapper = primaryKeyCondition(v);
 		Assert.CheckNotNull(wrapper,ExceptionEnum.INVALID_PK_FOR_UPDATE);
-		int num = this.baseMapper.update(e, wrapper);
+		T t = beanMapper.map(v, entityClassType);
+		int num = this.baseMapper.update(t, wrapper);
 		Assert.checkNotEqual(num, 1, ExceptionEnum.INVALID_UPDATE_NUM);
 	}
 
 	@Override
-	public void delete(E e) {
-		Assert.checkArgument(e);
-		Wrapper<E> wrapper = primaryKeyCondition(e);
+	public void delete(V v) {
+		Assert.checkArgument(v);
+		Wrapper<T> wrapper = primaryKeyCondition(v);
 		Assert.CheckNotNull(wrapper,ExceptionEnum.INVALID_PK_FOR_DELETE);
 		int num = this.baseMapper.delete(wrapper);
 		Assert.checkNotEqual(num, 1, ExceptionEnum.INVALID_DELETE_NUM);

@@ -1,4 +1,4 @@
-package com.canaan.product.common;
+package com.canaan.product.constant;
 
 import com.canaan.core.exception.ExceptionEnumable;
 

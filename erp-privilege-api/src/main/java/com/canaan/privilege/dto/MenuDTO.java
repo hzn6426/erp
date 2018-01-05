@@ -1,6 +1,7 @@
 package com.canaan.privilege.dto;
 
-import com.canaan.common.BaseModel;
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -10,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 @Getter @Setter @JsonInclude(Include.NON_NULL) 
 @ApiModel(value="菜单对象")
-public class MenuDTO extends BaseModel {
+public class MenuDTO implements Serializable {
 	private static final long serialVersionUID = -2913587203203194413L;
 	
 	@ApiModelProperty(value = "主键ID")

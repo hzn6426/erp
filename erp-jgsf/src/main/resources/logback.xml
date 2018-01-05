@@ -102,9 +102,9 @@
             <level>WARN</level>
         </filter>
     </appender>
-    <logger name="com.alibaba.dubbo" level="INFO"/>
-    <logger name="org.springframework" level="INFO"/>
-    <logger name="org.apache.zookeeper" level="INFO"/>
+    <logger name="com.alibaba.dubbo" level="DEBUG"/>
+    <logger name="org.springframework" level="DEBUG"/>
+    <logger name="org.apache.zookeeper" level="DEBUG"/>
     <!-- <logger name="canaan.dao" level="DEBUG"/> -->
     <logger name="com.alibaba.druid" level="INFO" additivity="false">
     <logger name="org.jooq" level="DEBUG"/>

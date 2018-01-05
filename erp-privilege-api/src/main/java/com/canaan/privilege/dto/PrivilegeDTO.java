@@ -1,6 +1,7 @@
 package com.canaan.privilege.dto;
 
-import com.canaan.common.BaseModel;
+
+import java.io.Serializable;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,7 +10,7 @@ import lombok.Getter;
 import lombok.ToString;
 @Builder @Getter @ToString
 @ApiModel(value="权限对象")
-public class PrivilegeDTO extends BaseModel {
+public class PrivilegeDTO implements Serializable  {
 	private static final long serialVersionUID = 3664138339949625927L;
 	@ApiModelProperty("全线字符串")
 	private String permission;

@@ -1,4 +1,4 @@
-package com.canaan.privilege.common;
+package com.canaan.privilege.constant;
 
 import com.canaan.core.exception.ExceptionEnumable;
 

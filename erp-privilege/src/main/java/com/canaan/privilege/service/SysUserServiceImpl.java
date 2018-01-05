@@ -9,7 +9,7 @@ import org.jooq.SortField;
 import com.canaan.core.exception.ServerException;
 import com.canaan.core.service.BaseServiceImpl;
 import com.canaan.privilege.api.SysUserService;
-import com.canaan.privilege.common.PrivilegeExceptionEnum;
+import com.canaan.privilege.constant.PrivilegeExceptionEnum;
 import com.canaan.privilege.db.tables.SysUser;
 import com.canaan.privilege.db.tables.records.SysUserRecord;
 import com.canaan.privilege.dto.UserDTO;
