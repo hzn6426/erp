@@ -110,24 +110,5 @@
     <bean id="cacheInterceptor" class="com.jarvis.cache.aop.aspectj.AspectjAopInterceptor">
 	  <constructor-arg ref="cacheHandler" />
 	</bean>
-	<aop:config proxy-target-class="false">
-	  <!-- 处理 @Cache AOP-->
-	  <aop:aspect ref="cacheInterceptor">
-	    <aop:pointcut id="daoCachePointcut" expression="execution(public !void com.canaan.product.mapper..*.*(..)) &amp;&amp; @annotation(cache)" />
-	    <aop:around pointcut-ref="daoCachePointcut" method="proceed" />
-	  </aop:aspect>
 	
-	  <!-- 处理 @CacheDelete AOP-->
-	  <aop:aspect ref="cacheInterceptor" order="1000"><!-- order 参数控制 aop通知的优先级，值越小，优先级越高 ，在事务提交后删除缓存 -->
-	    <aop:pointcut id="deleteCachePointcut" expression="execution(* com.canaan.product.mapper..*.*(..)) &amp;&amp; @annotation(cacheDelete)" />
-	    <aop:after-returning pointcut-ref="deleteCachePointcut" method="deleteCache" returning="retVal"/>
-	  </aop:aspect>
-	
-	  <!-- 处理 @CacheDeleteTransactional AOP-->
-	  <aop:aspect ref="cacheInterceptor">
-	    <aop:pointcut id="cacheDeleteTransactional" expression="execution(* com.canaan.product.service..*.*(..)) &amp;&amp; @annotation(cacheDeleteTransactional)" />
-	    <aop:around pointcut-ref="cacheDeleteTransactional" method="deleteCacheTransactional" />
-	  </aop:aspect>
-	
-	</aop:config>
 </beans>
