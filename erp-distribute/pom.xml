@@ -127,6 +127,12 @@
             <artifactId>spring-test</artifactId>
         </dependency>
 	
+	   <!-- spring-data-redis -->
+       <dependency>
+           <groupId>org.springframework.data</groupId>
+           <artifactId>spring-data-redis</artifactId>
+       </dependency>
+       
         <dependency>
 	        <groupId>com.alibaba</groupId>
 	        <artifactId>fastjson</artifactId>
@@ -142,15 +148,16 @@
            <artifactId>sentry-logback</artifactId>
        </dependency>
 	
-	   <!-- spring-data-redis -->
-       <dependency>
-           <groupId>org.springframework.data</groupId>
-           <artifactId>spring-data-redis</artifactId>
-       </dependency>
        <!-- redis -->
        <dependency>
            <groupId>redis.clients</groupId>
            <artifactId>jedis</artifactId>
+       </dependency>
+       
+       <!-- redis autoload cache -->
+       <dependency>
+         <groupId>com.github.qiujiayu</groupId>
+         <artifactId>autoload-cache</artifactId>
        </dependency>
     </dependencies>
 </project>

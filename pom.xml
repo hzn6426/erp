@@ -32,6 +32,8 @@
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         
         <!-- lib versions  -->
+        <autoload-cache.version>6.7</autoload-cache.version>
+        
         <commons-io.version>2.4</commons-io.version>
         <commons-logging.version>1.2</commons-logging.version>
         <commons-codec.version>1.10</commons-codec.version>
@@ -392,6 +394,13 @@
         		<artifactId>erp-redis</artifactId>
         		<version>${project.version}</version>
         	</dependency>
+        	
+        	<!-- redis autoload cache -->
+        	<dependency>
+			  <groupId>com.github.qiujiayu</groupId>
+			  <artifactId>autoload-cache</artifactId>
+			  <version>${autoload-cache.version}</version>
+			</dependency>
         	
         	<!-- mybatis-plus -->
         	<dependency>

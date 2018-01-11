@@ -189,7 +189,7 @@
 		</tx:attributes>
 	</tx:advice>
 	
-	<aop:config proxy-target-class="true">
+	<aop:config proxy-target-class="false">
 		<aop:pointcut expression="execution(* com.canaan..service..*.*(..)) " id="jdkPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="jdkPointcut"/>
 	</aop:config>

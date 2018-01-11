@@ -70,6 +70,64 @@
        <property name="valueSerializer">
            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
        </property>
-     </bean>
-
+    </bean>
+    
+    <!-- 自动加载配置 -->
+    <bean id="autoLoadConfig" class="com.jarvis.cache.to.AutoLoadConfig">
+		<property name="threadCnt" value="10" />
+		<property name="maxElement" value="20000" />
+		<property name="printSlowLog" value="true" />
+		<property name="slowLoadTime" value="500" />
+		<property name="sortType" value="1" />
+		<property name="checkFromCacheBeforeLoad" value="true" />
+		<property name="autoLoadPeriod" value="50" />
+		<property name="functions">
+		  <map>
+		    <entry key="isEmpty" value="com.jarvis.cache.CacheUtil" />
+		  </map>
+		</property>
+    </bean>
+    <!-- key条件表达式 -->
+    <bean id="scriptParser" class="com.jarvis.cache.script.SpringELParser" />
+    <!-- 序列化数据序列器 -->
+    <bean id="hessianSerializer" class="com.jarvis.cache.serializer.HessianSerializer" />
+    <!-- 序列化缓存数据压缩 -->
+    <bean id="hessianCompressorSerializer" class="com.jarvis.cache.serializer.CompressorSerializer">
+        <constructor-arg ref="hessianSerializer" />
+    </bean>
+    
+    <bean id="cacheManager" class="com.canaan.core.cache.RedisClusterCacheManager">
+	  <constructor-arg ref="hessianCompressorSerializer" />
+	  <property name="redisTemplate" ref="redisTemplate" />
+	</bean>
+	<bean id="cacheHandler" class="com.jarvis.cache.CacheHandler" destroy-method="destroy">
+	  <constructor-arg ref="cacheManager" />
+	  <constructor-arg ref="scriptParser" />
+	  <constructor-arg ref="autoLoadConfig" />
+	  <constructor-arg ref="hessianCompressorSerializer" />
+	</bean>
+    
+    <bean id="cacheInterceptor" class="com.jarvis.cache.aop.aspectj.AspectjAopInterceptor">
+	  <constructor-arg ref="cacheHandler" />
+	</bean>
+	<aop:config proxy-target-class="false">
+	  <!-- 处理 @Cache AOP-->
+	  <aop:aspect ref="cacheInterceptor">
+	    <aop:pointcut id="daoCachePointcut" expression="execution(public !void com.canaan.product.mapper..*.*(..)) &amp;&amp; @annotation(cache)" />
+	    <aop:around pointcut-ref="daoCachePointcut" method="proceed" />
+	  </aop:aspect>
+	
+	  <!-- 处理 @CacheDelete AOP-->
+	  <aop:aspect ref="cacheInterceptor" order="1000"><!-- order 参数控制 aop通知的优先级，值越小，优先级越高 ，在事务提交后删除缓存 -->
+	    <aop:pointcut id="deleteCachePointcut" expression="execution(* com.canaan.product.mapper..*.*(..)) &amp;&amp; @annotation(cacheDelete)" />
+	    <aop:after-returning pointcut-ref="deleteCachePointcut" method="deleteCache" returning="retVal"/>
+	  </aop:aspect>
+	
+	  <!-- 处理 @CacheDeleteTransactional AOP-->
+	  <aop:aspect ref="cacheInterceptor">
+	    <aop:pointcut id="cacheDeleteTransactional" expression="execution(* com.canaan.product.service..*.*(..)) &amp;&amp; @annotation(cacheDeleteTransactional)" />
+	    <aop:around pointcut-ref="cacheDeleteTransactional" method="deleteCacheTransactional" />
+	  </aop:aspect>
+	
+	</aop:config>
 </beans>
