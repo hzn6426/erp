@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<configuration scan="true" scanPeriod="1800 seconds" debug="false">
-    <jmxConfigurator/>
+<configuration >
    <!--  <property name="log.home" value="${log.home}"/> -->
    <!--  <property scope="context" name="FILE_NAME" value="${log.fileName}"/> -->
 
-    <timestamp key="byDay" datePattern="yyyy-MM-dd"/>
+    <!-- <timestamp key="byDay" datePattern="yyyy-MM-dd"/> -->
 
     <appender name="Stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -13,7 +12,19 @@
         </encoder>
     </appender>
 
-    <appender name="FileInfo"
+    <appender name="FileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> 
+    　　　　　　<fileNamePattern>${log.home}/${app.name}.%d{yyyy-MM-dd}.log</fileNamePattern> 
+    　　　　　　<maxHistory>10</maxHistory> 
+　　　　　　</rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+          <MaxFileSize>${log.filesize}</MaxFileSize>
+        </triggeringPolicy> 
+　　　　　　<encoder> 
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern> 
+　　　　　　</encoder> 
+　　　　</appender>
+    <!-- <appender name="FileInfo"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.home}/${app.name}/${byDay}/${app.name}-info.log</file>
 
@@ -85,7 +96,7 @@
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n
             </pattern>
         </encoder>
-    </appender>
+    </appender> -->
     <!-- <appender name="LOGSTASH" class="com.cwbase.logback.RedisAppender">
        <source>canaan</source>
        <type>test</type>
@@ -102,18 +113,17 @@
         </filter>
     </appender>
     
-    <logger name="com.alibaba.dubbo" level="DEBUG"/>
-    <logger name="org.springframework" level="DEBUG"/>
-    <logger name="org.apache.zookeeper" level="DEBUG"/>
+    <logger name="com.alibaba.dubbo" level="${log.level}"/>
+    <logger name="org.springframework" level="${log.level}"/>
+    <logger name="org.apache.zookeeper" level="${log.level}"/>
     <!-- <logger name="canaan.dao" level="DEBUG"/> -->
-    <logger name="com.alibaba.druid" level="DEBUG" additivity="false">
+    <!-- <logger name="com.alibaba.druid" level="${log.level}" additivity="false">
         <appender-ref ref="Druid"/>
-    </logger>
-    <logger name="org.jooq" level="DEBUG"/>
+    </logger> -->
     
     <root level="${log.level}">
-        <appender-ref ref="FileError"/>
-        <appender-ref ref="FileInfo"/>
+        <appender-ref ref="FileAppender"/>
+        <!-- <appender-ref ref="FileInfo"/ -->
         <appender-ref ref="Stdout"/>
         <appender-ref ref="Sentry"/>
     </root>

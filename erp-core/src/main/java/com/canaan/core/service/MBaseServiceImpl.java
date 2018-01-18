@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.baomidou.mybatisplus.entity.Columns;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
@@ -24,6 +25,11 @@ import com.canaan.core.util.Assert;
 import com.canaan.core.util.CollectionMapperDecorator;
 import com.canaan.distribute.util.Checker;
 import com.google.common.collect.Lists;
+import com.jarvis.cache.annotation.Cache;
+import com.jarvis.cache.annotation.CacheDelete;
+import com.jarvis.cache.annotation.CacheDeleteKey;
+import com.jarvis.cache.annotation.CacheDeleteTransactional;
+
 /**
  * 通用基于mybatis-plus的服务方法基类
  * <ul>
@@ -35,11 +41,11 @@ import com.google.common.collect.Lists;
  * @date 2018年1月5日 上午11:54:53
  * @version V1.0
  */
-public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel, V> extends ServiceImpl<M, T> implements MBaseService<V> {
-
-	private  Class<T> entityClassType;
+public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseModel, V> extends ServiceImpl<M, T>  implements MBaseService<V> {
 	
-	private Class<V> vmodelClassType;
+	protected  Class<T> entityClassType;
+	
+	protected Class<V> vmodelClassType;
 	
 	@SuppressWarnings("unchecked")
 	public  MBaseServiceImpl() {
@@ -48,8 +54,8 @@ public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseMo
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
         entityClassType = (Class<T>) params[1];
         vmodelClassType = (Class<V>) params[2];
+//        entityClassName = entityClassType.getName();
 	}
-	
 	protected abstract Columns select();
 	protected abstract Wrapper<T> condition(V v);
 	protected abstract OrderBy orderby();
@@ -132,31 +138,34 @@ public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseMo
 		
 		List<T> list = this.baseMapper.selectPage(page, wrapper);
 		List<V> vlist = Lists.newArrayList(collectionMapper.mapCollection(list, vmodelClassType));
-		int count = this.selectCount(wrapper);
+		int count = this.baseMapper.selectCount(wrapper);
 		return new SearchResult<V>(count, vlist);
 	}
 
 	@Override
 	public List<V> list(V v) {
 		Wrapper<T> wrapper = wrapperIt(v);
-		List<T> list = this.selectList(wrapper);
+		List<T> list = this.baseMapper.selectList(wrapper);
 		return Lists.newArrayList(collectionMapper.mapCollection(list, vmodelClassType));
 	}
 
+	@Cache(expire = 300, expireExpression = "null == #retVal ? 300: 3600",  key = "#target.getClass().getName() + '-' + #args[0]")
 	@Override
 	public V get(Long pk) {
 		Assert.checkArgument(pk);
-		T t =  this.selectById(pk);
+		T t =  this.baseMapper.selectById(pk);
 		return beanMapper.map(t, vmodelClassType);
 	}
-
+	
 	@Override
 	public void save(V v) {
 		Assert.checkArgument(v);
 		T t = beanMapper.map(v, entityClassType);
-		this.insert(t);
+		this.baseMapper.insert(t);
 	}
-
+	
+	@CacheDeleteTransactional
+	@CacheDelete(@CacheDeleteKey(value="#target.getClass().getName() + '-' + #args[0].id"))
 	@Override
 	public void update(V v) {
 		Assert.checkArgument(v);
@@ -166,7 +175,9 @@ public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseMo
 		int num = this.baseMapper.update(t, wrapper);
 		Assert.checkNotEqual(num, 1, ExceptionEnum.INVALID_UPDATE_NUM);
 	}
-
+	
+	@CacheDeleteTransactional
+	@CacheDelete(@CacheDeleteKey(value="#target.getClass().getName() + '-' + #args[0].id"))
 	@Override
 	public void delete(V v) {
 		Assert.checkArgument(v);

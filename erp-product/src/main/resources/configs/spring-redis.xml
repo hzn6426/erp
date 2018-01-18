@@ -53,23 +53,20 @@
 		<!-- 连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true -->  
 		<property name="blockWhenExhausted" value="false" />
     </bean>
-
+    
     <!--  jedis客户端连接工厂 -->
-    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-        <constructor-arg index="0" ref="redisClusterConfiguration"/>
-        <constructor-arg index="1" ref="jedisPoolConfig"/>
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
+        <constructor-arg  ref="redisClusterConfiguration"/>
         <property name="password" value="${redis.cluster.password}"/>
     </bean>
 
     <!-- redisTemplate模板 -->
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
        <property name="connectionFactory" ref="jedisConnectionFactory" />
-       <property name="keySerializer">
-           <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
-       </property>
-       <property name="valueSerializer">
-           <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
-       </property>
+       <property name="keySerializer" ref="keySerializer"></property>
+       <property name="valueSerializer" ref="valueSerializer"></property>
+       <property name="hashKeySerializer" ref="keySerializer"></property>
+       <property name="hashValueSerializer" ref="valueSerializer"></property>
     </bean>
     
     <!-- 自动加载配置 -->
@@ -94,6 +91,16 @@
     <!-- 序列化缓存数据压缩 -->
     <bean id="hessianCompressorSerializer" class="com.jarvis.cache.serializer.CompressorSerializer">
         <constructor-arg ref="hessianSerializer" />
+    </bean>
+    
+    <bean id="stringSerializer" class="com.jarvis.cache.serializer.StringSerializer"></bean>
+    
+    <bean id="keySerializer" class="com.canaan.core.cache.WrapHessianSerializer">
+        <constructor-arg ref="stringSerializer" />
+    </bean>
+    
+    <bean id="valueSerializer" class="com.canaan.core.cache.WrapHessianSerializer">
+        <constructor-arg ref="hessianCompressorSerializer" />
     </bean>
     
     <bean id="cacheManager" class="com.canaan.core.cache.RedisClusterCacheManager">

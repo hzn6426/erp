@@ -8,7 +8,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import com.canaan.core.util.SpringBeanUtil;
 import com.jarvis.cache.ICacheManager;
 import com.jarvis.cache.exception.CacheCenterConnectionException;
 import com.jarvis.cache.serializer.ISerializer;
@@ -26,7 +29,7 @@ public class RedisClusterCacheManager implements ICacheManager {
     private final ISerializer<Object> serializer;
 
     @Setter
-    private RedisTemplate<byte[], byte[]> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 //    private JedisCluster jedisCluster;
 
     /**
@@ -57,9 +60,9 @@ public class RedisClusterCacheManager implements ICacheManager {
             String hfield=cacheKeyTO.getHfield();
             if(null == hfield || hfield.length() == 0) {
                 if(expire == 0) {
-                	redisTemplate.opsForValue().set(KEY_SERIALIZER.serialize(cacheKey), serializer.serialize(result));
+                	redisTemplate.opsForValue().set(cacheKey, result);
                 } else if(expire > 0) {
-                	redisTemplate.opsForValue().set(KEY_SERIALIZER.serialize(cacheKey), serializer.serialize(result), expire, TimeUnit.SECONDS);
+                	redisTemplate.opsForValue().set(cacheKey, result, expire, TimeUnit.SECONDS);
                 }
             } else {
                 hashSet(cacheKey, hfield, result);
@@ -73,7 +76,7 @@ public class RedisClusterCacheManager implements ICacheManager {
 //    private static byte[] hashSetScript;
     private static String hashSetScript;
     static {
-    	hashSetScript = "redis.call('HSET', KEYS[1], ARGV[1], ARGV[2]);\nredis.call('EXPIRE', KEYS[1], tonumber(ARGV[3]));";
+    	hashSetScript = "redis.call('HSET', KEYS[1], ARGV[1], ARGV[2]);redis.call('EXPIRE', KEYS[1], tonumber(ARGV[3]));";
 //        try {
 //            String tmpScript="redis.call('HSET', KEYS[1], ARGV[1], ARGV[2]);\nredis.call('EXPIRE', KEYS[1], tonumber(ARGV[3]));";
 //            hashSetScript=tmpScript.getBytes("UTF-8");
@@ -93,22 +96,25 @@ public class RedisClusterCacheManager implements ICacheManager {
             hExpire=hashExpire;
         }
         if(hExpire == 0) {
-        	redisTemplate.opsForHash().put(key, field, val);
+        	redisTemplate.opsForHash().put(cacheKey, hfield, result);
         } else if(hExpire > 0) {
             if(hashExpireByScript) {
-                List<byte[]> keys=new ArrayList<byte[]>();
-                keys.add(key);
+                List<String> keys=new ArrayList<>();
+                keys.add(cacheKey);
 
-                List<byte[]> args=new ArrayList<byte[]>();
+                List<byte[]> args=new ArrayList<>();
                 args.add(field);
                 args.add(val);
                 args.add(KEY_SERIALIZER.serialize(String.valueOf(hExpire)));
-                DefaultRedisScript<Void> script = new DefaultRedisScript<>();
+                DefaultRedisScript<Object> script = new DefaultRedisScript<>();
                 script.setScriptText(hashSetScript);
-                redisTemplate.execute(script , keys, args);
+//                new StringRedisSerializer();
+//                RedisSerializer<Object> serializer = (RedisSerializer<Object>) SpringBeanUtil.getBean("valueSerializer");
+//                RedisSerializer<String> keyserializer = (RedisSerializer<String>) SpringBeanUtil.getBean("keySerializer");
+                redisTemplate.execute(script, null, null, keys, args.toArray());
             } else {
-            	redisTemplate.opsForHash().put(key, field, val);
-            	redisTemplate.expire(key, hExpire, TimeUnit.SECONDS);
+            	redisTemplate.opsForHash().put(cacheKey, hfield, result);
+            	redisTemplate.expire(cacheKey, hExpire, TimeUnit.SECONDS);
             }
         }
     }
@@ -125,18 +131,19 @@ public class RedisClusterCacheManager implements ICacheManager {
         }
         CacheWrapper<Object> res=null;
         try {
-            byte bytes[]=null;
+//            byte bytes[]=null;
+        	Object v = null;
             String hfield=cacheKeyTO.getHfield();
             if(null == hfield || hfield.length() == 0) {
-                bytes=redisTemplate.opsForValue().get(KEY_SERIALIZER.serialize(cacheKey));
+                v=redisTemplate.opsForValue().get(cacheKey);
             } else {
-                bytes=(byte[])redisTemplate.opsForHash().get(KEY_SERIALIZER.serialize(cacheKey), KEY_SERIALIZER.serialize(hfield));
+                v=redisTemplate.opsForHash().get(cacheKey, hfield);
             }
-            Type returnType=null;
-            if(null != method) {
-                returnType=method.getGenericReturnType();
-            }
-            res=(CacheWrapper<Object>)serializer.deserialize(bytes, returnType);
+//            Type returnType=null;
+//            if(null != method) {
+//                returnType=method.getGenericReturnType();
+//            }
+            res=(CacheWrapper<Object>)v;
         } catch(Exception ex) {
             log.error(ex.getMessage(), ex);
         } finally {
@@ -161,9 +168,9 @@ public class RedisClusterCacheManager implements ICacheManager {
         try {
             String hfield=cacheKeyTO.getHfield();
             if(null == hfield || hfield.length() == 0) {
-            	redisTemplate.delete(KEY_SERIALIZER.serialize(cacheKey));
+            	redisTemplate.delete(cacheKey);
             } else {
-            	redisTemplate.opsForHash().delete(KEY_SERIALIZER.serialize(cacheKey), KEY_SERIALIZER.serialize(hfield));
+            	redisTemplate.opsForHash().delete(cacheKey,hfield);
             }
         } catch(Exception ex) {
             log.error(ex.getMessage(), ex);

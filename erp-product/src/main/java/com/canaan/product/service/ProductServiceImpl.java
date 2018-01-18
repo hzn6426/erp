@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.baomidou.mybatisplus.entity.Columns;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.canaan.common.SearchResult;
 import com.canaan.core.batisplus.OrderBy;
 import com.canaan.core.service.MBaseServiceImpl;
 import com.canaan.core.util.Assert;
@@ -17,8 +18,6 @@ import com.canaan.product.entity.MchProduct;
 import com.canaan.product.mapper.MchProductMapper;
 
 public class ProductServiceImpl extends MBaseServiceImpl<MchProductMapper, MchProduct, ProductDTO> implements ProductService {
-
-	
 	
 	@Override
 	protected Columns select() {
@@ -29,7 +28,6 @@ public class ProductServiceImpl extends MBaseServiceImpl<MchProductMapper, MchPr
 	@Override
 	protected Wrapper<MchProduct> condition(ProductDTO e) {
 		Assert.checkArgument(e);
-		
 		EntityWrapper<MchProduct> wrapper = new EntityWrapper<>();
 		wrapper.eq(StringUtils.isNoneBlank(e.getProductCode()), "product_code", e.getProductCode())
 			.eq(StringUtils.isNoneBlank(e.getProductName()), "product_name", e.getProductName());
@@ -46,10 +44,18 @@ public class ProductServiceImpl extends MBaseServiceImpl<MchProductMapper, MchPr
 		return new EntityWrapper<MchProduct>().eq("id", e.getId());
 	}
 
+//	@Cache(expire = 350, key = "'product_list'+#hash(#args[0])", hfield = "#args[1]+'_'+#args[2]")
+	@Override
+	public SearchResult<ProductDTO> list(ProductDTO v, int pageNumber, int pageSize) {
+		return super.list(v, pageNumber, pageSize);
+	}
+
+	
 	@Override
 	public List<ProductDTO> listProducts() {
 		return this.baseMapper.doSelect4Test();
 	}
+
 
 	
 	

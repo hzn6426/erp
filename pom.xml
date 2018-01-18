@@ -32,7 +32,7 @@
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         
         <!-- lib versions  -->
-        <autoload-cache.version>6.7</autoload-cache.version>
+        <autoload-cache.version>6.8</autoload-cache.version>
         
         <commons-io.version>2.4</commons-io.version>
         <commons-logging.version>1.2</commons-logging.version>
@@ -59,6 +59,7 @@
         
         <imgscalr-lib.version>4.2</imgscalr-lib.version>
         
+        <lettuce.version>4.3.3.Final</lettuce.version>
         <lmax.disruptor.version>3.3.6</lmax.disruptor.version>
         <log4j.version>2.7</log4j.version>
         <logback.version>1.1.7</logback.version>
@@ -410,6 +411,14 @@
 			    <artifactId>hessian</artifactId>
 			    <version>${hession.version}</version>
 			</dependency>
+        	
+        	<!-- lettuce for redis single thread -->
+			<dependency>
+			    <groupId>biz.paluch.redis</groupId>
+			    <artifactId>lettuce</artifactId>
+			    <version>${lettuce.version}</version>
+			</dependency>
+        	
         	
         	<!-- mybatis-plus -->
         	<dependency>

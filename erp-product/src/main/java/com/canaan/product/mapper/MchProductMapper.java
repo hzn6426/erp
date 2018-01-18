@@ -5,6 +5,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.canaan.product.dto.ProductDTO;
 import com.canaan.product.entity.MchProduct;
+import com.jarvis.cache.annotation.Cache;
 
 /**
  * 商品mapper
@@ -14,5 +15,8 @@ import com.canaan.product.entity.MchProduct;
  */
 public interface MchProductMapper extends BaseMapper<MchProduct> {
 
+	@Cache(expire = 300, key = "doSelect4Test")
 	List<ProductDTO> doSelect4Test();
+	
+	
 }
