@@ -1,0 +1,210 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.canaan</groupId>
+		<artifactId>erp-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+  
+	<artifactId>erp-web-jgsf</artifactId>
+	<packaging>war</packaging>
+	<name>erp-web-jgsf</name>
+	<url>http://maven.apache.org</url>
+  
+	<build>
+		<finalName>jgsf</finalName>
+		<filters>
+			<filter>src/main/envs/env-${env}.properties</filter>
+		</filters>
+		<!-- <plugins>
+		<plugin>
+		<groupId>com.github.kongchen</groupId>
+		<artifactId>swagger-maven-plugin</artifactId>
+		<configuration>
+		    <apiSources>
+		        <apiSource>
+		            <springmvc>true</springmvc>
+		            <locations>com.canaan.jgsf.controller</locations>Controller所在的位置
+		            <basePath>/</basePath>
+		            <schemes>http,https</schemes>
+		            <info>
+		                <title>${artifactId}</title>
+		                <version>v1</version>
+		                <description>Click Link Below for Help</description>
+		                <termsOfService>http://www.github.com/kongchen/swagger-maven-plugin</termsOfService>
+		            </info>
+		            html文档输出功能的模板文件
+		            <templatePath>${basedir}/src/test/resources/swagger_template/strapdown.html.hbs</templatePath>
+		            html文档输出的位置
+		            <outputPath>${project.build.directory}/swagger-ui/swagger_document.html</outputPath>
+		            <swaggerDirectory>${project.build.directory}/swagger-ui</swaggerDirectory>定义API描述文档的输出目录
+		            <outputFormats>yaml,json</outputFormats>支持yaml和json格式
+		        </apiSource>
+		    </apiSources>
+		</configuration>
+		<executions>
+		    <execution>
+		        <phase>compile</phase>
+		        <goals>
+		            <goal>generate</goal>
+		        </goals>
+		    </execution>
+		</executions>
+		</plugin>
+		<plugin>
+		<groupId>io.github.swagger2markup</groupId>
+		<artifactId>swagger2markup-maven-plugin</artifactId>
+		<configuration>
+		    The URL or file path to the Swagger specification
+		    <swaggerInput>${project.build.directory}/swagger-ui/swagger.yaml</swaggerInput>
+		    <outputDir>${project.build.directory}/swagger-ui</outputDir>
+		    <outputFile>${project.build.directory}/swagger-ui/swagger.md</outputFile>
+		    <config>
+		        设置输出文件的语言：ASCIIDOC, MARKDOWN, CONFLUENCE_MARKUP
+		        <swagger2markup.markupLanguage>MARKDOWN</swagger2markup.markupLanguage>
+		        设置目录的展现方式
+		        <swagger2markup.pathsGroupedBy>TAGS</swagger2markup.pathsGroupedBy>
+		    </config>
+		</configuration>
+		<executions>
+		    <execution>
+		        <phase>compile</phase>
+		        <goals>
+		            <goal>convertSwagger2markup</goal>
+		        </goals>
+		    </execution>
+		</executions>
+        </plugin>
+		</plugins> -->
+	</build>
+  
+  
+	<profiles>
+		<!-- 开发环境 -->
+		<profile>
+			<id>dev</id>
+			<properties>
+				<env>dev</env>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<!-- 测试环境 -->
+		<profile>
+			<id>test</id>
+			<properties>
+				<env>test</env>
+			</properties>
+		</profile>
+		<!-- 正式环境 -->
+		<profile>
+			<id>pub</id>
+			<properties>
+				<env>pub</env>
+			</properties>
+		</profile>
+	</profiles>
+  
+	<dependencies>
+    	<dependency>
+    		<groupId>com.canaan</groupId>
+    		<artifactId>erp-service-privilege-api</artifactId>
+    	</dependency>
+    	
+    	<dependency>
+            <groupId>com.canaan</groupId>
+            <artifactId>erp-service-product-api</artifactId>
+        </dependency>
+    	
+		<dependency>
+			<groupId>com.canaan</groupId>
+			<artifactId>erp-distribute</artifactId>
+		</dependency>
+        
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+        
+        <!-- swagger2 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
+
+        <!-- spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+
+        <!-- jackson -->
+         <dependency>
+             <groupId>com.fasterxml.jackson.core</groupId>
+             <artifactId>jackson-databind</artifactId>
+         </dependency>
+        
+        <!-- thymeleaf -->
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring4</artifactId>
+		</dependency>
+		
+		<!-- dozer -->
+		<dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer-spring</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+        <!-- shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-all</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+        </dependency>
+            
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+        </dependency>
+        
+        <dependency>
+        	<groupId>org.freemarker</groupId>
+        	<artifactId>freemarker</artifactId>
+		</dependency>
+		
+		<dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+	</dependencies>
+  
+</project>

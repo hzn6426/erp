@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.canaan</groupId>
+        <artifactId>erp-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>erp-service-core</artifactId>
+    <name>erp-service-core</name>
+  
+    <dependencies>
+        <dependency>
+            <groupId>com.canaan</groupId>
+            <artifactId>erp-api-common</artifactId>
+        </dependency>
+    
+        <dependency>
+            <groupId>com.canaan</groupId>
+            <artifactId>erp-distribute</artifactId>
+        </dependency>
+    
+	    <dependency>
+	        <groupId>net.sf.dozer</groupId>
+	        <artifactId>dozer</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>net.sf.dozer</groupId>
+	        <artifactId>dozer-spring</artifactId>
+	    </dependency>
+	    
+	    <!-- mybatis-plus -->
+	    <dependency>
+		    <groupId>com.baomidou</groupId>
+		    <artifactId>mybatis-plus</artifactId>
+		</dependency>
+	    
+	    <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+        </dependency>
+	    <!-- jooq -->
+           <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+        </dependency>
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+	    
+	    <!-- mysql -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+	    
+	    <!-- log4j2的RollingRandomAccessFile支持（异步日志记录） -->
+	    <dependency>
+	        <groupId>com.lmax</groupId>
+	        <artifactId>disruptor</artifactId>
+	    </dependency>
+	    
+	    
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

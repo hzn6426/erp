@@ -361,25 +361,25 @@
             <!-- apis -->
             <dependency>
                <groupId>com.canaan</groupId>
-               <artifactId>erp-privilege-api</artifactId>
+               <artifactId>erp-service-privilege-api</artifactId>
                <version>${project.version}</version>
             </dependency>
             
             <dependency>
                <groupId>com.canaan</groupId>
-               <artifactId>erp-product-api</artifactId>
+               <artifactId>erp-service-product-api</artifactId>
                <version>${project.version}</version>
             </dependency>
             
             <!-- erp -->
         	<dependency>
         		<groupId>com.canaan</groupId>
-        		<artifactId>erp-common</artifactId>
+        		<artifactId>erp-api-common</artifactId>
         		<version>${project.version}</version>
         	</dependency>
         	<dependency>
                 <groupId>com.canaan</groupId>
-                <artifactId>erp-core</artifactId>
+                <artifactId>erp-service-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
         	<dependency>
@@ -389,12 +389,12 @@
         	</dependency>
         	<dependency>
         		<groupId>com.canaan</groupId>
-        		<artifactId>erp-fdfs</artifactId>
+        		<artifactId>erp-service-fdfs</artifactId>
         		<version>${project.version}</version>
         	</dependency>
         	<dependency>
         		<groupId>com.canaan</groupId>
-        		<artifactId>erp-redis</artifactId>
+        		<artifactId>erp-service-redis</artifactId>
         		<version>${project.version}</version>
         	</dependency>
         	
@@ -879,15 +879,15 @@
         <url>${scm.host}/trunk/${project.artifactId}</url>
     </scm>
   <modules>
-    <module>erp-common</module>
-    <module>erp-redis</module>
-    <module>erp-fdfs</module>
+    <module>erp-api-common</module>
+    <module>erp-service-redis</module>
+    <module>erp-service-fdfs</module>
     <module>erp-distribute</module>
-    <module>erp-privilege</module>
-    <module>erp-jgsf</module>
-    <module>erp-privilege-api</module>
-    <module>erp-core</module>
-    <module>erp-product</module>
-    <module>erp-product-api</module>
+    <module>erp-service-privilege</module>
+    <module>erp-web-jgsf</module>
+    <module>erp-service-privilege-api</module>
+    <module>erp-service-core</module>
+    <module>erp-service-product</module>
+    <module>erp-service-product-api</module>
   </modules>
 </project>
