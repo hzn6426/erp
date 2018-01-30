@@ -22,7 +22,7 @@ import com.canaan.core.common.BaseModel;
 import com.canaan.core.exception.ExceptionEnum;
 import com.canaan.core.util.Assert;
 import com.canaan.core.util.CollectionMapperDecorator;
-import com.canaan.distribute.util.Checker;
+import com.canaan.util.tool.Checker;
 import com.google.common.collect.Lists;
 import com.jarvis.cache.annotation.Cache;
 import com.jarvis.cache.annotation.CacheDelete;

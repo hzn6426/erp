@@ -6,7 +6,7 @@ import com.alibaba.dubbo.rpc.RpcContext;
 import com.canaan.core.util.Assert;
 import com.canaan.distribute.exception.BizException;
 import com.canaan.distribute.exception.DistributeException;
-import com.canaan.distribute.util.SnowflakeIdWorker;
+import com.canaan.util.tool.SnowflakeIdWorker;
 import com.google.common.base.Optional;
 import com.google.common.base.Throwables;
 

@@ -17,9 +17,9 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
-import com.canaan.distribute.util.Checker;
 import com.canaan.distribute.util.UserUtil;
 import com.canaan.jgsf.constant.SystemConstants;
+import com.canaan.util.tool.Checker;
 
 
 /**

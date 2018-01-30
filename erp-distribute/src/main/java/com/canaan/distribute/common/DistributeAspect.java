@@ -10,12 +10,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.rpc.RpcException;
-import com.canaan.distribute.util.SnowflakeIdWorker;
-
-
 import com.canaan.distribute.constant.Constants;
 import com.canaan.distribute.exception.DistributeException;
 import com.canaan.distribute.util.DistributeSignatureUtil;
+import com.canaan.util.tool.SnowflakeIdWorker;
 /**
  * 分布式一致性标志监控，监控{@link Distribute}标志的方法，保证方法内多服务调用的事物一致性
  * <p>对于方法内多服务调用（多个写服务）时，为保证事务一致性采取的策略，如方法中调用A，B，C三个写服务，A执行成功，数据持久化，B调用失败，C服务不会调用，会对B进行重试，

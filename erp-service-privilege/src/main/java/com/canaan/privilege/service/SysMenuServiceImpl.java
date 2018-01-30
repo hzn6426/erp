@@ -10,11 +10,11 @@ import org.jooq.impl.DSL;
 
 import com.canaan.common.SearchResult;
 import com.canaan.core.service.BaseServiceImpl;
-import com.canaan.distribute.util.Checker;
 import com.canaan.privilege.api.SysMenuService;
 import com.canaan.privilege.db.tables.SysMenu;
 import com.canaan.privilege.db.tables.records.SysMenuRecord;
 import com.canaan.privilege.dto.MenuDTO;
+import com.canaan.util.tool.Checker;
 import com.google.common.collect.ImmutableList;
 
 import static com.canaan.privilege.db.tables.SysMenu.SYS_MENU;

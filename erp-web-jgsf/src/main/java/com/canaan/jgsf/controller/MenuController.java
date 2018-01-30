@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.canaan.common.SearchResult;
-import com.canaan.distribute.util.Checker;
 import com.canaan.jgsf.common.BaseController;
 import com.canaan.jgsf.common.ResponseResult;
 import com.canaan.jgsf.util.Assert;
 import com.canaan.privilege.api.SysUserService;
 import com.canaan.privilege.dto.MenuDTO;
+import com.canaan.util.tool.Checker;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

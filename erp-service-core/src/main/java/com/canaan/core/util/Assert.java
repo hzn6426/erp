@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.canaan.core.exception.ExceptionEnum;
 import com.canaan.core.exception.ServerException;
-import com.canaan.distribute.util.Checker;
+import com.canaan.util.tool.Checker;
 import com.google.common.base.Preconditions;
 public class Assert {
 	

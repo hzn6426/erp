@@ -1,6 +1,7 @@
 package com.canaan.distribute.util;
 
 import com.canaan.distribute.common.User;
+import com.canaan.util.tool.Checker;
 
 public class UserUtil {
 

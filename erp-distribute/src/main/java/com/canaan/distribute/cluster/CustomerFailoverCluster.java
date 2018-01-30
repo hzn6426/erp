@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.canaan.distribute.common.DistributeSignature;
 import com.canaan.distribute.exception.DistributeException;
-import com.canaan.distribute.util.BeanUtil;
 import com.canaan.distribute.util.DistributeSignatureUtil;
 import com.google.common.base.Throwables;
 
@@ -134,7 +134,7 @@ public class CustomerFailoverCluster implements Cluster {
 					exString += ",\n 参数列表-";
 					for (int i=0; i < argsLength; i++) {
 						String avalue = "";
-						if (BeanUtil.bePrimitive(args[i])) {
+						if (ClassUtils.isPrimitiveOrWrapper(args[i].getClass())) {
 							avalue = args[i].toString();
 						} else {
 							try {

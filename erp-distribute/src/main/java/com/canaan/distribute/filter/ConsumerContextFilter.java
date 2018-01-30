@@ -12,12 +12,12 @@ import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.canaan.distribute.util.SnowflakeIdWorker;
 import com.canaan.distribute.util.UserUtil;
+import com.canaan.util.tool.Checker;
+import com.canaan.util.tool.SnowflakeIdWorker;
 import com.canaan.distribute.common.DistributeSignature;
 import com.canaan.distribute.common.User;
 import com.canaan.distribute.constant.Constants;
-import com.canaan.distribute.util.Checker;
 import com.canaan.distribute.util.DistributeSignatureUtil;
 /**
  * 

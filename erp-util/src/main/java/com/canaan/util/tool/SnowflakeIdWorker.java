@@ -1,4 +1,4 @@
-package com.canaan.distribute.util;
+package com.canaan.util.tool;
 
 public class SnowflakeIdWorker {
 	private static final SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);

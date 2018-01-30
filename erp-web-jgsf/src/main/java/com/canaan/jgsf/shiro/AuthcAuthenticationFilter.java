@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticationFilter;
 
-import com.canaan.distribute.util.Checker;
 import com.canaan.distribute.util.UserUtil;
 import com.canaan.jgsf.exception.ClientBizException;
 import com.canaan.jgsf.exception.ClientExceptionEnum;
 import com.canaan.jgsf.util.WebUtil;
+import com.canaan.util.tool.Checker;
 
 
 public class AuthcAuthenticationFilter extends AuthenticationFilter {
