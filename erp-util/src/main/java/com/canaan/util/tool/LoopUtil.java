@@ -251,7 +251,7 @@ public class LoopUtil {
      * Comparator{@code <Integer>} comparator = ComparatorUtils.naturalComparator();
      * Predicate{@code <Integer>} predicate = new ComparatorPredicate{@code <Integer>}(10, comparator, Criterion.LESS);
      * 
-     * List{@code <Integer>} select = CollectionsUtil.select(toList(1, 5, 10, 30, 55, 88, 1, 12, 3), predicate);
+     * List{@code <Integer>} select = LoopUtil.select(ConvertUtil.toList(1, 5, 10, 30, 55, 88, 1, 12, 3), predicate);
      * LOGGER.debug(JsonUtil.format(select, 0, 0));
      * </pre>
      * 
@@ -306,8 +306,8 @@ public class LoopUtil {
      * </p>
      * 
      * <pre class="code">
-     * List{@code <Long>} list = toList(1L, 1L, 2L, 3L);
-     * CollectionsUtil.selectRejected(list, new EqualPredicate{@code <Long>}(1L))
+     * List{@code <Long>} list = ConvertUtil.toList(1L, 1L, 2L, 3L);
+     * LoopUtil.selectRejected(list, new EqualPredicate{@code <Long>}(1L))
      * </pre>
      * 
      * <b>返回:</b>
@@ -354,11 +354,11 @@ public class LoopUtil {
      * User guanxing20 = new User("关兴", 18);
      * 
      * <span style="color:green">//---------------------------------------------------------------</span>
-     * List{@code <User>} list = toList(mateng55, machao28, madai27, maxiu25, zhangfei28, liubei32, guanyu50, guanping32, guansuo31, guanxing20);
+     * List{@code <User>} list = ConvertUtil.toList(mateng55, machao28, madai27, maxiu25, zhangfei28, liubei32, guanyu50, guanping32, guansuo31, guanxing20);
      * 
      * <span style="color:green">//---------------------------------------------------------------</span>
      * 
-     * Map{@code <String, List<User>>} map = CollectionsUtil.group(list,new Transformer{@code <User, String>}(){
+     * Map{@code <String, List<User>>} map = LoopUtil.group(list,new Transformer{@code <User, String>}(){
      * 
      *     &#64;Override
      *     public String transform(User user){
