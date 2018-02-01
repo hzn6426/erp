@@ -38,6 +38,11 @@ public class GloableExceptionHandler {
 	}
 	@ExceptionHandler(Exception.class)
 	protected Object handleCustomerException(Exception ex, WebRequest request) {
+		ModelAndView mv = new ModelAndView(SystemConstants.SERVER_INTERNAL_ERROR);
+		if (! WebUtil.isAjaxRequest(request)) {
+			return mv;
+		}
+		
 		ResponseResult<?> result = null;
 		if (BizException.class.isInstance(ex)) {
 			result = handleBizException((BizException) ex);
@@ -56,22 +61,22 @@ public class GloableExceptionHandler {
 		} else {
 			result = handleException(ex);
 		}
-		if (WebUtil.isAjaxRequest(request)) {
-			return result;
-		}
-		ModelAndView mv = new ModelAndView(SystemConstants.SERVER_INTERNAL_ERROR);
-		return mv;
+		return result;
+		
     }
+	
 	
 	private ResponseResult<?> handleIllegalArgumentException(IllegalArgumentException illex) {
 		log.error("ClientBizException:" + Throwables.getStackTraceAsString(illex));
-		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.ILLEGAL_ARGUMENT);
+		String message = Optional.fromNullable(illex.getMessage()).or("");
+		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.ILLEGAL_ARGUMENT, message);
 		return ResponseResult.build(clientException.getCode(), clientException.getMessage());
 	}
 	
 	private ResponseResult<?> handleNullPointException(NullPointerException npe) {
 		log.error("ClientBizException:" + Throwables.getStackTraceAsString(npe));
-		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.OBJECT_IS_NULL);
+		String message = Optional.fromNullable(npe.getMessage()).or("");
+		ClientBizException clientException = new ClientBizException(ClientExceptionEnum.OBJECT_IS_NULL, message);
 		return ResponseResult.build(clientException.getCode(), clientException.getMessage());
 	}
 	

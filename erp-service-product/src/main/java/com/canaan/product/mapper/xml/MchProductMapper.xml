@@ -4,7 +4,7 @@
 
     
     <select id="doSelect4Test" resultType="com.canaan.product.dto.ProductDTO">
-        SELECT product_code, product_name, product_url, brand_name, type_name 
+        SELECT id, product_code, product_name, product_url, brand_name, type_name, price, cost_price, state
         FROM mch_product
         
     </select>

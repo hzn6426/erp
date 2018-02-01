@@ -5,7 +5,12 @@ import org.apache.commons.lang3.Validate;
 
 import com.canaan.util.tool.BeanUtil;
 
-
+/**
+ * 用于对象属性值预言的对象
+ * @author zening
+ * @date 2018年2月1日 上午11:42:07
+ * @since 1.0.0
+ */
 public class BeanPredicate<T> implements Predicate<T>{
 	
 	private final String propertyName;

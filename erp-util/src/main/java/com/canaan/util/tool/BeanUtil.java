@@ -2,11 +2,12 @@ package com.canaan.util.tool;
 
 
 
+import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.reflect.FieldUtils;
 
 
 /**
@@ -29,12 +30,17 @@ public class BeanUtil {
 	 */
 	public static Map<String, Object> describe(Object bean, String...propertyNames) {
         Validate.notNull(bean, "bean can't be null!");
-        if (Checker.BeNotEmpty(propertyNames)){
-            try{
-                return PropertyUtils.describe(bean);
-            }catch (Exception e){
-                throw new RuntimeException("describe exception", e);
-            }
+        if (!Checker.BeNotEmpty(propertyNames)){
+        	try{
+	        	Field[] fields = FieldUtils.getAllFields(bean.getClass());
+	        	Map<String, Object> map = new LinkedHashMap<String, Object>(fields.length);
+	        	for (Field field : fields) {
+	        		map.put(field.getName(), field.get(bean));
+	        	}
+	        	return map;
+        	} catch (Exception e){
+              throw new RuntimeException("describe exception", e);
+        	}
         }
         Map<String, Object> map = new LinkedHashMap<>(propertyNames.length);
         for (String propertyName : propertyNames){
@@ -55,7 +61,9 @@ public class BeanUtil {
         Validate.notNull(bean, "bean can't be null!");
         Validate.notBlank(propertyName, "propertyName can't be blank!");
         try {
-            return (T) PropertyUtils.getProperty(bean, propertyName);
+        	Field field =  FieldUtils.getField(bean.getClass(), propertyName, true);
+        	return (T) field.get(bean);
+//            return (T) PropertyUtils.getProperty(bean, propertyName);
         } catch (Exception e) {
             throw new RuntimeException("getProperty exception", e);
         }
@@ -83,9 +91,12 @@ public class BeanUtil {
         Validate.notNull(bean, "bean can't be null!");
         Validate.notBlank(propertyName, "propertyName can't be null!");
         try {
-            PropertyUtils.setProperty(bean, propertyName, value);
+        	//for lombok dynamic setter getter , must use Introspection. PropertyUtils.setProperty(bean, propertyName, value); will be wrong.
+        	Field field =  FieldUtils.getField(bean.getClass(), propertyName, true);
+        	field.set(bean, value);
+//          PropertyUtils.setProperty(bean, propertyName, value);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("setProperty exception" + e);
         }
     }
 	

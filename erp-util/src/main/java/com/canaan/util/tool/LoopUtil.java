@@ -22,6 +22,7 @@ import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.PredicateUtils;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.functors.ChainedClosure;
+import org.apache.commons.collections4.functors.WhileClosure;
 import org.apache.commons.lang3.Validate;
 
 import com.canaan.util.closure.BeanPropertyValueChangeClosure;
@@ -30,6 +31,12 @@ import com.canaan.util.predicate.BeanPredicate;
 
 /**
  * 循环相关工具类
+ * <ol>
+ * 	<li>修改集合中对象属性的方法</li>
+ * 	<li>查询集合中对象属性值的方法</li>
+ * 	<li>抽取集合中对象属性的方法</li>
+ * 	<li>分组集合中对象属性的方法</li>
+ * </ol>
  * @author zening
  * @date 2018年1月25日 上午9:35:06
  * @version V1.0
@@ -50,6 +57,67 @@ public class LoopUtil {
 	public  static <I> boolean changePropertyValue(final Iterable<I> beanIterable, String propertyName, Object propertyValue) {
 		if (Checker.BeNotEmpty(beanIterable)) {
 			IterableUtils.forEach(beanIterable, new BeanPropertyValueChangeClosure<I>(propertyName, propertyValue));
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 将循环体中属性为 <code>propertyName</code> 对应的值在<code>predicate</code>成立的情况下修改为<code>propertyValue</code>
+	 * @param <I> 循环体中对象类型
+	 * @param beanIterable 循环体
+	 * @param predicate 预言条件
+	 * @param propertyName 属性名称
+	 * @param propertyValue 属性值
+	 * @return 修改成功为true,否则为false
+	 */
+	public static <I> boolean changePropertyValue(final Iterable<I> beanIterable, 
+			Predicate<I> predicate, String propertyName, Object propertyValue ) {
+		if (Checker.BeNotEmpty(beanIterable)) {
+			BeanPropertyValueChangeClosure<I> changeClosure = new BeanPropertyValueChangeClosure<I>(propertyName, propertyValue);
+			WhileClosure<I> whileClosure = (WhileClosure<I>) WhileClosure.whileClosure(predicate, changeClosure, false);
+			IterableUtils.forEach(beanIterable, whileClosure);
+			
+		}
+		return false;
+	}
+	
+	/**
+	 * 将循环体中的对象满足<code>predicate</code>条件时，对多个属性进行修改，按照<code>propertyValueMap<属性名,属性值></code>方式修改
+	 * @param <I> 循环体中对象类型
+	 * @param beanIterable 循环体
+	 * @param predicate 预言条件
+	 * @param propertyValueMap 属性，属性值映射表
+	 * @return 修改成功为true,否则为false
+	 */
+	public static <I> boolean changePropertyValue(final Iterable<I> beanIterable, 
+			Predicate<I> predicate, Map<String, Object> propertyValueMap) {
+		if (Checker.BeNotEmpty(beanIterable) && Checker.BeNotEmpty(propertyValueMap)) {
+			MapIterator<String, Object> mapIter = MapUtils.iterableMap(propertyValueMap).mapIterator();
+			List<BeanPropertyValueChangeClosure<I>> changedList = new LinkedList<>();
+			while (mapIter.hasNext()) {
+				changedList.add(new BeanPropertyValueChangeClosure<I>(mapIter.next(), mapIter.getValue()));
+			}
+			ChainedClosure<I> chainClosure = (ChainedClosure<I>) ChainedClosure.chainedClosure(changedList);
+			WhileClosure<I> whileClosure = (WhileClosure<I>) WhileClosure.whileClosure(predicate, chainClosure, false);
+			IterableUtils.forEach(beanIterable, whileClosure);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 将循环体中的对象按照闭包的规则进行修改
+	 * @param <I> 循环体中对象类型
+	 * @param beanIterable  循环体
+	 * @param changeClosures 属性修改闭包
+	 * @return 修改成功为true,否则为false
+	 */
+	@SafeVarargs
+	public static <I> boolean changePropertyValue(final Iterable<I> beanIterable, BeanPropertyValueChangeClosure<I> ...changeClosures) {
+		if (Checker.BeNotEmpty(beanIterable) && Checker.BeNotEmpty(changeClosures)) {
+			ChainedClosure<I> chainClosure = (ChainedClosure<I>) ChainedClosure.chainedClosure(changeClosures);
+			IterableUtils.forEach(beanIterable, chainClosure);
 			return true;
 		}
 		return false;
@@ -147,6 +215,7 @@ public class LoopUtil {
         }
         return map;
 	}
+	
 	
 	/**
 	 * 查找循环体中查找循环体中属性名为<code>propertyName</code>，值为<code>propertyValue</code>的对象对应的索引，并返回（第一个匹配）

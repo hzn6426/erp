@@ -35,4 +35,13 @@ public class ProductDTO implements Serializable  {
 	@ApiModelProperty("分类名称")
 	private String typeName;
 	
+	@ApiModelProperty("价格")
+	private Double price;
+	
+	@ApiModelProperty("成本价")
+	private Double costPrice;
+	
+	@ApiModelProperty("状态")
+	private String state;
+	
 }

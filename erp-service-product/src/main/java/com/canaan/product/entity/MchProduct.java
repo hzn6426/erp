@@ -3,6 +3,8 @@ package com.canaan.product.entity;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.canaan.core.common.BaseModel;
 import com.baomidou.mybatisplus.annotations.TableId;
+
+
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 
@@ -39,7 +41,12 @@ public class MchProduct extends BaseModel {
     private String brandName;
     @TableField("type_name")
     private String typeName;
-   
+    @TableField("price")
+    private Double price;
+    @TableField("costPrice")
+    private Double costPrice;
+    @TableField("state")
+    private String state;
 
 
 }
