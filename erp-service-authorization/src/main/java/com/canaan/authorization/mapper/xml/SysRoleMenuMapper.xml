@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canaan.authorization.entity.SysRoleButton">
+
+    
+    <delete id="deleteByRoleId" parameterType="java.lang.String">
+        DELETE FROM sys_role_menu t WHERE t.role_id = #{roleId,jdbcType=CHAR}
+    </delete>
+</mapper>

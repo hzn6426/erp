@@ -21,7 +21,7 @@ public class MpGenerator {
         gc.setBaseResultMap(true);// XML ResultMap
         gc.setBaseColumnList(false);// XML columList
     // .setKotlin(true) 是否生成 kotlin 代码
-//        gc.setAuthor("Yanghu");
+        gc.setAuthor("zening");
 
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
         // gc.setMapperName("%sDao");
@@ -52,12 +52,12 @@ public class MpGenerator {
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
     // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
-//        strategy.setTablePrefix(new String[] { "sys_", "mch_" });// 此处可以修改为您的表前缀
+//        strategy.setTablePrefix(new String[] { "sys_" });// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
         strategy.setEntityLombokModel(true);
         strategy.setSuperEntityClass("com.canaan.core.common.BaseModel");
         // strategy.setInclude(new String[] { "user" }); // 需要生成的表
-        // strategy.setExclude(new String[]{"test"}); // 排除生成的表
+//         strategy.setExclude(new String[]{"mch_"}); // 排除生成的表
         // 自定义实体父类
         // strategy.setSuperEntityClass("com.baomidou.demo.TestEntity");
         // 自定义实体，公共字段
@@ -65,9 +65,9 @@ public class MpGenerator {
         // 自定义 mapper 父类
         // strategy.setSuperMapperClass("com.baomidou.demo.TestMapper");
         // 自定义 service 父类
-        // strategy.setSuperServiceClass("com.baomidou.demo.TestService");
+         strategy.setSuperServiceClass("com.canaan.common.MBaseService");
         // 自定义 service 实现类父类
-        // strategy.setSuperServiceImplClass("com.baomidou.demo.TestServiceImpl");
+         strategy.setSuperServiceImplClass("com.canaan.core.service.MBaseServiceImpl");
         // 自定义 controller 父类
         // strategy.setSuperControllerClass("com.baomidou.demo.TestController");
         // 【实体】是否生成字段常量（默认 false）
@@ -80,7 +80,7 @@ public class MpGenerator {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.canaan.core");
+        pc.setParent("com.canaan.authorization");
 //        pc.setModuleName("test");
         mpg.setPackageInfo(pc);
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd" default-autowire="byType">
+
+    <description>dubbo provider config</description>
+    <!--
+    | 在Provider可以配置的Consumer端属性有：
+    | timeout 方法调用超时
+    | retries 失败重试次数，缺省是2（表示加上第一次调用，会调用3次）
+    | loadbalance 负载均衡算法，缺省是随机（random）。轮询(roundrobin)、最不活跃优先（leastactive）
+    | actives 消费者端，最大并发调用限制。
+    | 暴露API服务，Provider上尽量多配置Consumer端的属性，
+    | 让Provider实现者一开始就思考Provider服务特点、服务质量的问题。
+    -->
+    
+    <!--
+    | spring bean configuration
+    | 配置spring bean
+    -->
+    
+    <!--
+    | dubbo provider configuration
+    | 配置 dubbo provider
+    -->
+    <!-- <dubbo:service ref="productService" interface="com.canaan.product.api.ProductService" timeout="${dubbo.provider.timeout}"
+        retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/> -->
+</beans>

@@ -368,6 +368,12 @@
             
             <dependency>
                <groupId>com.canaan</groupId>
+               <artifactId>erp-service-authorization-api</artifactId>
+               <version>${project.version}</version>
+            </dependency>
+            
+            <dependency>
+               <groupId>com.canaan</groupId>
                <artifactId>erp-service-product-api</artifactId>
                <version>${project.version}</version>
             </dependency>
@@ -900,5 +906,7 @@
     <module>erp-service-product</module>
     <module>erp-service-product-api</module>
     <module>erp-util</module>
+    <module>erp-service-authorization</module>
+    <module>erp-service-authorization-api</module>
   </modules>
 </project>

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.canaan</groupId>
+    <artifactId>erp-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>erp-service-authorization</artifactId>
+  <name>erp-service-authorization</name>
+  <url>http://maven.apache.org</url>
+  
+  <build>
+        <filters>
+            <filter>src/main/envs/env-${env}.properties</filter>
+        </filters>
+    </build>
+      
+    
+    <profiles>
+        <!-- 开发环境 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 测试环境 -->
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
+        <!-- 正式环境 -->
+        <profile>
+            <id>pub</id>
+            <properties>
+                <env>pub</env>
+            </properties>
+        </profile>
+    </profiles>
+    
+    <dependencies>
+        
+        <dependency>
+            <groupId>com.canaan</groupId>
+            <artifactId>erp-service-authorization-api</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.canaan</groupId>
+            <artifactId>erp-service-core</artifactId>
+        </dependency>
+    
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
