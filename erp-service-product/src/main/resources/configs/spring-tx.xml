@@ -18,7 +18,7 @@
      
      
     <!-- AspectJ support -->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <aop:aspectj-autoproxy proxy-target-class="false"/>
     <!-- scan the package and the sub package -->
     <context:component-scan base-package="com.canaan.**"/>
     

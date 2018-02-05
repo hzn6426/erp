@@ -1,17 +1,16 @@
 package com.canaan.authorization.service;
 
-
 import com.baomidou.mybatisplus.entity.Columns;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.canaan.authorization.api.SysButtonService;
-import com.canaan.authorization.dto.ButtonDTO;
-import com.canaan.authorization.entity.SysButton;
-import com.canaan.authorization.mapper.SysButtonMapper;
+import com.canaan.authorization.api.SysUserRoleService;
+import com.canaan.authorization.dto.UserRoleDTO;
+import com.canaan.authorization.entity.SysUserRole;
+import com.canaan.authorization.mapper.SysUserRoleMapper;
 import com.canaan.core.batisplus.OrderBy;
 import com.canaan.core.service.MBaseServiceImpl;
 
-public class SysButtonServiceImpl extends MBaseServiceImpl<SysButtonMapper, SysButton, ButtonDTO> implements SysButtonService {
+public class SysUserRoleServiceImpl extends MBaseServiceImpl<SysUserRoleMapper, SysUserRole, UserRoleDTO> implements SysUserRoleService {
 
 	@Override
 	protected Columns select() {
@@ -20,7 +19,7 @@ public class SysButtonServiceImpl extends MBaseServiceImpl<SysButtonMapper, SysB
 	}
 
 	@Override
-	protected Wrapper<SysButton> condition(ButtonDTO v) {
+	protected Wrapper<SysUserRole> condition(UserRoleDTO v) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -32,9 +31,8 @@ public class SysButtonServiceImpl extends MBaseServiceImpl<SysButtonMapper, SysB
 	}
 
 	@Override
-	protected Wrapper<SysButton> primaryKeyCondition(ButtonDTO v) {
-		return new EntityWrapper<SysButton>().eq("id", v.getId());
+	protected Wrapper<SysUserRole> primaryKeyCondition(UserRoleDTO v) {
+		return new EntityWrapper<SysUserRole>().eq("id", v.getId());
 	}
 
-	
 }

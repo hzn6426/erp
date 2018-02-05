@@ -2,6 +2,8 @@ package com.canaan.authorization.mapper;
 
 import com.canaan.authorization.entity.SysRoleMenu;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
@@ -13,6 +15,14 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @version 1.0.0
  */
 public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
+	
+	
+	/**
+	 * 根据角色列表获取菜单列表
+	 * @param roleIdList 角色id列表
+	 * @return
+	 */
+	public List<SysRoleMenu> listMenuByRoleIdList(List<Integer> roleIdList);
 	
 	/**
 	 * 删除角色对应的菜单关联

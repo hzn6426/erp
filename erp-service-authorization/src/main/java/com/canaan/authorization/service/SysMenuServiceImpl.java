@@ -1,17 +1,16 @@
 package com.canaan.authorization.service;
 
-
 import com.baomidou.mybatisplus.entity.Columns;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.canaan.authorization.api.SysButtonService;
-import com.canaan.authorization.dto.ButtonDTO;
-import com.canaan.authorization.entity.SysButton;
-import com.canaan.authorization.mapper.SysButtonMapper;
+import com.canaan.authorization.api.SysMenuService;
+import com.canaan.authorization.dto.MenuDTO;
+import com.canaan.authorization.entity.SysMenu;
+import com.canaan.authorization.mapper.SysMenuMapper;
 import com.canaan.core.batisplus.OrderBy;
 import com.canaan.core.service.MBaseServiceImpl;
 
-public class SysButtonServiceImpl extends MBaseServiceImpl<SysButtonMapper, SysButton, ButtonDTO> implements SysButtonService {
+public class SysMenuServiceImpl extends MBaseServiceImpl<SysMenuMapper, SysMenu, MenuDTO> implements SysMenuService {
 
 	@Override
 	protected Columns select() {
@@ -20,7 +19,7 @@ public class SysButtonServiceImpl extends MBaseServiceImpl<SysButtonMapper, SysB
 	}
 
 	@Override
-	protected Wrapper<SysButton> condition(ButtonDTO v) {
+	protected Wrapper<SysMenu> condition(MenuDTO v) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -32,9 +31,8 @@ public class SysButtonServiceImpl extends MBaseServiceImpl<SysButtonMapper, SysB
 	}
 
 	@Override
-	protected Wrapper<SysButton> primaryKeyCondition(ButtonDTO v) {
-		return new EntityWrapper<SysButton>().eq("id", v.getId());
+	protected Wrapper<SysMenu> primaryKeyCondition(MenuDTO v) {
+		return new EntityWrapper<SysMenu>().eq("id", v.getId());
 	}
 
-	
 }
