@@ -23,9 +23,9 @@ public class ProtocolExceptionHandler {
 	
 	
 	public void doProtocolException (Exception ex) {
-		Assert.checkArgument(ex);
+		Assert.CheckArgument(ex);
 		String protocol = RpcContext.getContext().getUrl().getProtocol();
-		Assert.checkNotNull(protocol);
+		Assert.CheckNotNull(protocol);
 		
 		switch (protocol.toLowerCase()) {
 		case "dubbo":

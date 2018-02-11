@@ -21,12 +21,44 @@
     <!--
     | spring bean configuration
     | 配置spring bean
+    | 1.按钮服务
+    | 2.角色按钮服务-用来进行对按钮的授权
+    | 3.菜单服务
+    | 4.角色菜单服务-用来进行对菜单的授权
+    | 5.用户服务
+    | 6.用户角色服务-用户分配角色
+    | 7.角色服务
     -->
+    <bean id="buttonService" class="com.canaan.authorization.service.SysButtonServiceImpl"></bean>
+    <bean id="roleButtonService" class="com.canaan.authorization.service.SysRoleButtonServiceImpl"></bean>
+    <bean id="menuService" class="com.canaan.authorization.service.SysMenuServiceImpl"></bean>
+    <bean id="roleMenuService" class="com.canaan.authorization.service.SysRoleMenuServiceImpl"></bean>
+    <bean id="userService" class="com.canaan.authorization.service.SysUserServiceImpl"></bean>
+    <bean id="userRoleService" class="com.canaan.authorization.service.SysUserRoleServiceImpl"></bean>
+    <bean id="roleService" class="com.canaan.authorization.service.SysRoleServiceImpl"></bean>
     
     <!--
     | dubbo provider configuration
     | 配置 dubbo provider
     -->
-    <!-- <dubbo:service ref="productService" interface="com.canaan.product.api.ProductService" timeout="${dubbo.provider.timeout}"
-        retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/> -->
+    <dubbo:service ref="buttonService" interface="com.canaan.authorization.api.SysButtonService" timeout="${dubbo.provider.timeout}"
+        retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/>
+        
+    <dubbo:service ref="roleButtonService" interface="com.canaan.authorization.api.SysRoleButtonService" timeout="${dubbo.provider.timeout}"
+        retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/>
+        
+    <dubbo:service ref="menuService" interface="com.canaan.authorization.api.SysMenuService" timeout="${dubbo.provider.timeout}"
+        retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/>
+        
+    <dubbo:service ref="roleMenuService" interface="com.canaan.authorization.api.SysRoleMenuService" timeout="${dubbo.provider.timeout}"
+        retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/>
+        
+    <dubbo:service ref="userService" interface="com.canaan.authorization.api.SysUserService" timeout="${dubbo.provider.timeout}"
+        retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/>
+        
+    <dubbo:service ref="userRoleService" interface="com.canaan.authorization.api.SysUserRoleService" timeout="${dubbo.provider.timeout}"
+        retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/>
+    
+    <dubbo:service ref="roleService" interface="com.canaan.authorization.api.SysRoleService" timeout="${dubbo.provider.timeout}"
+        retries="${dubbo.provider.retries}" loadbalance="leastactive" version="${dubbo.provider.version}"/>
 </beans>

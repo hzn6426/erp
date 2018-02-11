@@ -27,7 +27,7 @@ public class ProductServiceImpl extends MBaseServiceImpl<MchProductMapper, MchPr
 
 	@Override
 	protected Wrapper<MchProduct> condition(ProductDTO e) {
-		Assert.checkArgument(e);
+		Assert.CheckArgument(e);
 		EntityWrapper<MchProduct> wrapper = new EntityWrapper<>();
 		wrapper.eq(StringUtils.isNoneBlank(e.getProductCode()), "product_code", e.getProductCode())
 			.eq(StringUtils.isNoneBlank(e.getProductName()), "product_name", e.getProductName());

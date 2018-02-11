@@ -50,6 +50,15 @@ public class SysButton extends BaseModel {
      */
     @TableField("menu_id")
     private Integer menuId;
+    /**
+     * 按钮功能描述
+     */
+    @TableField("remark")
+    private String remark;
+    /**
+     * 父按钮（当前按钮是通过上级按钮操作展示的）
+     */
+    private Integer parentId;
 
 
 }

@@ -89,4 +89,12 @@ public class Checker {
 		return StringUtils.isNotBlank(cs);
 	}
 	
+	public static Boolean BeGreaterThan(int a, int b) {
+		return a > b;
+	}
+	
+	public static Boolean BeGreaterOrEqualThan(int a, int b) {
+		return a > b || a == b;
+	}
+	
 }

@@ -1,19 +1,20 @@
 
-import com.canaan.jgsf.util.SerializeUtil;
+import java.util.Calendar;
+
 
 public class CommonTest {
 
 	public static void main(String[] args) throws Exception{
-		String prefix = "shiro_session:";
-		String key = prefix + "wewfwefwf";
-		
-//		MenuDTO dto = new MenuDTO();
-//		dto.setCode("111");
-		String str = SerializeUtil.convertToByteString("wewfwefwf");
-//		System.out.println(Arrays.toString(bytes));
-//		String str = new String(bytes,StandardCharsets.UTF_8);
-//		MessageDigest md = MessageDigest.getInstance("MD5");
-		System.out.println(key+str);
+//		String prefix = "shiro_session:";
+//		String key = prefix + "wewfwefwf";
+//		
+////		MenuDTO dto = new MenuDTO();
+////		dto.setCode("111");
+//		String str = SerializeUtil.convertToByteString("wewfwefwf");
+////		System.out.println(Arrays.toString(bytes));
+////		String str = new String(bytes,StandardCharsets.UTF_8);
+////		MessageDigest md = MessageDigest.getInstance("MD5");
+//		System.out.println(key+str);
 //		MenuDTO m =  (MenuDTO) SerializeUtil.convertFromByteString(str);
 //		byte[] strbytes = str.getBytes(StandardCharsets.UTF_8);
 //		System.out.println(Arrays.toString(strbytes));
@@ -27,7 +28,8 @@ public class CommonTest {
 //		System.out.println(targetbytes);
 //		MenuDTO m =  (MenuDTO) SerializeUtil.deserialize(strbytes);
 //		System.out.println(m.getCode());
-		
+		System.out.println(java.util.TimeZone.getDefault().getID());
+		System.out.println(Calendar.getInstance().getTime());
 	}
 
 }

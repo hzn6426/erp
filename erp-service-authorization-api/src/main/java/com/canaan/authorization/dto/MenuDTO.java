@@ -36,5 +36,8 @@ public class MenuDTO implements Serializable {
     
 	@ApiModelProperty("父菜单ID")
     private Integer parentId;
+	
+	@ApiModelProperty("优先级")
+	private Short priority;
 
 }

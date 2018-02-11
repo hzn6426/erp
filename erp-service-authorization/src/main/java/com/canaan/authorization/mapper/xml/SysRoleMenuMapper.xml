@@ -13,8 +13,27 @@
         </foreach>
     </select>
     
+    <!-- 根据menuid和角色id列表获取子菜单列表 -->
+    <select id="listChildMenuByMapMenuIdAndRoleIds" resultType="com.canaan.authorization.entity.SysMenu">
+        SELECT m.id, m.menu_code, m.menu_name, m.menu_url 
+        FROM sys_menu AS m 
+        INNER JOIN sys_role_menu sm ON m.id = sm.menu_id
+        WHERE m.parent_id = #{menuId,jdbcType=INTEGER} and sm.role_id in 
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}       
+        </foreach>
+    </select>
+    
+    <!-- 删除角色id对应的菜单id列表权限 -->
+    <delete id="deleteByMapRoleIdAndMenuIds" parameterType="java.util.Map">
+        DELETE FROM sys_role_menu  WHERE role_id = #{roleId,jdbcType=INTEGER} AND menu_id in 
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}       
+        </foreach>
+    </delete>
+    
     <!-- 根据id删除角色菜单关系 -->
     <delete id="deleteByRoleId" parameterType="java.lang.Integer">
-        DELETE FROM sys_role_menu t WHERE t.role_id = #{roleId,jdbcType=CHAR}
+        DELETE FROM sys_role_menu  WHERE role_id = #{roleId,jdbcType=CHAR}
     </delete>
 </mapper>

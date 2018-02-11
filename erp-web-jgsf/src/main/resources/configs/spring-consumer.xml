@@ -8,24 +8,33 @@
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 
-    | privilege module
+    | authorization module
     -->
-    <dubbo:reference id="sysMenuService"
-        interface="com.canaan.privilege.api.SysMenuService"
+    <dubbo:reference id="menuService"
+        interface="com.canaan.authorization.api.SysMenuService"
         lazy="true" retries="${dubbo.consumer.retries}" protocol="${dubbo.consumer.protocol}" 
         timeout="${dubbo.comsumer.timeout}" check="false" version="${dubbo.consumer.version}"/>
     
-    <dubbo:reference id="sysUserService"
-        interface="com.canaan.privilege.api.SysUserService"
+    <dubbo:reference id="userService"
+        interface="com.canaan.authorization.api.SysUserService"
         lazy="true" retries="${dubbo.consumer.retries}" protocol="${dubbo.consumer.protocol}" 
         timeout="${dubbo.comsumer.timeout}" check="false" version="${dubbo.consumer.version}"/>
         
+    <dubbo:reference id="buttonService"
+        interface="com.canaan.authorization.api.SysButtonService"
+        lazy="true" retries="${dubbo.consumer.retries}" protocol="${dubbo.consumer.protocol}" 
+        timeout="${dubbo.comsumer.timeout}" check="false" version="${dubbo.consumer.version}"/>
+        
+    <dubbo:reference id="roleService"
+        interface="com.canaan.authorization.api.SysRoleService"
+        lazy="true" retries="${dubbo.consumer.retries}" protocol="${dubbo.consumer.protocol}" 
+        timeout="${dubbo.comsumer.timeout}" check="false" version="${dubbo.consumer.version}"/>
     <!--
     | product module 
-    -->
+    
     <dubbo:reference id="productService"
         interface="com.canaan.product.api.ProductService"
         lazy="true" retries="${dubbo.consumer.retries}" protocol="${dubbo.consumer.protocol}" 
         timeout="${dubbo.comsumer.timeout}" check="false" version="${dubbo.consumer.version}"/>
-    
+    -->
 </beans>

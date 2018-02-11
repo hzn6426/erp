@@ -1,5 +1,6 @@
 package com.canaan.common;
 
+import java.io.Serializable;
 import java.util.List;
 
 public interface MBaseService<E> {
@@ -8,11 +9,13 @@ public interface MBaseService<E> {
 	
 	List<E> list(E e);
 	
-	E get(Long pk);
+	E get(Integer pk);
 	
 	void save(E e);
 	
 	void update(E e);
 	
 	void delete(E e);
+	
+	void delete(List<? extends Serializable> ids);
 }

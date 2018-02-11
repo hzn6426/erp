@@ -47,6 +47,9 @@ public class SysMenu extends BaseModel {
      */
     @TableField("parent_id")
     private Integer parentId;
-
-
+    /**
+     * 优先级
+     */
+    @TableField("priority")
+    private Short priority;
 }

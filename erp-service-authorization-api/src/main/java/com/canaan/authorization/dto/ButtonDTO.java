@@ -2,6 +2,10 @@ package com.canaan.authorization.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -26,15 +30,19 @@ public class ButtonDTO implements Serializable {
 	@ApiModelProperty("主键ID")
     private Integer id;
 	
+	@NotBlank
 	@ApiModelProperty("按钮编码")
     private String buttonCode;
     
+	@NotBlank
 	@ApiModelProperty("按钮名称")
     private String buttonName;
     
+	@NotBlank
 	@ApiModelProperty("按钮功能连接")
     private String buttonUrl;
 	
+	@NotNull
 	@ApiModelProperty("菜单id")
     private Integer menuId;
 }

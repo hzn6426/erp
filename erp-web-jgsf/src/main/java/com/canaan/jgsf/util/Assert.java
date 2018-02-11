@@ -2,6 +2,8 @@ package com.canaan.jgsf.util;
 
 import java.util.Collection;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.canaan.jgsf.exception.ClientBizException;
 import com.canaan.jgsf.exception.ClientExceptionEnum;
 import com.canaan.util.tool.Checker;
@@ -17,7 +19,7 @@ public class Assert {
 		}
 		if (beStrict) {
 			if (String.class.isInstance(reference)) {
-				return !"".equals(reference);
+				return !StringUtils.isBlank((String)reference);
 			} else if (Collection.class.isInstance(reference)) {
 				return !((Collection<?>) reference).isEmpty();
 			}
@@ -53,14 +55,14 @@ public class Assert {
 		return reference;
 	}
 	
-	public static <T> Collection<T> checkNotNull(Collection<T> collection, ClientExceptionEnum exenum, Object...args) {
+	public static <T> Collection<T> CheckNotNull(Collection<T> collection, ClientExceptionEnum exenum, Object...args) {
 		if (!Checker.BeNotNull(collection)) {
 			throw new ClientBizException(exenum, args);
 		}
 		return collection;
 	}
 	
-	public static <T> Collection<T> checkNotNull(Collection<T> collection, ClientExceptionEnum exenum) {
+	public static <T> Collection<T> CheckNotNull(Collection<T> collection, ClientExceptionEnum exenum) {
 		if (!Checker.BeNotNull(collection)) {
 			throw new ClientBizException(exenum);
 		}
@@ -75,7 +77,7 @@ public class Assert {
 		return reference;
 	}
 	
-	public static <T> T checkNotNull(T refererce) {
+	public static <T> T CheckNotNull(T refererce) {
 		if (!Checker.BeNotNull(refererce)) {
 			throw new NullPointerException();
 		}
@@ -83,53 +85,59 @@ public class Assert {
 	}
 	
 	
-	public static void CheckArgument(boolean beStrict, Object... references) {
+	public static void CheckArgument( Object... references) {
 		for (Object object : references) {
-			Preconditions.checkArgument(BeNotNull(object, beStrict));
+			Preconditions.checkArgument(BeNotNull(object, false));
 		}
 //		Arrays.asList(references).stream().forEach(reference -> Preconditions.checkArgument(BeNotNull(reference, beStrict)));
 	}
 	
-	public static <T> T checkArgument(T reference) {
+	public static void CheckArgumentStrict(Object...references) {
+		for (Object object : references) {
+			Preconditions.checkArgument(BeNotNull(object, true));
+		}
+	}
+	
+	public static <T> T CheckArgument(T reference) {
 		Preconditions.checkArgument(Checker.BeNotNull(reference));
 		return reference;
 	}
 	
-	public static <T> Collection<T> checkArgument(Collection<T> collection) {
+	public static <T> Collection<T> CheckArgument(Collection<T> collection) {
 		Preconditions.checkArgument(Checker.BeNotNull(collection));
 		return collection;
 	}
 	
-	public static <T> T checkArgument(T reference, ClientExceptionEnum exenum, Object...args) {
+	public static <T> T CheckArgument(T reference, ClientExceptionEnum exenum, Object...args) {
 		if (!Checker.BeNotNull(reference)) {
 			throw new ClientBizException(exenum, args);
 		}
 		return reference;
 	}
 	
-	public static <T> T checkArgument(T reference, ClientExceptionEnum exenum) {
+	public static <T> T CheckArgument(T reference, ClientExceptionEnum exenum) {
 		if (!Checker.BeNotNull(reference)) {
 			throw new ClientBizException(exenum);
 		}
 		return reference;
 	}
 	
-	public static <T> Collection<T> checkArgument(Collection<T> collection, ClientExceptionEnum exenum, Object...args) {
+	public static <T> Collection<T> CheckArgument(Collection<T> collection, ClientExceptionEnum exenum, Object...args) {
 		if (!Checker.BeNotNull(collection)) {
 			throw new ClientBizException(exenum, args);
 		}
 		return collection;
 	}
 	
-	public static <T> Collection<T> checkArgument(Collection<T> collection, ClientExceptionEnum exenum) {
+	public static <T> Collection<T> CheckArgument(Collection<T> collection, ClientExceptionEnum exenum) {
 		if (!Checker.BeNotNull(collection)) {
 			throw new ClientBizException(exenum);
 		}
 		return collection;
 	}
 	
-	public static <T> void checkNotEqual(T reference, Object target, ClientExceptionEnum exceptionEnum) {
-		checkArgument(reference);
+	public static <T> void CheckNotEqual(T reference, Object target, ClientExceptionEnum exceptionEnum) {
+		CheckArgument(reference);
 		if (!reference.equals(target)) {
 			throw new ClientBizException(exceptionEnum);
 		}

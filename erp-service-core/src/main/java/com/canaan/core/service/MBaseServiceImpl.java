@@ -1,7 +1,10 @@
 package com.canaan.core.service;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -18,12 +21,12 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.canaan.common.MBaseService;
 import com.canaan.common.SearchResult;
 import com.canaan.core.batisplus.OrderBy;
+import com.canaan.core.cache.CacheAssistService;
 import com.canaan.core.common.BaseModel;
 import com.canaan.core.exception.ExceptionEnum;
 import com.canaan.core.util.Assert;
 import com.canaan.core.util.CollectionMapperDecorator;
 import com.canaan.util.tool.Checker;
-import com.google.common.collect.Lists;
 import com.jarvis.cache.annotation.Cache;
 import com.jarvis.cache.annotation.CacheDelete;
 import com.jarvis.cache.annotation.CacheDeleteKey;
@@ -65,13 +68,16 @@ public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseMo
 	@Resource
 	protected CollectionMapperDecorator collectionMapper;
 	
+	@Resource
+	private CacheAssistService<V> cacheAssistService;
+	
 	/**
 	 * 将 {@link V}类型对象(<code>dto</code>)转化成{@link T}类型对象(<code>entity</code>)
 	 * @param v dto对象
 	 * @return entity对象
 	 */
 	protected T mapper(V v) {
-		Assert.checkArgument(v);
+		Assert.CheckArgument(v);
 		return beanMapper.map(v, entityClassType);
 	}
 	
@@ -81,7 +87,7 @@ public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseMo
 	 * @return dto对象
 	 */
 	protected V mapper(T t) {
-		Assert.checkArgument(t);
+		Assert.CheckArgument(t);
 		return beanMapper.map(t, vmodelClassType);
 	}
 	
@@ -91,8 +97,8 @@ public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseMo
 	 * @return
 	 */
 	protected List<V> mapper(List<T> tlist) {
-		Assert.checkArgument(tlist);
-		return Lists.newArrayList(collectionMapper.mapCollection(tlist, vmodelClassType));
+		Assert.CheckArgument(tlist);
+		return new ArrayList<>(collectionMapper.mapCollection(tlist, vmodelClassType));
 	}
 	
 	/**
@@ -135,7 +141,7 @@ public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseMo
 		}
 		
 		List<T> list = this.baseMapper.selectPage(page, wrapper);
-		List<V> vlist = Lists.newArrayList(collectionMapper.mapCollection(list, vmodelClassType));
+		List<V> vlist = new ArrayList<>(collectionMapper.mapCollection(list, vmodelClassType));
 		int count = this.baseMapper.selectCount(wrapper);
 		return new SearchResult<V>(count, vlist);
 	}
@@ -144,45 +150,62 @@ public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseMo
 	public List<V> list(V v) {
 		Wrapper<T> wrapper = wrapperIt(v);
 		List<T> list = this.baseMapper.selectList(wrapper);
-		return Lists.newArrayList(collectionMapper.mapCollection(list, vmodelClassType));
+		return new ArrayList<>(collectionMapper.mapCollection(list, vmodelClassType));
 	}
 
-	@Cache(expire = 300, expireExpression = "null == #retVal ? 300: 3600",  key = "#target.getClass().getName() + '-' + #args[0]")
+	@Cache(expire = 300, expireExpression = "null == #retVal ? 300: 3600",  key = "#target.getClass().getName()", hfield = "#args[0]")
 	@Override
-	public V get(Long pk) {
-		Assert.checkArgument(pk);
+	public V get(Integer pk) {
+		Assert.CheckArgument(pk);
 		T t =  this.baseMapper.selectById(pk);
 		return beanMapper.map(t, vmodelClassType);
 	}
 	
 	@Override
 	public void save(V v) {
-		Assert.checkArgument(v);
+		Assert.CheckArgument(v);
 		T t = beanMapper.map(v, entityClassType);
+		t.setCreateTime(new Date());
 		this.baseMapper.insert(t);
 	}
 	
 	@CacheDeleteTransactional
-	@CacheDelete(@CacheDeleteKey(value="#target.getClass().getName() + '-' + #args[0].id"))
+	@CacheDelete(@CacheDeleteKey(value="#target.getClass().getName()", hfield = "#args[0].id"))
 	@Override
 	public void update(V v) {
-		Assert.checkArgument(v);
+		Assert.CheckArgument(v);
 		Wrapper<T> wrapper = primaryKeyCondition(v);
 		Assert.CheckNotNull(wrapper,ExceptionEnum.INVALID_PK_FOR_UPDATE);
 		T t = beanMapper.map(v, entityClassType);
+		t.setUpdateTime(new Date());
 		int num = this.baseMapper.update(t, wrapper);
-		Assert.checkNotEqual(num, 1, ExceptionEnum.INVALID_UPDATE_NUM);
+		Assert.CheckNotEqual(num, 1, ExceptionEnum.INVALID_UPDATE_NUM);
 	}
 	
 	@CacheDeleteTransactional
-	@CacheDelete(@CacheDeleteKey(value="#target.getClass().getName() + '-' + #args[0].id"))
+	@CacheDelete(@CacheDeleteKey(value="#target.getClass().getName()", hfield ="#args[0].id"))
 	@Override
 	public void delete(V v) {
-		Assert.checkArgument(v);
+		Assert.CheckArgument(v);
 		Wrapper<T> wrapper = primaryKeyCondition(v);
 		Assert.CheckNotNull(wrapper,ExceptionEnum.INVALID_PK_FOR_DELETE);
 		int num = this.baseMapper.delete(wrapper);
-		Assert.checkNotEqual(num, 1, ExceptionEnum.INVALID_DELETE_NUM);
+		Assert.CheckNotEqual(num, 1, ExceptionEnum.INVALID_DELETE_NUM);
 	}
+	
+	@Override
+	public void delete(List<? extends Serializable> ids) {
+		//delete in db
+		Assert.CheckArgumentStrict(ids);
+		int num = this.baseMapper.deleteBatchIds(ids);
+		Assert.CheckNotEqual(num, 1, ExceptionEnum.INVALID_DELETE_NUM);
+		List<T> list = this.selectBatchIds(ids);
+		//delete in caches
+		for (T t : list) {
+			cacheAssistService.cacheDelete(mapper(t));
+		}
+		
+	}
+	
 
 }

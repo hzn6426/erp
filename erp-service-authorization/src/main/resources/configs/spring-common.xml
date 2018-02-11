@@ -39,6 +39,11 @@
     
     <bean id="collectionMapper" class="com.canaan.core.util.CollectionMapperDecorator"></bean>
    
-    
+    <!-- 
+    |
+    | cache assist for batch delete caches
+    |
+    -->
+    <bean id="cacheAssistService" class="com.canaan.core.cache.CacheAssistServiceImpl"></bean>
     
 </beans>

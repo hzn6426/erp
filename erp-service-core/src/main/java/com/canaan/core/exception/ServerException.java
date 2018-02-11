@@ -22,7 +22,7 @@ public class ServerException extends RuntimeException {
 		this.code = exceptionEnum.getExceptionCode();
 	}
 	
-	public ServerException(ExceptionEnum exceptionEnum, Object... arguments) {
+	public ServerException(ExceptionEnumable exceptionEnum, Object... arguments) {
 		super(MessageFormat.format(getBundleMessage(exceptionEnum.getExceptionCode()), arguments));
 		this.code = exceptionEnum.getExceptionCode();
 	}

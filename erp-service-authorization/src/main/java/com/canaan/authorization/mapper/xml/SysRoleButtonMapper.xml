@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.canaan.authorization.entity.SysRoleButton">
+<mapper namespace="com.canaan.authorization.mapper.SysRoleButtonMapper">
 
     <!-- 根据角色id列表获取按钮列表 -->
     <select id="listButtonByRoleIdList" parameterType="java.util.List" resultType="com.canaan.authorization.entity.SysButton">
@@ -15,6 +15,14 @@
     
     <!-- 根据角色id删除角色按钮关系 -->
     <delete id="deleteByRoleId" parameterType="java.lang.Integer">
-        DELETE FROM sys_role_button t WHERE t.role_id = #{roleId,jdbcType=CHAR}
+        DELETE FROM sys_role_button WHERE role_id = #{roleId,jdbcType=INTEGER}
+    </delete>
+    
+    <!-- 删除角色id对应的按钮id列表权限 -->
+    <delete id="deleteByMapRoleIdAndButtonIds" parameterType="java.util.Map">
+        DELETE FROM sys_role_button  WHERE role_id = #{roleId,jdbcType=INTEGER} AND button_id in 
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}       
+        </foreach>
     </delete>
 </mapper>

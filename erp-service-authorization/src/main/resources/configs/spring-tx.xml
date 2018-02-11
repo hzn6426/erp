@@ -102,10 +102,10 @@
 		<!-- mybatis config file -->
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<!-- mybatis mapper file -->
-		<property name="mapperLocations" value="classpath:com/canaan/product/mapper/xml/*Mapper.xml"></property>
+		<property name="mapperLocations" value="classpath:com/canaan/authorization/mapper/xml/*Mapper.xml"></property>
 		<!-- 配置实体扫描路径，多个package可以用分号; 逗号, 分隔， 支持通配符*-->
 		<!-- com.a.b.entity;com.a.c.entity;com.d.*.entity-->
-		<property name="typeAliasesPackage" value="com.canaan.product.entity"/>
+		<property name="typeAliasesPackage" value="com.canaan.authorization.entity"/>
 		<!-- <property name="configuration" ref="mybatisConfig"/> -->
 		<!-- MP 全局配置注入 -->
 		<!-- <property name="globalConfig" ref="globalConfig"/> -->
@@ -129,7 +129,7 @@
     
     <!-- 配置mybatis 扫描mapper接口的路径, 相当于注解@MapperScan，@MapperScan("com.baomidou.mybatisplus.test.h2.entity.mapper")-->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.canaan.product.mapper"/>
+        <property name="basePackage" value="com.canaan.authorization.mapper"/>
     </bean>
 
    <!--  <bean id="mybatisConfig" class="com.baomidou.mybatisplus.MybatisConfiguration">

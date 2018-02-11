@@ -108,10 +108,14 @@
 	</profiles>
   
 	<dependencies>
-    	<dependency>
+	   <dependency>
+            <groupId>com.canaan</groupId>
+            <artifactId>erp-service-authorization-api</artifactId>
+        </dependency>
+    	<!-- <dependency>
     		<groupId>com.canaan</groupId>
     		<artifactId>erp-service-privilege-api</artifactId>
-    	</dependency>
+    	</dependency> -->
     	
     	<dependency>
             <groupId>com.canaan</groupId>

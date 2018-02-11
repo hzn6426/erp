@@ -61,7 +61,7 @@
         </mvc:resource-chain>
     </mvc:resources>
     <mvc:resources mapping="/ajax/**" cache-period="3000" location="/ajax/" />
-    <mvc:resources mapping="swagger-ui.html"  location="classpath:/META-INF/resources/" />  
+    <mvc:resources mapping="swagger-ui.html"  location="classpath:/META-INF/resources/" /> 
     <mvc:resources mapping="/webjars/**"  location="classpath:/META-INF/resources/webjars/" />
     <!-- <mvc:default-servlet-handler /> -->
  

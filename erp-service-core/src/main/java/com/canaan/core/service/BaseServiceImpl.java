@@ -118,7 +118,7 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 
 	@Override
 	public E get(E e) {
-		Assert.checkArgument(e);
+		Assert.CheckArgument(e);
 		Condition pkConditon = primaryKeyCondition(e);
 		Assert.CheckNotNull(pkConditon, ExceptionEnum.INVALID_PK_FOR_GET);
 		R record = baseMapper.map(e, recordClassType);
@@ -129,7 +129,7 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 
 	@Override
 	public void save(E e) {
-		Assert.checkArgument(e);
+		Assert.CheckArgument(e);
 //		if (null != e.getId()) {
 //			throw new ServerException(ExceptionEnum.INVALID_ID_FOR_INSERT);
 //		}
@@ -144,7 +144,7 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 	}
 	
 	public void update(E e) {
-		Assert.checkArgument(e);
+		Assert.CheckArgument(e);
 //		Assert.CheckNotNull(e.getId(), ExceptionEnum.INVALID_ID_FOR_UPDATE);
 		Condition pkConditon = primaryKeyCondition(e);
 		Assert.CheckNotNull(pkConditon, ExceptionEnum.INVALID_PK_FOR_UPDATE);
@@ -154,16 +154,16 @@ public abstract class BaseServiceImpl<R extends TableRecord<R>, T extends Table<
 //		e.setUpdateTime(misecond);
 		R record = baseMapper.map(e, recordClassType);
 		int num = dsl.update(record.getTable()).set(record).where(pkConditon).execute();
-		Assert.checkNotEqual(num, 1, ExceptionEnum.INVALID_UPDATE_NUM);
+		Assert.CheckNotEqual(num, 1, ExceptionEnum.INVALID_UPDATE_NUM);
 	}
 	
 	public void delete(E e) {
-		Assert.checkArgument(e);
+		Assert.CheckArgument(e);
 //		Assert.CheckNotNull(e.getId(), ExceptionEnum.INVALID_ID_FOR_DELETE);
 		Condition pkConditon = primaryKeyCondition(e);
 		Assert.CheckNotNull(pkConditon, ExceptionEnum.INVALID_PK_FOR_DELETE);
 		R record = baseMapper.map(e, recordClassType);
 		int num = dsl.deleteFrom(record.getTable()).where(pkConditon).execute();
-		Assert.checkNotEqual(num, 1, ExceptionEnum.INVALID_DELETE_NUM);
+		Assert.CheckNotEqual(num, 1, ExceptionEnum.INVALID_DELETE_NUM);
 	}
 }
