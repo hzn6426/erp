@@ -6,9 +6,9 @@ import java.util.Collection;
 import java.util.Collections;  
 import java.util.HashSet;  
 import java.util.List;  
-import java.util.Set;  
-  
-  
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.shiro.cache.Cache;  
 import org.apache.shiro.cache.CacheException;  
 import org.apache.shiro.util.CollectionUtils;  
@@ -99,10 +99,22 @@ public class ShiroRedisCache<K,V> implements Cache<K,V> {
          try {  
                 redisTemplate.opsForValue().set(getBuildKey(key), SerializeUtil.serialize(value));  
                 return value;  
-            } catch (Throwable t) {  
-                throw new CacheException(t);  
-            }  
+        } catch (Throwable t) {  
+            throw new CacheException(t);  
+        }  
     }  
+    
+    public V put(K key, V value, int seconds) {
+    	logger.debug("根据key从存储 key [" + key + "]");  
+        try {  
+        	String storeKey = getBuildKey(key);
+	    	redisTemplate.opsForValue().set(storeKey, SerializeUtil.serialize(value));
+	    	redisTemplate.expire(storeKey, seconds, TimeUnit.SECONDS);
+	    	return value;  
+       } catch (Throwable t) {  
+           throw new CacheException(t);  
+       }  
+    }
   
     @Override  
     public V remove(K key) throws CacheException {  

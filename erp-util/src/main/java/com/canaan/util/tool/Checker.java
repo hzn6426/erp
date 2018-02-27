@@ -89,6 +89,14 @@ public class Checker {
 		return StringUtils.isNotBlank(cs);
 	}
 	
+	public static Boolean BeBlank(CharSequence cs) {
+		return StringUtils.isBlank(cs);
+	}
+	
+	public static Boolean BeEmpty(CharSequence cs) {
+		return StringUtils.isEmpty(cs);
+	}
+	
 	public static Boolean BeGreaterThan(Number a, Number b) {
 		return a.doubleValue() - b.doubleValue() > 0;
 	}

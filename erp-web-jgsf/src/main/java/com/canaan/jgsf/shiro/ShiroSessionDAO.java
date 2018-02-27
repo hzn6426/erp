@@ -1,8 +1,8 @@
 package com.canaan.jgsf.shiro;
 
 import org.apache.shiro.session.Session;
-import org.apache.shiro.session.UnknownSessionException;
-import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
+import org.apache.shiro.session.mgt.ValidatingSession;
+import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
 import org.apache.shiro.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2017年11月20日 下午2:57:02
  * @version V1.0
  */
-public class ShiroSessionDAO extends AbstractSessionDAO {
+public class ShiroSessionDAO extends CachingSessionDAO {
 	private static Logger logger = LoggerFactory.getLogger(ShiroSessionDAO.class);
 	private static final String SESSION_KEY_PREFIX = "jgsf_shiro_redis_session:";
 	private final int sessionTimeoutSeconds;
@@ -53,23 +53,23 @@ public class ShiroSessionDAO extends AbstractSessionDAO {
 		return getSessionFRedis(buildRedisSessionKey(sessionId));
 	}
 
-	@Override
-	public void update(Session session) throws UnknownSessionException {
-		if(session == null || session.getId() == null){
-			logger.error("Session or SessionId to update must not be null!");
-			return;
-		}
-		putSession2Redis(buildRedisSessionKey(session.getId()), sessionTimeoutSeconds, session);
-	}
+//	@Override
+//	public void update(Session session) throws UnknownSessionException {
+//		if(session == null || session.getId() == null){
+//			logger.error("Session or SessionId to update must not be null!");
+//			return;
+//		}
+//		putSession2Redis(buildRedisSessionKey(session.getId()), sessionTimeoutSeconds, session);
+//	}
 
-	@Override
-	public void delete(Session session) {
-		if(session == null || session.getId() == null){
-			logger.error("Session or SessionId to delete must not be null!");
-			return;
-		}
-		deleteSessionFRedis(buildRedisSessionKey(session.getId()));
-	}
+//	@Override
+//	public void delete(Session session) {
+//		if(session == null || session.getId() == null){
+//			logger.error("Session or SessionId to delete must not be null!");
+//			return;
+//		}
+//		deleteSessionFRedis(buildRedisSessionKey(session.getId()));
+//	}
 
 	@Override
 	public Collection<Session> getActiveSessions() {
@@ -108,5 +108,37 @@ public class ShiroSessionDAO extends AbstractSessionDAO {
 	}
 	private void deleteSessionFRedis(String key) {
 		redisTemplate.delete(key);
+	}
+
+	@Override
+	protected void doUpdate(Session session) {
+		
+		if(session == null || session.getId() == null){
+			logger.error("Session or SessionId to update must not be null!");
+			return;
+		}
+		if (logger.isDebugEnabled()) {
+			logger.debug("do update session to redis, the session id is {}",session.getId());
+		}
+		if (session instanceof ValidatingSession && !((ValidatingSession) session).isValid()) {    
+            return;    
+        }
+		//如果没有改变不更新缓存，直接返回
+		if (ShiroSession.class.isInstance(session)) {
+			ShiroSession ss = (ShiroSession) session;
+			if (!ss.isChanged()) {
+				return;
+			}
+		}
+		putSession2Redis(buildRedisSessionKey(session.getId()), sessionTimeoutSeconds, session);
+	}
+
+	@Override
+	protected void doDelete(Session session) {
+		if(session == null || session.getId() == null){
+			logger.error("Session or SessionId to delete must not be null!");
+			return;
+		}
+		deleteSessionFRedis(buildRedisSessionKey(session.getId()));
 	}
 }

@@ -7,12 +7,15 @@ import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.CacheManager;
 import org.jboss.netty.util.internal.ConcurrentHashMap;
 import org.springframework.data.redis.core.RedisTemplate;
+
+import lombok.Setter;
 @SuppressWarnings({"rawtypes","unchecked"})
 public class ShiroRedisCacheManager implements CacheManager {
 
 	
 	private final ConcurrentMap<String, Cache> cacheMap = new ConcurrentHashMap<String, Cache>();
 	
+	@Setter
 	private RedisTemplate redisTemplate;
 	
 	@Override
@@ -30,9 +33,6 @@ public class ShiroRedisCacheManager implements CacheManager {
 
 
 
-	public void setRedisTemplate(RedisTemplate redisTemplate) {
-		this.redisTemplate = redisTemplate;
-	}
 
 	
 	

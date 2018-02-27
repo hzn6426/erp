@@ -22,7 +22,9 @@
         <constructor-arg ref="shiroRedisCacheManager" />  
         <property name="hashAlgorithmName" value="MD5" /> 
         <property name="hashIterations" value="2" />  
-        <property name="storedCredentialsHexEncoded" value="true" />  
+        <property name="storedCredentialsHexEncoded" value="true" />
+        <property name="retryTime" value="${login_retry_time}"></property>
+        <property name="retryTimeout" value="${login_retry_timeout}"></property>  
     </bean>
     <!-- <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
         <property name="hashAlgorithmName" value="MD5"/>
@@ -66,7 +68,7 @@
     <!-- redisSessionDAO -->
     <bean id="redisSessionDAO" class="com.canaan.jgsf.shiro.ShiroSessionDAO">
         <constructor-arg index="0" ref="redisTemplate"></constructor-arg>
-        <constructor-arg index="1" value="${redis.expire}"></constructor-arg>
+        <constructor-arg index="1" value="${login_redis_expire}"></constructor-arg>
         <property name="sessionIdGenerator" ref="sessionIdGenerator"></property>
     </bean>
     
@@ -76,15 +78,24 @@
         <property name="sessionManager" ref="sessionManager"/>
     </bean>
     
+    <bean id="shiroSessionFactory" class="com.canaan.jgsf.shiro.ShiroSessionFactory"></bean>
+    
     <!-- sessionManager -->
     <bean id="sessionManager" class="com.canaan.jgsf.shiro.ShiroSessionManager">
         <property name="sessionDAO" ref="redisSessionDAO" />
-        <property name="globalSessionTimeout" value="60000"/>  
+        <property name="globalSessionTimeout" value="${login_session_timeout}"/>  
         <property name="deleteInvalidSessions" value="true"/>  
         <property name="sessionValidationSchedulerEnabled" value="true"/>
         <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
         <property name="sessionIdCookieEnabled" value="true"/> 
         <property name="sessionIdCookie" ref="sessionIdCookie"/>  
+        <property name="sessionFactory" ref="shiroSessionFactory"/>
+        <property name="staticResourceUrls">
+            <list>
+                <value>/static/**</value>
+                <value>/webjars/**</value>
+            </list>
+        </property>
     </bean>
     
     
@@ -122,40 +133,44 @@
     
     <!-- 基于Form表单的身份验证过滤器 -->
     <bean id="authcAuthenticationFilter" class="com.canaan.jgsf.shiro.AuthcAuthenticationFilter">
-        <!-- <property name="usernameParam" value="username"/>
+        <property name="loginUrl" value="/checkLogin"></property>
+        <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
-        <property name="rememberMeParam" value="remember"/> -->
+        <property name="rememberMeParam" value="remember"/>
+        <property name="successUrl" value="/swagger-ui.html"></property>
+        <property name="failureKeyAttribute" value="shiro_login_failure"></property>
     </bean>
     
-    <bean id="ShiroExceptionFilter" class="com.canaan.jgsf.shiro.ShiroExceptionFilter"></bean>
     
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/login" />
+		<property name="loginUrl" value="/checkLogin" />
 		<property name="unauthorizedUrl" value="/lock.html"/>
-		<property name="successUrl" value="/swagger-ui" ></property>
+		<property name="successUrl" value="/swagger-ui.html" ></property>
 		<!-- <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" /> -->
 		<property name="filters">
 		    <map>
+		        <entry key="authc" value-ref="authcAuthenticationFilter"/>  
 		        <entry key="user" value-ref="rememberMeAuthenticationFilter"></entry>
-		    	<entry key="authc" value-ref="authcAuthenticationFilter"/>  
 		        <entry key="logout" value-ref="logoutFilter" />
 		    </map>
 		</property>
 		<property name="filterChainDefinitions">  
             <value>  
+                /favicon.ico = anon
                 <!-- 静态资源允许访问 -->  
                 /static/** = anon
                 /swagger** = authc
-                <!-- /webjars/** = anon -->
-                  
+                /webjars/** = anon
+                /login = anon
                 <!-- 登录注册允许访问 -->  
                 /register* = anon  
                 <!-- 登出 --> 
                 /logout = logout  
                 <!-- 登录 -->
-                /checkLogin = anon
+                <!-- /checkLogin = anon -->
+                
                 
                 <!-- /user = rest[user]
                 /role = rest[role]

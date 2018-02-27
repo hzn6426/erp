@@ -3,15 +3,12 @@ package com.canaan.jgsf.shiro;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.servlet.ShiroHttpSession;
 import org.apache.shiro.web.util.WebUtils;
 
-import com.canaan.distribute.util.UserUtil;
 import com.canaan.jgsf.common.ResponseResult;
 import com.canaan.jgsf.constant.SystemConsts;
 import com.canaan.jgsf.util.WebUtil;
@@ -28,8 +25,13 @@ public class AuthcAuthenticationFilter extends FormAuthenticationFilter {
 		ShiroHttpSession session = (ShiroHttpSession)httpServletRequest.getSession();
 		if (session == null) {
 			return false;
+			
 		}
-		// String url = httpServletRequest.getServletPath();
+		ShiroUser user = (ShiroUser)session.getAttribute(SystemConsts.USER_SESSION);
+		if (user == null) {
+			return false;
+		}
+		// Sdtringw url = httpServletRequest.getServletPath();
 		// if (subject.isAuthenticated()) {
 		//
 		// String sessionid = httpServletRequest.getSession().getId();
@@ -57,16 +59,6 @@ public class AuthcAuthenticationFilter extends FormAuthenticationFilter {
 		
 	}
 
-	@Override
-	public void afterCompletion(ServletRequest request, ServletResponse response, Exception exception)
-			throws Exception {
-		//清楚user缓存
-		if (Checker.BeNotNull(UserUtil.get())) {
-			UserUtil.remove();
-		}
-		super.afterCompletion(request, response, exception);
-//		response.getWriter().write(ResponseResult.build(403, "没有权限").json());
-	}
 
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
