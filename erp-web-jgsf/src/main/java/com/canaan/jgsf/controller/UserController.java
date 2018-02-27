@@ -30,6 +30,8 @@ public class UserController extends MBaseController<UserDTO> {
 	@Resource
 	private SysUserService userService;
 	
+	
+	
 	@ApiOperation(value = "查询列表")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseResult<UserDTO> list(@RequestParam int page, @RequestParam int limit) {

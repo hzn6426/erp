@@ -156,11 +156,11 @@ public class SysRoleServiceImpl extends MBaseServiceImpl<SysRoleMapper, SysRole,
 		
 		int parentId = -1;
 		//处理nodeParentId，如果为null或空串表示读取一级菜单（parentId为-1）
-		if (Checker.BeNotBlank(nodeParentId)) {
-			if (nodeParentId.indexOf("menu") != -1) {
-				parentId = Integer.valueOf(Splitter.on("_").splitToList(nodeParentId).get(1));
+		if (Checker.BeNotBlank(nodeParentId) && Checker.BeNotEqual(nodeParentId, -1)) {
+			if (nodeParentId.indexOf("menu") == -1) {
+				throw new ServerException(AuthorizationExceptionEnum.INVALID_NODE_ID_EXCEPTION);
 			}
-			
+			parentId = Integer.valueOf(Splitter.on("_").splitToList(nodeParentId).get(1));
 		}
 		
 		List<MenuDTO> menuList = menuService.list(new MenuDTO().setParentId(parentId));
@@ -173,6 +173,7 @@ public class SysRoleServiceImpl extends MBaseServiceImpl<SysRoleMapper, SysRole,
 						.setNodeId("menu_" + menu.getId())
 						.setNodeName(menu.getMenuName())
 						.setNodeType("menu")
+						.setUrl(menu.getMenuUrl())
 						.setChecked(authMenuIdList.contains(menu.getId())));
 			}
 		} else {
@@ -185,6 +186,7 @@ public class SysRoleServiceImpl extends MBaseServiceImpl<SysRoleMapper, SysRole,
 							.setNodeId("btn_" + button.getId())
 							.setNodeName(button.getButtonName())
 							.setNodeType("btn")
+							.setUrl(button.getButtonUrl())
 							.setChecked(authButtonIdList.contains(button.getId())));
 				}
 			}

@@ -83,4 +83,10 @@ public class SysUserServiceImpl extends MBaseServiceImpl<SysUserMapper, SysUser,
 		return list;
 	}
 
+	@Override
+	public UserDTO getByUserName(String userName) {
+		SysUser user = this.baseMapper.selectOne(new SysUser().setUserName(userName));
+		return Checker.BeNotNull(user) ? mapper(user) : null;
+	}
+
 }

@@ -34,6 +34,8 @@
         <!-- lib versions  -->
         <autoload-cache.version>6.8</autoload-cache.version>
         
+        <beetl.version>2.7.26</beetl.version>
+        
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-logging.version>1.2</commons-logging.version>
@@ -410,11 +412,18 @@
         		<version>${project.version}</version>
         	</dependency>
         	
+        	<!--beetl 模板  -->
+        	<dependency>
+		        <groupId>com.ibeetl</groupId>
+		        <artifactId>beetl</artifactId>
+		        <version>${beetl.version}</version>
+			</dependency>
+        	
         	<!-- redis autoload cache -->
         	<dependency>
-			  <groupId>com.github.qiujiayu</groupId>
-			  <artifactId>autoload-cache</artifactId>
-			  <version>${autoload-cache.version}</version>
+			    <groupId>com.github.qiujiayu</groupId>
+			    <artifactId>autoload-cache</artifactId>
+			    <version>${autoload-cache.version}</version>
 			</dependency>
         	
         	<!-- hession serialize for autoload cache -->

@@ -20,19 +20,24 @@
     <bean id="credentialsMatcher"  
         class="com.canaan.jgsf.shiro.RetryLimitHashedCredentialsMatcher">  
         <constructor-arg ref="shiroRedisCacheManager" />  
-        <property name="hashAlgorithmName" value="md5" /><!-- md5盐值加密3次 -->  
-        <property name="hashIterations" value="3" />  
+        <property name="hashAlgorithmName" value="MD5" /> 
+        <property name="hashIterations" value="2" />  
         <property name="storedCredentialsHexEncoded" value="true" />  
     </bean>
+    <!-- <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="MD5"/>
+        <property name="hashIterations" value="2"></property>
+    </bean> -->
     
     <!-- 会话ID生成器 -->
     <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
     
     <!-- 登录cookie,maxAge -1表示关闭浏览器后清楚cookie -->
     <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">  
-        <constructor-arg value="sid"/>
+        <constructor-arg value="ssid"/>
         <property name="httpOnly" value="true"/> 
         <property name="maxAge" value="-1"></property>
+        <property name="path" value="/"></property>
     </bean> 
     
     <!-- remeberme -->
@@ -49,9 +54,10 @@
     
     <!-- Realm实现 -->
     <bean id="userRealm" class="com.canaan.jgsf.shiro.UserRealm">
+        <property name="userService" ref="userService"></property>
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <property name="cachingEnabled" value="true"/>
-        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="false"/>
         <property name="authenticationCacheName" value="authenticationCache"/>
         <property name="authorizationCachingEnabled" value="true"/>
         <property name="authorizationCacheName" value="authorizationCache"/>
@@ -61,22 +67,22 @@
     <bean id="redisSessionDAO" class="com.canaan.jgsf.shiro.ShiroSessionDAO">
         <constructor-arg index="0" ref="redisTemplate"></constructor-arg>
         <constructor-arg index="1" value="${redis.expire}"></constructor-arg>
+        <property name="sessionIdGenerator" ref="sessionIdGenerator"></property>
     </bean>
     
     <!-- 会话验证调度器 -->
-    <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
-        <property name="sessionValidationInterval" value="1800000"/>
+    <bean id="sessionValidationScheduler" class="com.canaan.jgsf.shiro.QuartzSessionValidationScheduler">
+        <property name="sessionValidationInterval" value="20000"/>
         <property name="sessionManager" ref="sessionManager"/>
     </bean>
     
     <!-- sessionManager -->
-    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+    <bean id="sessionManager" class="com.canaan.jgsf.shiro.ShiroSessionManager">
         <property name="sessionDAO" ref="redisSessionDAO" />
-        <property name="globalSessionTimeout" value="${redis.expire}"/>  
+        <property name="globalSessionTimeout" value="60000"/>  
         <property name="deleteInvalidSessions" value="true"/>  
         <property name="sessionValidationSchedulerEnabled" value="true"/>
         <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
-        <property name="sessionValidationInterval" value="${redis.expire}"/> 
         <property name="sessionIdCookieEnabled" value="true"/> 
         <property name="sessionIdCookie" ref="sessionIdCookie"/>  
     </bean>
@@ -101,7 +107,7 @@
     
     <!-- 安全退出filter  --> 
     <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
-         <property name="redirectUrl" value="${loginUrl}" />
+         <property name="redirectUrl" value="/login" />
     </bean>
     
     <!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
@@ -110,25 +116,29 @@
         <property name="arguments" ref="securityManager"/>
     </bean>
     
-    <!-- 基于Form表单的身份验证过滤器 -->
+    
     <bean id="rememberMeAuthenticationFilter"  class="com.canaan.jgsf.shiro.RememberMeAuthenticationFilter">
-        <property name="usernameParam" value="username"/>
-        <property name="passwordParam" value="password"/>
-        <property name="rememberMeParam" value="rememberMe"/>
     </bean>
     
-    <bean id="authcAuthenticationFilter" class="com.canaan.jgsf.shiro.AuthcAuthenticationFilter"></bean>
+    <!-- 基于Form表单的身份验证过滤器 -->
+    <bean id="authcAuthenticationFilter" class="com.canaan.jgsf.shiro.AuthcAuthenticationFilter">
+        <!-- <property name="usernameParam" value="username"/>
+        <property name="passwordParam" value="password"/>
+        <property name="rememberMeParam" value="remember"/> -->
+    </bean>
+    
+    <bean id="ShiroExceptionFilter" class="com.canaan.jgsf.shiro.ShiroExceptionFilter"></bean>
     
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="${loginUrl}" />
-		<property name="unauthorizedUrl" value="${unauthorizedUrl}"/>
-		<property name="successUrl" value="/" ></property>
+		<property name="loginUrl" value="/login" />
+		<property name="unauthorizedUrl" value="/lock.html"/>
+		<property name="successUrl" value="/swagger-ui" ></property>
 		<!-- <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" /> -->
 		<property name="filters">
 		    <map>
-		        <entry key="rememberMe" value-ref="rememberMeAuthenticationFilter"></entry>
+		        <entry key="user" value-ref="rememberMeAuthenticationFilter"></entry>
 		    	<entry key="authc" value-ref="authcAuthenticationFilter"/>  
 		        <entry key="logout" value-ref="logoutFilter" />
 		    </map>
@@ -136,20 +146,25 @@
 		<property name="filterChainDefinitions">  
             <value>  
                 <!-- 静态资源允许访问 -->  
-                /resources/** = anon  
+                /static/** = anon
+                /swagger** = authc
+                <!-- /webjars/** = anon -->
+                  
                 <!-- 登录注册允许访问 -->  
-                /login* = anon  
                 /register* = anon  
-                <!-- 登出 -->  
+                <!-- 登出 --> 
                 /logout = logout  
+                <!-- 登录 -->
+                /checkLogin = anon
                 
-                /add* = authc
-                /save* = authc
-                /*delete* = authc
-                /*insert* = authc
-                /*update* = authc  
+                <!-- /user = rest[user]
+                /role = rest[role]
+                /button = rest[button]
+                /menu = rest[menu] -->
+                /role/** = user
+                <!-- /*update* = authc   -->
                 <!-- remeber业务 -->
-                /** = rememberMe,user
+                /** = authc
                 
                 <!-- 其他资源需要认证 -->  
                 

@@ -89,12 +89,20 @@ public class Checker {
 		return StringUtils.isNotBlank(cs);
 	}
 	
-	public static Boolean BeGreaterThan(int a, int b) {
-		return a > b;
+	public static Boolean BeGreaterThan(Number a, Number b) {
+		return a.doubleValue() - b.doubleValue() > 0;
 	}
 	
-	public static Boolean BeGreaterOrEqualThan(int a, int b) {
-		return a > b || a == b;
+	
+	public static Boolean BeGreaterOrEqualThan(Number a, Number b) {
+		if (a == null || b == null) {
+			throw new IllegalArgumentException("Invalid number parameter, must not be null.");
+		}
+		return a.doubleValue() > b.doubleValue() || a.doubleValue() == b.doubleValue();
+	}
+	
+	public static Boolean BeNotEqual(Object a, Object b) {
+		return !a.equals(b);
 	}
 	
 }

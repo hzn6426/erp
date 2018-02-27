@@ -17,6 +17,7 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     <!-- scan the package and the sub package -->
     <context:component-scan base-package="com.canaan.**"/>
+    
     <!--
     | Session 中包含locale信息 
      -->
@@ -84,6 +85,13 @@
 	    <property name="cacheSeconds" value="60"/>     
     </bean>
     
+    <!-- beetl template -->
+    <bean id="beetlConfig" class="com.canaan.jgsf.beetl.BeetlConfiguration" init-method="init"/>
+	<bean id="viewResolver" class="org.beetl.ext.spring.BeetlSpringViewResolver">
+        <property name="suffix" value=".html"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="config" ref="beetlConfig"/>
+	</bean>
     <!-- 
     | thymeleaf template
     -->
@@ -107,7 +115,7 @@
         <property name="characterEncoding" value="UTF-8"/>
     </bean> -->
     
-    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">    
+    <!-- <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">    
        <property name="templateLoaderPath">    
            <value>/</value>    
        </property>    
@@ -117,5 +125,5 @@
        <property name="suffix" value=".html" />   
        <property name="order" value="0"></property>   
        <property name="contentType" value="text/html;charset=UTF-8"></property>           
-   </bean>
+   </bean> -->
 </beans>

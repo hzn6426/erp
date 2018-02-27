@@ -1,4 +1,5 @@
 
+import java.security.MessageDigest;
 import java.util.Calendar;
 
 
@@ -28,8 +29,16 @@ public class CommonTest {
 //		System.out.println(targetbytes);
 //		MenuDTO m =  (MenuDTO) SerializeUtil.deserialize(strbytes);
 //		System.out.println(m.getCode());
-		System.out.println(java.util.TimeZone.getDefault().getID());
-		System.out.println(Calendar.getInstance().getTime());
+//		System.out.println(java.util.TimeZone.getDefault().getID());
+//		System.out.println(Calendar.getInstance().getTime());
+		String passwd = "admin";
+		byte[] hashed = passwd.getBytes("utf8");
+		MessageDigest digest = MessageDigest.getInstance("MD5");
+		for (int i = 0; i < 2; ++i) {
+//			digest.reset();
+			hashed = digest.digest(hashed);
+		}
+		System.out.println(new String(hashed,"utf8"));
 	}
 
 }

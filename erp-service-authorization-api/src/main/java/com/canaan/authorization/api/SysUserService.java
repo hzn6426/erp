@@ -20,4 +20,12 @@ public interface SysUserService extends MBaseService<UserDTO> {
 	 * @return 权限列表，没有返回空列表
 	 */
 	List<String> listPermsByUserName(String userName);
+	
+	
+	/**
+	 * 根据用户名获取用户信息
+	 * @param userName 用户名
+	 * @return 用户对象信息
+	 */
+	UserDTO getByUserName(String userName);
 }

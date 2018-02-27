@@ -24,4 +24,7 @@ public class MenuButtonTreeDTO implements Serializable {
 	
 	@ApiModelProperty("是否选中,选中为角色拥有权限")
 	private boolean checked;
+	
+	@ApiModelProperty("链接地址")
+	private String url;
 }

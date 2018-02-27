@@ -20,4 +20,6 @@ public class BaseModel implements Serializable {
     private Integer updateId;
     @TableField("filter_sql")
     private String filterSql;
+    @TableField("state")
+    private String state;
 }

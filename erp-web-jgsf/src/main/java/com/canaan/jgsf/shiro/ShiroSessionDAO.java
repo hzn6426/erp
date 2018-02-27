@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ShiroSessionDAO extends AbstractSessionDAO {
 	private static Logger logger = LoggerFactory.getLogger(ShiroSessionDAO.class);
-	private static final String SESSION_KEY_PREFIX = "shiro_redis_session:";
+	private static final String SESSION_KEY_PREFIX = "jgsf_shiro_redis_session:";
 	private final int sessionTimeoutSeconds;
 	private final RedisTemplate<String, Session> redisTemplate;
 	public ShiroSessionDAO(RedisTemplate<String, Session> redisTemplate, int sessionTimeoutSeconds) {
@@ -48,6 +48,7 @@ public class ShiroSessionDAO extends AbstractSessionDAO {
 	protected Session doReadSession(Serializable sessionId) {
 		if (sessionId == null) {
 			logger.error("SessionId of session to read must not be null!");
+			return null;
 		}
 		return getSessionFRedis(buildRedisSessionKey(sessionId));
 	}

@@ -25,7 +25,7 @@ public class ShiroRedisCacheManager implements CacheManager {
 			cache = new ShiroRedisCache<K, V>(redisTemplate);
 		}
 		cacheMap.put(name, cache);
-		return null;
+		return cache;
 	}
 
 

@@ -17,7 +17,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import com.canaan.distribute.exception.BizException;
 import com.canaan.distribute.exception.DistributeException;
 import com.canaan.jgsf.common.ResponseResult;
-import com.canaan.jgsf.constant.SystemConstants;
+import com.canaan.jgsf.constant.SystemConsts;
 import com.canaan.jgsf.util.WebUtil;
 import com.google.common.base.Optional;
 import com.google.common.base.Throwables;
@@ -33,12 +33,12 @@ public class GloableExceptionHandler {
 		if (WebUtil.isAjaxRequest(request)) {
 			return result;
 		}
-		ModelAndView mv = new ModelAndView(SystemConstants.REQUEST_NOT_FOUND);
+		ModelAndView mv = new ModelAndView(SystemConsts.REQUEST_NOT_FOUND);
 		return mv;
 	}
 	@ExceptionHandler(Exception.class)
 	protected Object handleCustomerException(Exception ex, WebRequest request) {
-		ModelAndView mv = new ModelAndView(SystemConstants.SERVER_INTERNAL_ERROR);
+		ModelAndView mv = new ModelAndView(SystemConsts.SERVER_INTERNAL_ERROR);
 		if (! WebUtil.isAjaxRequest(request)) {
 			return mv;
 		}

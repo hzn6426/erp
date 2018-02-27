@@ -23,6 +23,7 @@ import com.canaan.common.SearchResult;
 import com.canaan.core.batisplus.OrderBy;
 import com.canaan.core.cache.CacheAssistService;
 import com.canaan.core.common.BaseModel;
+import com.canaan.core.constant.StateEnum;
 import com.canaan.core.exception.ExceptionEnum;
 import com.canaan.core.util.Assert;
 import com.canaan.core.util.CollectionMapperDecorator;
@@ -165,7 +166,10 @@ public abstract class MBaseServiceImpl<M extends BaseMapper<T>, T extends BaseMo
 	public void save(V v) {
 		Assert.CheckArgument(v);
 		T t = beanMapper.map(v, entityClassType);
-		t.setCreateTime(new Date());
+		Date now = new Date();
+		t.setCreateTime(now);
+		t.setUpdateTime(now);
+		t.setState(StateEnum.ACTIVE.toString());
 		this.baseMapper.insert(t);
 	}
 	

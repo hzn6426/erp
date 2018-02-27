@@ -117,15 +117,21 @@
     		<artifactId>erp-service-privilege-api</artifactId>
     	</dependency> -->
     	
-    	<dependency>
+    	<!-- <dependency>
             <groupId>com.canaan</groupId>
             <artifactId>erp-service-product-api</artifactId>
-        </dependency>
+        </dependency> -->
     	
 		<dependency>
 			<groupId>com.canaan</groupId>
 			<artifactId>erp-distribute</artifactId>
 		</dependency>
+        
+        <!-- beetl模板 -->
+        <dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetl</artifactId>
+        </dependency>
         
         <!-- druid -->
         <dependency>

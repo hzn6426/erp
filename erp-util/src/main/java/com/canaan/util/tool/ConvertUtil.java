@@ -49,6 +49,16 @@ public class ConvertUtil {
     }
 	
 	/**
+	 * 将set集合转化成list
+	 * @param <T> 集合类型
+	 * @param set 集合
+	 * @return 转化的List列表
+	 */
+	public static <T> List<T> toList(Set<T> set) {
+		return !Checker.BeNotEmpty(set) ? Collections.<T> emptyList() : new ArrayList<>(set);
+	}
+	
+	/**
 	 * 将数组转化为set
 	 * @param <T>数组类型
 	 * @param arrays 数组

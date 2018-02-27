@@ -3,6 +3,8 @@ package com.canaan.jgsf.common;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,6 +17,11 @@ import com.canaan.util.tool.Checker;
 
 public class MBaseController<E> {
 
+	@Autowired
+	protected HttpServletRequest httpServletRequest;
+	@Autowired
+	protected HttpServletResponse httpServletResponse;
+	
 	@Autowired
 	private MBaseService<E> baseService;
 	

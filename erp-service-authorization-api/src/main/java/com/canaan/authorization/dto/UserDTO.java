@@ -36,4 +36,6 @@ public class UserDTO implements Serializable {
 
 	@ApiModelProperty("真实姓名")
     private String userRealName;
+	
+	private String state;
 }

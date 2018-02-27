@@ -45,8 +45,6 @@ public class MchProduct extends BaseModel {
     private Double price;
     @TableField("costPrice")
     private Double costPrice;
-    @TableField("state")
-    private String state;
 
 
 }
