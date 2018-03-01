@@ -42,6 +42,12 @@
     <!-- 
     | Common config
     | 1.跨域配置，解决跨域问题
+    | 2.spring工具，用来获取bean对象
      -->
-    <bean class="com.canaan.jgsf.common.CrossConfigurerAdapter"></bean>
+    <bean class="com.canaan.jgsf.cross.CrossConfigurerAdapter">
+        <property name="allowCross" value="${allow_cross_domain}"></property>
+    </bean>
+    <bean class="com.canaan.jgsf.util.SpringUtil"></bean>
+    
+    <!-- <bean class="com.canaan.jgsf.exception.MVCExceptionHandler"></bean> -->
 </beans>

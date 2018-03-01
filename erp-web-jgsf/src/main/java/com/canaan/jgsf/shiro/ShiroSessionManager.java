@@ -3,6 +3,7 @@ package com.canaan.jgsf.shiro;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.session.mgt.WebSessionKey;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
@@ -27,6 +29,8 @@ public class ShiroSessionManager extends DefaultWebSessionManager {
 
 	@Setter
 	private List<String> staticResourceUrls = new ArrayList<>();
+	
+//	private final ConcurrentHashMap<String, ShiroSession> map = new ConcurrentHashMap<>();
 	//缓存session，避免重复调用
 	@Override
 	protected Session retrieveSession(SessionKey sessionKey) throws UnknownSessionException {
@@ -37,26 +41,29 @@ public class ShiroSessionManager extends DefaultWebSessionManager {
 		
 		if (sessionKey instanceof WebSessionKey) {
 			request = ((WebSessionKey) sessionKey).getServletRequest();
-			HttpServletRequest httpRequest = (HttpServletRequest) request;
+			HttpServletRequest httpRequest = WebUtils.toHttp(request);
 			url = httpRequest.getRequestURI();
+			log.info("============================URL is {}",url);
 			if (doUrlMatch(url)) {
 				return null;
 			}
 		}
-		if (request != null && null != sessionId) {
-			Object sessionObj = request.getAttribute(sessionId.toString());
-			if (sessionObj != null) {
-				return (Session) sessionObj;
-			}
-		}
+//		if (request != null && null != sessionId) {
+//			Object sessionObj = request.getAttribute(sessionId.toString());
+//			if (sessionObj != null) {
+//				return (Session) sessionObj;
+//			}
+//		}
 		if (log.isDebugEnabled()) {
 			log.debug("get session cache from redis, the url is {}",url);
 		}
+		
 		Session session = super.retrieveSession(sessionKey);
-		if (request != null && null != sessionId) {
-			request.setAttribute(sessionId.toString(), session);
-		}
+//		if (request != null && null != sessionId) {
+//			request.setAttribute(sessionId.toString(), session);
+//		}
 		return session;
+//		return super.retrieveSession(sessionKey);
 	}
 	
 	/**

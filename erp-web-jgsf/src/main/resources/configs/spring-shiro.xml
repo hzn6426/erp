@@ -39,7 +39,6 @@
         <constructor-arg value="ssid"/>
         <property name="httpOnly" value="true"/> 
         <property name="maxAge" value="-1"></property>
-        <property name="path" value="/"></property>
     </bean> 
     
     <!-- remeberme -->
@@ -90,10 +89,10 @@
         <property name="sessionIdCookieEnabled" value="true"/> 
         <property name="sessionIdCookie" ref="sessionIdCookie"/>  
         <property name="sessionFactory" ref="shiroSessionFactory"/>
+        <!-- 静态资源不需要经过redis读取session -->
         <property name="staticResourceUrls">
             <list>
                 <value>/static/**</value>
-                <value>/webjars/**</value>
             </list>
         </property>
     </bean>
@@ -133,25 +132,26 @@
     
     <!-- 基于Form表单的身份验证过滤器 -->
     <bean id="authcAuthenticationFilter" class="com.canaan.jgsf.shiro.AuthcAuthenticationFilter">
-        <property name="loginUrl" value="/checkLogin"></property>
+        <!-- <property name="loginUrl" value="/login"></property>
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
         <property name="rememberMeParam" value="remember"/>
         <property name="successUrl" value="/swagger-ui.html"></property>
-        <property name="failureKeyAttribute" value="shiro_login_failure"></property>
+        <property name="failureKeyAttribute" value="shiro_login_failure"></property> -->
     </bean>
     
-    
+    <bean id="scrfFilter" class="com.canaan.jgsf.csrf.CsrfFilter"></bean>
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/checkLogin" />
+		<property name="loginUrl" value="/doLogin" />
 		<property name="unauthorizedUrl" value="/lock.html"/>
 		<property name="successUrl" value="/swagger-ui.html" ></property>
 		<!-- <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" /> -->
 		<property name="filters">
 		    <map>
 		        <entry key="authc" value-ref="authcAuthenticationFilter"/>  
+		        <entry key="csrf" value-ref="scrfFilter"></entry>
 		        <entry key="user" value-ref="rememberMeAuthenticationFilter"></entry>
 		        <entry key="logout" value-ref="logoutFilter" />
 		    </map>
@@ -163,23 +163,22 @@
                 /static/** = anon
                 /swagger** = authc
                 /webjars/** = anon
-                /login = anon
                 <!-- 登录注册允许访问 -->  
                 /register* = anon  
                 <!-- 登出 --> 
                 /logout = logout  
                 <!-- 登录 -->
                 <!-- /checkLogin = anon -->
-                
-                
+                /login=csrf,anon
                 <!-- /user = rest[user]
                 /role = rest[role]
                 /button = rest[button]
                 /menu = rest[menu] -->
+                /button = rest[button]
                 /role/** = user
                 <!-- /*update* = authc   -->
                 <!-- remeber业务 -->
-                /** = authc
+                /** = csrf,authc
                 
                 <!-- 其他资源需要认证 -->  
                 

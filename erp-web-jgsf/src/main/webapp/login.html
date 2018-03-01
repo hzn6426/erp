@@ -101,17 +101,20 @@
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
 						<div class="well no-padding">
-							<form action="/checkLogin" method="post" id="login-form" class="smart-form client-form">
+							<form action="/doLogin" method="post" id="login-form" class="smart-form client-form">
+							     <input type="hidden" name="_csrf" value="${_csrf.token}">
 								<header>
 									Sign In
 								</header>
-                                <span class="txt-color-red">${code!}${msg!}</span>
+								@if(has(code) && has(msg)) {
+                                <span class="txt-color-red">${code!}:${msg!}</span>
+                                @}
 								<fieldset>
 									
 									<section>
 										<label class="label">E-mail</label>
 										<label class="input"> <i class="icon-append fa fa-user"></i>
-											<input type="text" name="username">
+											<input type="text" name="username" value="${username!}">
 											<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b></label>
 									</section>
 

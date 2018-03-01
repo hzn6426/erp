@@ -3,25 +3,25 @@ package com.canaan.jgsf.common;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.canaan.authorization.dto.UserDTO;
 import com.canaan.common.MBaseService;
 import com.canaan.common.SearchResult;
 import com.canaan.jgsf.exception.ClientBizException;
 import com.canaan.jgsf.exception.ClientExceptionEnum;
 import com.canaan.jgsf.util.Assert;
 import com.canaan.util.tool.Checker;
-
-public class MBaseController<E> {
-
-	@Autowired
-	protected HttpServletRequest httpServletRequest;
-	@Autowired
-	protected HttpServletResponse httpServletResponse;
-	
+/**
+ * 基于mybatis plus的通用controller
+ * <p>其中baseService是根据类型进行匹配，例如继承该controller中的<code>E</code>为{@link UserDTO},
+ * 则service会匹配继承自{@link MBaseService}且泛型{@link UserDTO}的service</p>
+ * @author zening
+ * @date 2018年2月28日 上午10:52:48
+ * @version 1.0.0
+ */
+public class MBaseController<E> extends ActionController{
 	@Autowired
 	private MBaseService<E> baseService;
 	
