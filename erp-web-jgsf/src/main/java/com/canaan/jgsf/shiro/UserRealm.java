@@ -30,7 +30,8 @@ public class UserRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String userName = (String)principals.getPrimaryPrincipal();
+    	ShiroUser user = (ShiroUser)principals.getPrimaryPrincipal();
+        String userName = user.getUserName();
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(new HashSet<>(userService.listRoleNameByUserName(userName)));

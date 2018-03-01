@@ -47,7 +47,7 @@
     <bean class="com.canaan.jgsf.cross.CrossConfigurerAdapter">
         <property name="allowCross" value="${allow_cross_domain}"></property>
     </bean>
-    <bean class="com.canaan.jgsf.util.SpringUtil"></bean>
+    <bean class="com.canaan.jgsf.util.SpringBeanUtil"></bean>
     
-    <!-- <bean class="com.canaan.jgsf.exception.MVCExceptionHandler"></bean> -->
+    <bean class="com.canaan.jgsf.exception.MVCExceptionHandler"></bean>
 </beans>

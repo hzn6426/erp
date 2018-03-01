@@ -1,0 +1,51 @@
+package com.canaan.jgsf.shiro;
+
+import java.io.IOException;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
+import org.apache.shiro.web.util.WebUtils;
+
+import com.canaan.jgsf.common.ResponseResult;
+import com.canaan.jgsf.constant.SystemConsts;
+import com.canaan.jgsf.exception.ClientBizException;
+import com.canaan.jgsf.exception.ClientExceptionEnum;
+import com.canaan.jgsf.util.SessionUtil;
+import com.canaan.jgsf.util.WebUtil;
+/**
+ * 用于处理perm授权失败的处理
+ * @author zening
+ * @date 2018年3月1日 上午11:15:08
+ * @version 1.0.0
+ */
+public class ShiroPermisssionFilter extends PermissionsAuthorizationFilter {
+
+	@Override
+	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
+		HttpServletRequest httpRequest = WebUtils.toHttp(request);
+		HttpServletResponse httpResponse = WebUtils.toHttp(response);
+		boolean beLogin = SessionUtil.hasLogin(httpRequest);
+		boolean beAjaxRequest = WebUtil.isAjaxRequest(httpRequest);
+		
+		if (beLogin) {
+			if (beAjaxRequest) {
+				WebUtil.write(httpResponse,ResponseResult.build(new ClientBizException(ClientExceptionEnum.NO_PRIVILEGE_EXCEPTION)).json());
+			} else {
+				WebUtils.issueRedirect(httpRequest, httpResponse, getUnauthorizedUrl());
+			}
+		} else {
+			if (beAjaxRequest) {
+				WebUtil.write(httpResponse, ResponseResult.build(new ClientBizException(ClientExceptionEnum.USER_IS_NOT_LOGIN)).json());
+			} else {
+				WebUtils.issueRedirect(httpRequest, httpResponse, SystemConsts.LOGIN);
+			}
+		}
+		
+		return false;
+	}
+
+}

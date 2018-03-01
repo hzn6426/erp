@@ -4,6 +4,7 @@ package com.canaan.jgsf.common;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
+import com.canaan.jgsf.exception.ClientBizException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.collect.Lists;
@@ -56,6 +57,11 @@ public class ResponseResult<E> {
 	
 	public static <E> ResponseResult<E> build(int code, String message, int totalSize, List<E> data) {
 		return new ResponseResult<E>(code, message,totalSize, data);
+	}
+	
+	public static <E> ResponseResult<E> build(ClientBizException bizException) {
+		return bizException == null ? build() : build(bizException.getCode(), bizException.getMessage());
+		
 	}
 	
 	public  String json() {

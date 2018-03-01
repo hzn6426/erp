@@ -6,7 +6,7 @@ import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 public class BeetlUtil {
 
 	public static GroupTemplate beetlGroupTemplate() {
-		BeetlGroupUtilConfiguration config = (BeetlGroupUtilConfiguration) SpringUtil.getBean("beetlConfig");
+		BeetlGroupUtilConfiguration config = (BeetlGroupUtilConfiguration) SpringBeanUtil.getBean("beetlConfig");
 		GroupTemplate group = config.getGroupTemplate();
 		return group;
 	}

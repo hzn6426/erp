@@ -17,7 +17,7 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     <!-- scan the package and the sub package -->
     <context:component-scan base-package="com.canaan.**"/>
-    
+    <mvc:annotation-driven />
     <!--
     | Session 中包含locale信息 
      -->

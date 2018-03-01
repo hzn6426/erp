@@ -1,18 +1,19 @@
 package com.canaan.jgsf.exception;
 
-import java.io.IOException;
 import java.util.Iterator;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
 import com.canaan.distribute.exception.BizException;
 import com.canaan.distribute.exception.DistributeException;
@@ -23,13 +24,54 @@ import com.google.common.base.Optional;
 import com.google.common.base.Throwables;
 
 import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
-public class MVCExceptionHandler implements HandlerExceptionResolver {
+public class MVCExceptionHandler extends ExceptionHandlerExceptionResolver {
 
-	@Override
-	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
-			Exception ex) {
+//	@Override
+//	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
+//			Exception ex) {
+//		ModelAndView mv = new ModelAndView(SystemConsts.SERVER_INTERNAL_ERROR);
+//		if (! WebUtil.isAjaxRequest(request)) {
+//			return mv;
+//		}
+//		
+//		ResponseResult<?> result = null;
+//		if (BizException.class.isInstance(ex)) {
+//			result = handleBizException((BizException) ex);
+//		} else if (DistributeException.class.isInstance(ex)) {
+//			result = handleDistributeException((DistributeException) ex);
+//		} else if (MethodArgumentNotValidException.class.isInstance(ex)) {
+//			result = handleBindException((MethodArgumentNotValidException) ex);
+//		} else if (BindException.class.isInstance(ex)) {
+//			result = handleBindException((BindException) ex);
+//		} else if (ClientBizException.class.isInstance(ex)) {
+//			result = handleClientBizException((ClientBizException) ex);
+//		} else if (NullPointerException.class.isInstance(ex)) {
+//			result =handleNullPointException((NullPointerException) ex);
+//		} else if (IllegalArgumentException.class.isInstance(ex)) {
+//			result =handleIllegalArgumentException((IllegalArgumentException) ex);
+//		} else {
+//			result = handleException(ex);
+//		}
+//		try {
+//			response.getWriter().write(result.json());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+	@ResponseStatus(value=HttpStatus.NOT_FOUND)
+	@ExceptionHandler(NoHandlerFoundException.class)
+	protected Object handler404(NoHandlerFoundException ex, WebRequest request) {
+		ResponseResult<?> result = handleNotFundException((NoHandlerFoundException) ex);
+		if (WebUtil.isAjaxRequest(request)) {
+			return result;
+		}
+		ModelAndView mv = new ModelAndView(SystemConsts.REQUEST_NOT_FOUND);
+		return mv;
+	}
+	@ExceptionHandler(Exception.class)
+	protected Object handleCustomerException(Exception ex, WebRequest request) {
 		ModelAndView mv = new ModelAndView(SystemConsts.SERVER_INTERNAL_ERROR);
 		if (! WebUtil.isAjaxRequest(request)) {
 			return mv;
@@ -53,14 +95,9 @@ public class MVCExceptionHandler implements HandlerExceptionResolver {
 		} else {
 			result = handleException(ex);
 		}
-		try {
-			response.getWriter().write(result.json());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
+		return result;
+		
+    }
 	
 	private ResponseResult<?> handleIllegalArgumentException(IllegalArgumentException illex) {
 		log.error("ClientBizException:" + Throwables.getStackTraceAsString(illex));

@@ -106,32 +106,22 @@
 	</bean>
 
     
-	<!-- 項目自定义的Realm -->
-	<!-- <bean id="shiroDbRealm" class="com.canaan.security.merchant.ShiroDbRealm">
-		<property name="credentialsMatcher" ref="credentialsMatcher">
-            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-                <property name="hashAlgorithmName" value="MD5"/>
-            </bean>
-        </property>
-	</bean> -->
-    
-    <!-- 安全退出filter  --> 
-    <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
-         <property name="redirectUrl" value="/login" />
-    </bean>
-    
     <!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"/>
         <property name="arguments" ref="securityManager"/>
     </bean>
     
-    
-    <bean id="rememberMeAuthenticationFilter"  class="com.canaan.jgsf.shiro.RememberMeAuthenticationFilter">
+     <!-- 安全退出filter  --> 
+    <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+         <property name="redirectUrl" value="/login" />
+    </bean>
+    <!-- 记住我filter -->
+    <bean id="rememberMeAuthenticationFilter"  class="com.canaan.jgsf.shiro.ShiroRememberMeFilter">
     </bean>
     
-    <!-- 基于Form表单的身份验证过滤器 -->
-    <bean id="authcAuthenticationFilter" class="com.canaan.jgsf.shiro.AuthcAuthenticationFilter">
+    <!-- 身份验证过滤器 -->
+    <bean id="authcAuthenticationFilter" class="com.canaan.jgsf.shiro.ShiroAuthcFilter">
         <!-- <property name="loginUrl" value="/login"></property>
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
@@ -140,17 +130,27 @@
         <property name="failureKeyAttribute" value="shiro_login_failure"></property> -->
     </bean>
     
+    <!-- csrf过滤器 -->
     <bean id="scrfFilter" class="com.canaan.jgsf.csrf.CsrfFilter"></bean>
+    
+    <!-- perms权限验证器 -->
+    <bean id="permsFilter" class="com.canaan.jgsf.shiro.ShiroPermisssionFilter"></bean>
+    
+    <!-- rest权限验证器 -->
+    <bean id="restFilter" class="com.canaan.jgsf.shiro.ShiroRestFilter"></bean>
+    
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/doLogin" />
-		<property name="unauthorizedUrl" value="/lock.html"/>
+		<property name="unauthorizedUrl" value="/login"/>
 		<property name="successUrl" value="/swagger-ui.html" ></property>
 		<!-- <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" /> -->
 		<property name="filters">
 		    <map>
-		        <entry key="authc" value-ref="authcAuthenticationFilter"/>  
+		        <entry key="authc" value-ref="authcAuthenticationFilter"/> 
+		        <entry key="perms" value-ref="permsFilter"></entry> 
+		        <entry key="rest" value-ref="restFilter"></entry>
 		        <entry key="csrf" value-ref="scrfFilter"></entry>
 		        <entry key="user" value-ref="rememberMeAuthenticationFilter"></entry>
 		        <entry key="logout" value-ref="logoutFilter" />
@@ -174,7 +174,7 @@
                 /role = rest[role]
                 /button = rest[button]
                 /menu = rest[menu] -->
-                /button = rest[button]
+                /button/* = rest[button]
                 /role/** = user
                 <!-- /*update* = authc   -->
                 <!-- remeber业务 -->

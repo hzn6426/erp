@@ -26,6 +26,10 @@ public class ActionController {
 		return getRequest().getAttribute(name);
 	}
 	
+	protected Object getSessionAttribute(String name) {
+		return getSession().getAttribute(name);
+	}
+	
 	protected HttpSession getSession() {
 		return getRequest().getSession();
 	}

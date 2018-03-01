@@ -2,13 +2,13 @@ package com.canaan.jgsf.constant;
 
 public abstract class SystemConsts {
 	/*session 中存储用户信息的属性名称*/
-	public static final String USER_SESSION = "USER_SESSION";
-	
-	public static final String SESSION_MONITOR_KEY = "SESSION_MONITOR_KEY";
-	
-	public static final String SESSION_IS_INVALID = "SESSION_IS_INVALID";
-	
-	public static final String SESSION_IS_TIMEOUT = "SESSION_IS_TIMEOUT";
+//	public static final String USER_SESSION = "USER_SESSION";
+//	
+//	public static final String SESSION_MONITOR_KEY = "SESSION_MONITOR_KEY";
+//	
+//	public static final String SESSION_IS_INVALID = "SESSION_IS_INVALID";
+//	
+//	public static final String SESSION_IS_TIMEOUT = "SESSION_IS_TIMEOUT";
 	
 	/*非Ajax请求，非404错误，跳转到错误页面地址*/
 	public static final String SERVER_INTERNAL_ERROR = "error500";

@@ -1,5 +1,6 @@
 package com.canaan.jgsf.util;
 
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
@@ -237,6 +238,7 @@ public class ShiroUtil {
     	SimpleHash hash = new SimpleHash(hashAlgorithmName, credentials, credentialsSalt, hashIterations);
     	return hash.toString();
     }
+    
     
 	public static void main(String[] args) {
 		System.out.println(md5Hash("admin", null, 2));

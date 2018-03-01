@@ -32,6 +32,7 @@ import com.canaan.jgsf.dto.LinkDTO;
 import com.canaan.jgsf.exception.ClientBizException;
 import com.canaan.jgsf.exception.ClientExceptionEnum;
 import com.canaan.jgsf.shiro.ShiroUser;
+import com.canaan.jgsf.util.SessionUtil;
 import com.canaan.jgsf.util.ShiroUtil;
 import com.canaan.util.tool.Checker;
 import com.canaan.util.tool.ConvertUtil;
@@ -78,12 +79,14 @@ public class SystemController extends ActionController{
 			redirectAttributes.addFlashAttribute("msg", bizException.getMessage());
 		}
 		 if (bizException != null) {
-        	getSession().removeAttribute(SystemConsts.USER_SESSION);
+			SessionUtil.removeUser(getRequest());
+//        	getSession().removeAttribute(SystemConsts.USER_SESSION);
         	redirectAttributes.addFlashAttribute("username", getRequest().getParameter("username"));
         	return mv;
         }
 		ShiroUser user = ShiroUtil.getUser();
-		getRequest().getSession().setAttribute(SystemConsts.USER_SESSION, user);
+		SessionUtil.saveUser(getRequest(), user);
+//		getRequest().getSession().setAttribute(SystemConsts.USER_SESSION, user);
 //			return null;
 		mv.setUrl("/swagger-ui.html");
 		return mv;

@@ -19,7 +19,7 @@ public class Assert {
 		}
 		if (beStrict) {
 			if (String.class.isInstance(reference)) {
-				return !StringUtils.isBlank((String)reference);
+				return !StringUtils.isEmpty((String)reference);
 			} else if (Collection.class.isInstance(reference)) {
 				return !((Collection<?>) reference).isEmpty();
 			}

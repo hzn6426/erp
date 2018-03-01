@@ -1,14 +1,18 @@
 package com.canaan.jgsf.util;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ClassUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.WebRequest;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Optional;
 
 public class WebUtil {
@@ -52,5 +56,17 @@ public class WebUtil {
 	    		|| contentType.toLowerCase().contains("application/json") 
 	    		|| accept.toLowerCase().contains("application/json");  
 	    return isAjax;
+	}
+	
+	public static void write(HttpServletResponse response, Object object) {
+		if (response == null) {
+			throw new NullPointerException("response can not be null.");
+		}
+		try {
+			response.getWriter().write(ClassUtils.isPrimitiveOrWrapper(object.getClass()) ? object.toString() : JSONObject.toJSONString(object));
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e.getMessage());
+		}
 	}
 }

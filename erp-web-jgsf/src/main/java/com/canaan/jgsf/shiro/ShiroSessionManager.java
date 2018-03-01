@@ -3,7 +3,6 @@ package com.canaan.jgsf.shiro;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -79,7 +78,7 @@ public class ShiroSessionManager extends DefaultWebSessionManager {
 	 */
 	private boolean doUrlMatch(String url) {
 		
-		if (StringUtils.isBlank(url)) return false;
+		if (StringUtils.isEmpty(url)) return false;
 		PathMatcher matcher = new AntPathMatcher();
 		Predicate<String> matchPredicate = new Predicate<String>() {
 			@Override
