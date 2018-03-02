@@ -1,7 +1,11 @@
 package com.canaan.jgsf.exception;
 
+import java.io.IOException;
 import java.util.Iterator;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
@@ -10,7 +14,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
@@ -26,43 +29,23 @@ import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MVCExceptionHandler extends ExceptionHandlerExceptionResolver {
-
-//	@Override
-//	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
-//			Exception ex) {
-//		ModelAndView mv = new ModelAndView(SystemConsts.SERVER_INTERNAL_ERROR);
-//		if (! WebUtil.isAjaxRequest(request)) {
-//			return mv;
-//		}
-//		
-//		ResponseResult<?> result = null;
-//		if (BizException.class.isInstance(ex)) {
-//			result = handleBizException((BizException) ex);
-//		} else if (DistributeException.class.isInstance(ex)) {
-//			result = handleDistributeException((DistributeException) ex);
-//		} else if (MethodArgumentNotValidException.class.isInstance(ex)) {
-//			result = handleBindException((MethodArgumentNotValidException) ex);
-//		} else if (BindException.class.isInstance(ex)) {
-//			result = handleBindException((BindException) ex);
-//		} else if (ClientBizException.class.isInstance(ex)) {
-//			result = handleClientBizException((ClientBizException) ex);
-//		} else if (NullPointerException.class.isInstance(ex)) {
-//			result =handleNullPointException((NullPointerException) ex);
-//		} else if (IllegalArgumentException.class.isInstance(ex)) {
-//			result =handleIllegalArgumentException((IllegalArgumentException) ex);
-//		} else {
-//			result = handleException(ex);
-//		}
-//		try {
-//			response.getWriter().write(result.json());
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
+	private final static MVCExceptionHandler handler = new MVCExceptionHandler();
+	
+	private MVCExceptionHandler(){}
+	
+	public static void doHandlerException(Exception ex, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		if (!WebUtil.isAjaxRequest(request)) {
+			response.sendRedirect(SystemConsts.SERVER_INTERNAL_ERROR);
+			return;
+		}
+		ResponseResult<?> result = handler.createResultByExcepiton(ex);
+		WebUtil.write(response, result);
+		
+	}
+	
 	@ResponseStatus(value=HttpStatus.NOT_FOUND)
 	@ExceptionHandler(NoHandlerFoundException.class)
-	protected Object handler404(NoHandlerFoundException ex, WebRequest request) {
+	protected Object handler404(NoHandlerFoundException ex, HttpServletRequest request) {
 		ResponseResult<?> result = handleNotFundException((NoHandlerFoundException) ex);
 		if (WebUtil.isAjaxRequest(request)) {
 			return result;
@@ -71,12 +54,18 @@ public class MVCExceptionHandler extends ExceptionHandlerExceptionResolver {
 		return mv;
 	}
 	@ExceptionHandler(Exception.class)
-	protected Object handleCustomerException(Exception ex, WebRequest request) {
+	protected Object handleCustomerException(Exception ex, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView(SystemConsts.SERVER_INTERNAL_ERROR);
-		if (! WebUtil.isAjaxRequest(request)) {
+		if (!WebUtil.isAjaxRequest(request)) {
 			return mv;
 		}
 		
+		ResponseResult<?> result = createResultByExcepiton(ex);
+		return result;
+		
+    }
+	
+	private ResponseResult<?> createResultByExcepiton(Exception ex) {
 		ResponseResult<?> result = null;
 		if (BizException.class.isInstance(ex)) {
 			result = handleBizException((BizException) ex);
@@ -92,12 +81,18 @@ public class MVCExceptionHandler extends ExceptionHandlerExceptionResolver {
 			result =handleNullPointException((NullPointerException) ex);
 		} else if (IllegalArgumentException.class.isInstance(ex)) {
 			result =handleIllegalArgumentException((IllegalArgumentException) ex);
+		} else if (ServletException.class.isInstance(ex)) {//for shiro exception
+			Throwable cause = ((ServletException)ex).getCause();
+			if (ClientBizException.class.isInstance(cause)) {
+				result = handleClientBizException((ClientBizException) cause);
+			} else {
+				result = handleException((Exception)cause);
+			}
 		} else {
 			result = handleException(ex);
 		}
 		return result;
-		
-    }
+	}
 	
 	private ResponseResult<?> handleIllegalArgumentException(IllegalArgumentException illex) {
 		log.error("ClientBizException:" + Throwables.getStackTraceAsString(illex));

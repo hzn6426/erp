@@ -18,7 +18,7 @@ public class CrossConfigurerAdapter extends WebMvcConfigurerAdapter {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		String[] allowOrigins = StringUtils.isNotBlank(allowCross) ? allowCross.split(",") : new String[]{};
-		registry.addMapping("/*").allowedOrigins(allowOrigins);
+		registry.addMapping("/*").allowedOrigins("*");
 	}
 
 }

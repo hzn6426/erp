@@ -47,9 +47,17 @@ public class SystemController extends ActionController{
 	public ModelAndView login() {
 		return new ModelAndView(SystemConsts.LOGIN);
 	}
-	@RequestMapping("/index")
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView index() {
 		return new ModelAndView(SystemConsts.INDEX);
+	}
+	@RequestMapping(value = "/error500", method = RequestMethod.GET)
+	public ModelAndView error500() {
+		return new ModelAndView(SystemConsts.SERVER_INTERNAL_ERROR);
+	}
+	@RequestMapping(value = "/error404", method = RequestMethod.GET)
+	public ModelAndView error404() {
+		return new ModelAndView(SystemConsts.REQUEST_NOT_FOUND);
 	}
 	
 	@RequestMapping(value = "/doLogin", method = RequestMethod.POST)

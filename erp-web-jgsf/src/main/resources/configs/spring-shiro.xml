@@ -139,6 +139,9 @@
     <!-- rest权限验证器 -->
     <bean id="restFilter" class="com.canaan.jgsf.shiro.ShiroRestFilter"></bean>
     
+    
+    <bean id="exceptionFilter" class="com.canaan.jgsf.shiro.ShiroExceptionFilter"></bean>
+    
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
@@ -148,6 +151,7 @@
 		<!-- <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" /> -->
 		<property name="filters">
 		    <map>
+		        <entry key="monitor" value-ref="exceptionFilter"></entry>
 		        <entry key="authc" value-ref="authcAuthenticationFilter"/> 
 		        <entry key="perms" value-ref="permsFilter"></entry> 
 		        <entry key="rest" value-ref="restFilter"></entry>
@@ -161,7 +165,7 @@
                 /favicon.ico = anon
                 <!-- 静态资源允许访问 -->  
                 /static/** = anon
-                /swagger** = authc
+               <!--  /swagger** = authc -->
                 /webjars/** = anon
                 <!-- 登录注册允许访问 -->  
                 /register* = anon  
@@ -169,17 +173,17 @@
                 /logout = logout  
                 <!-- 登录 -->
                 <!-- /checkLogin = anon -->
-                /login=csrf,anon
+                /login=monitor,csrf,anon
                 <!-- /user = rest[user]
                 /role = rest[role]
                 /button = rest[button]
                 /menu = rest[menu] -->
-                /button/* = rest[button]
-                /role/** = user
+                <!-- /button/* = monitor,rest[button]
+                /role/** = user -->
                 <!-- /*update* = authc   -->
                 <!-- remeber业务 -->
-                /** = csrf,authc
-                
+               <!--  /** = monitor,csrf,authc -->
+                /** = anon
                 <!-- 其他资源需要认证 -->  
                 
                 <!-- perms[user:query]表示访问此连接需要权限为user:query的用户 -->  

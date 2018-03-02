@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;
 import org.apache.shiro.web.util.WebUtils;
 
-import com.canaan.distribute.exception.BizException;
 import com.canaan.jgsf.common.ResponseResult;
 import com.canaan.jgsf.constant.SystemConsts;
 import com.canaan.jgsf.exception.ClientBizException;

@@ -6,6 +6,9 @@ import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.canaan.jgsf.exception.ClientBizException;
+import com.canaan.jgsf.exception.ClientExceptionEnum;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -131,10 +134,11 @@ public class CsrfFilter extends AccessControlFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-    	//TODO do it for ajax
+    	
         WebUtils.saveRequest(request);
-        request.getRequestDispatcher(getErrorUrl()).forward(request, response);
-        return false;
+        throw new ClientBizException(ClientExceptionEnum.INVLID_CSRF_TOKEN);
+//        request.getRequestDispatcher(getErrorUrl()).forward(request, response);
+//        return false;
     }
 
 
